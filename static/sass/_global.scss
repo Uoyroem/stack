@@ -1,0 +1,53 @@
+
+.lnk {
+    color: black;
+    text-decoration: none;
+}
+
+.lnk:hover {
+    color: #0d6efd;
+}
+
+.collection-rest > input:checked + label > i[class*="bi-chevron-up"] {
+    display: inline-block !important;
+}
+
+.collection-rest > input:checked + label > i[class*="bi-chevron-down"] {
+    display: none !important;
+}
+
+.catalog > input:checked + label > i[class*="bi-list"] {
+    display: none !important;
+}
+
+
+.catalog > input:checked + label > i[class*="bi-x-circle"] {
+    display: inline-block !important;
+} 
+
+.categories-section {
+    display: grid;
+    
+    grid-template-areas: 
+    "main category-1 category-2 category-3"
+    "main category-4 category-5 category-6"
+    ;
+}
+
+@for $i from 1 to 7 {
+.categories-section__category-#{$i} {
+    grid-area: category-#{$i};
+    @if $i % 3 != 0 {
+        margin-right: 16px;
+    }
+   
+    @if $i < 4 {
+        margin-bottom: 10px;
+    }
+}
+}
+
+.categories-section__main-category {
+   grid-area: main;
+   margin-right: 16px;
+}

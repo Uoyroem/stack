@@ -1,0 +1,57 @@
+@use "variables";
+@use "global";
+
+html, body {
+    height: 100%;
+}
+
+footer {
+    background-color: var(--light-gray);
+}
+
+.footer-title {
+    font-size: 3.5em;
+}
+
+.bg--gray {
+    background-color: var(--gray);
+}
+
+.bg--light-gray {
+    background-color: var(--light-gray);
+}
+
+.footer-social i {
+    margin-right: 16px;
+}
+
+.product {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: calc(100% / 6);
+    margin: 10px 30px 10px 0;
+
+    &:last-child {
+        margin-right: 0;
+    }
+
+    &__image {
+        max-width: 112.5px;
+        max-height: 200px;
+        margin-bottom: 15px;
+    }
+    &__title {
+        font-size: 0.9em;
+        margin-bottom: 20px;
+    }
+    &__info {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+
+    }
+}
+

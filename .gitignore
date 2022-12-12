@@ -1,0 +1,10 @@
+node_modules/
+venv/
+.vscode/
+main/.env
+
+**/__pycache__
+static/**/*.css.map
+
+*/migrations/*
+!*/migrations/__init__.py
