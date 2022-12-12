@@ -1,6 +1,6 @@
 from django.db import models
 from django.urls import reverse
-from user_profile.models import Profile
+from users.models import Profile
 import re
 
 
