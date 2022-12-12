@@ -36,28 +36,28 @@
                     </label>
                 </div>
                 
-                <div class="col input-group input-group-lg">
-                    <input type="text" class="form-control rounded-0" placeholder="Поиск...">
-                    <button class="btn btn-outline-primary rounded-0 text-center">
+                <form class="col input-group input-group-lg" action="{% url 'search' %}">
+                    <input name="query" type="text" class="form-control rounded-0" placeholder="Поиск...">
+                    <button type="submit" class="btn btn-outline-primary rounded-0 text-center">
                         <i class="bi bi-search"></i>
                     </button>
-                </div>
-                <button class="col-auto d-flex align-items-center flex-column btn rounded-0">
+                </form>
+                <a class="col-auto d-flex align-items-center flex-column btn rounded-0" href="{% url 'profile' %}">
                     <i class="bi bi-person"></i>
                     Профиль
-                </button>
-                <button class="col-auto d-flex align-items-center flex-column btn rounded-0">
+                </a>
+                <a class="col-auto d-flex align-items-center flex-column btn rounded-0" href="{% url 'compares' %}">
                     <i class="bi bi-filter"></i>
                     Сравнение
-                </button>
-                <button class="col-auto d-flex align-items-center flex-column btn rounded-0">
+                </a>
+                <a class="col-auto d-flex align-items-center flex-column btn rounded-0" href="{% url 'favorities' %}">
                     <i class="bi bi-heart"></i>
                     Избранные
-                </button>
-                <button class="col-auto d-flex align-items-center flex-column btn rounded-0">
+                </a>
+                <a class="col-auto d-flex align-items-center flex-column btn rounded-0" href="{% url 'cart' %}">
                     <i class="bi bi-cart3"></i>
                     Корзина
-                </button>
+                </a>
             </div>
         </div>
     </div>
