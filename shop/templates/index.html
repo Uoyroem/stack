@@ -34,17 +34,28 @@
         <div class="d-flex ">
             {% for phone in phone_list %}
             <div class="product">
-                <img class="product__image" src="{{ phone.image_url }}" alt="">
                 <div>
-                    <h6 class="product__title">
+                    <img class="product__image" src="{{ phone.image_url }}" alt="">
+                    <h5 class="product__title">
                         <a class="lnk" href="{{ phone.get_absolute_url }}">{{ phone.name }}</a> 
-                    </h6>
-                    <div class="product__info">
-                        <h4 class="m-0">{{ phone.get_price }}</h4>
-                        <button class="btn rounded-0 btn-primary">
-                            <i class="bi bi-basket"></i>
+                    </h5>
+                    <h4 class="m-0">{{ phone.get_price }}</h4>
+                </div>
+                
+                <div class="product__buttons">
+                    <div>
+                        
+                        <a href="{{ product.to_favorite_url }}" class="btn rounded-0 {% if product.is_favorite %}btn-primary{% endif %}">
+                            <i class="bi bi-heart"></i>
+                        </a>
+                        
+                        <button class="btn rounded-0">
+                            <i class="bi bi-filter"></i>
                         </button>
                     </div>
+                    <button class="btn rounded-0 btn-primary">
+                        <i class="bi bi-basket"></i>
+                    </button>
                 </div>
                 
             </div>

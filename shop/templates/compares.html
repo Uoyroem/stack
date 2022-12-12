@@ -1,5 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
-  COMPARES
+<h4>Сравнение</h4>
+{% if compare_list %}
+  
+{% else %}
+  <h4 class="mt-5 mb-5 fw-bold">Нет товаров для сравнения</h4>
+{% endif %}
+
 {% endblock content %}

@@ -95,9 +95,6 @@ footer {
 
 .product {
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
   width: 16.6666666667%;
   margin: 10px 30px 10px 0;
 }
@@ -105,19 +102,18 @@ footer {
   margin-right: 0;
 }
 .product__image {
-  max-width: 112.5px;
-  max-height: 200px;
+  height: 186px;
   margin-bottom: 15px;
 }
 .product__title {
   font-size: 0.9em;
   margin-bottom: 20px;
 }
-.product__info {
+.product__buttons {
   display: flex;
-  width: 100%;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
+  justify-content: space-between;
 }
 
 /*# sourceMappingURL=index.css.map */

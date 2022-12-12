@@ -1,5 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
-  FAVORITES
+  <h4>Избранное</h4>
+  {% if favorite_list %}
+    
+  {% else %}
+    <h4 class="mt-5 mb-5 fw-bold">Список избранного пуст</h4>
+  {% endif %}
+  
 {% endblock content %}
