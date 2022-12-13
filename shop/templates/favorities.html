@@ -3,7 +3,33 @@
 {% block content %}
   <h4>Избранное</h4>
   {% if favorite_list %}
-    
+    {% for favorite in favorite_list  %}
+    <div class="product">
+      <div>
+          <img class="product__image" src="{{ favorite.image_url }}" alt="">
+          <h5 class="product__title">
+              <a class="lnk" href="{{ favorite.get_absolute_url }}">{{ favorite.name }}</a> 
+          </h5>
+          <h4 class="m-0">{{ favorite.get_price }}</h4>
+      </div>
+      
+      <div class="product__buttons">
+          <div>
+              <button type="submit" class="btn rounded-0" data-to="{{favorite.to_favorite_url}}">
+                <i class="bi bi-heart{% if phone in user.profile.favorite_products.all %}-fill text-primary{% endif %}"></i>
+              </button>
+              
+              <button type="submit" class="btn rounded-0"  data-to="{{favorite.to_compare_url}}">
+                  <i class="bi bi-filter {% if phone in user.profile.compare_products.all %}text-primary{% endif %}"></i>
+              </button>
+          </div>
+          <button class="btn rounded-0 btn-primary">
+              <i class="bi bi-basket"></i>
+          </button>
+      </div>
+      
+  </div>
+    {% endfor %}
   {% else %}
     <h4 class="mt-5 mb-5 fw-bold">Список избранного пуст</h4>
   {% endif %}

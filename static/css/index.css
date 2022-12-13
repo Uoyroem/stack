@@ -97,6 +97,7 @@ footer {
   display: flex;
   width: 16.6666666667%;
   margin: 10px 30px 10px 0;
+  padding: 20px 0;
 }
 .product:last-child {
   margin-right: 0;

@@ -17,15 +17,28 @@ class ProductDetailView(DetailView):
     model = models.Product
     
 
+def to_compare(request: HttpRequest, id: int) -> HttpResponse:
+    
+    
+    product = get_object_or_404(models.Product, id=id)
+    if product.compare.contains(request.user.profile):
+        product.compare.remove(request.user.profile)
+    else:
+        if request.user.profile.compare_products.count() >= 4:
+            return HttpResponse('Максимальное количество продуктов в сравнений.')
+        product.compare.add(request.user.profile)
+    return HttpResponse('Добавлен')
+
+
 def to_favorities(request: HttpRequest, id: int) -> HttpResponse:
     product = get_object_or_404(models.Product, id=id)
+    
     if product.favorite.contains(request.user.profile):
         product.favorite.remove(request.user.profile)
     else:
         product.favorite.add(request.user.profile)
-    return redirect('index')
+    return HttpResponse('Добавлен')
             
-
     
 class SearchView(View):
     def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
@@ -37,14 +50,19 @@ class SearchView(View):
 
 class CartView(View):
     def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
+        
         return render(request, 'cart.html')
     
     
 class ComparesView(View):
     def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
-        return render(request, 'compares.html')
+        return render(request, 'compares.html', {
+            'compare_list': request.user.profile.compare_products.all()
+        })
     
 
 class FavoritiesView(View):
     def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
-        return render(request, 'favorities.html')
+        return render(request, 'favorities.html', {
+            'favorite_list': request.user.profile.favorite_products.all()
+        })

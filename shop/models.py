@@ -14,12 +14,12 @@ class Product(models.Model):
     description = models.TextField(null=True, blank=True)
     specifications = models.JSONField(null=True, blank=True)
     image_url = models.URLField()
-
-    def is_favorite(self) -> bool:
-        return self.favorite.count() != 0
     
     def to_favorite_url(self) -> str:
         return reverse('to_favorite', kwargs={'id': self.id})
+    
+    def to_compare_url(self) -> str:
+        return reverse('to_compare', kwargs={'id': self.id})
     
     def get_price(self) -> str:
         return ' '.join(re.findall(r'\d{1,3}', str(round(self.price))[::-1]))[::-1] + ' ₸'

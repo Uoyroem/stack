@@ -3,7 +3,11 @@
 {% block content %}
 <h4>Сравнение</h4>
 {% if compare_list %}
-  
+  {% for compare in compare_list %}
+    <div>
+      {{compare}}
+    </div>
+  {% endfor %}
 {% else %}
   <h4 class="mt-5 mb-5 fw-bold">Нет товаров для сравнения</h4>
 {% endif %}
