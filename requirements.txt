@@ -10,6 +10,8 @@ django==4.1.4
     # via
     #   -r requirements.in
     #   jsonfield
+environ==1.0
+    # via -r requirements.in
 jsonfield==3.1.0
     # via -r requirements.in
 psycopg2==2.9.5
