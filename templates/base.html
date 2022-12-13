@@ -24,8 +24,11 @@
         <div class="d-grid">
             <div class="row align-items-center gap-3">
                 <h3 class="col-auto center d-flex text-uppercase text-center text-primary fw-bold d-inline">
-                    <i class="bi bi-stack me-2"></i>
-                    Stack
+                    <a class="text-primary text-decoration-none" href="{% url 'index' %}">
+                        <i class="bi bi-stack me-2"></i>
+                        Stack
+                    </a>
+                   
                 </h3>
                 <div class="catalog col-auto">
                     <input class="d-none" type="checkbox" name="catalog" id="catalog">
@@ -187,8 +190,5 @@
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
 <script src={% static "js/script.js" %}></script>
-{% block scripts %}
-  
-{% endblock scripts %}
 </body>
 </html>
