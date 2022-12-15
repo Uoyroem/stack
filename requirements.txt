@@ -10,13 +10,11 @@ django==4.1.4
     # via
     #   -r requirements.in
     #   jsonfield
-environ==1.0
+django-environ==0.9.0
     # via -r requirements.in
 jsonfield==3.1.0
     # via -r requirements.in
 psycopg2==2.9.5
     # via -r requirements.in
 sqlparse==0.4.3
-    # via django
-tzdata==2022.7
     # via django
