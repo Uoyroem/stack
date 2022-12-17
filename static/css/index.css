@@ -30,6 +30,8 @@
 
 .categories-section {
   display: grid;
+  grid-template-columns: 2fr auto auto;
+  grid-template-rows: 1fr 1fr 1fr;
   grid-template-areas: "main category-1 category-2 category-3" "main category-4 category-5 category-6";
 }
 
@@ -75,6 +77,10 @@ html, body {
 
 footer {
   background-color: var(--light-gray);
+}
+
+.bank-cards-icons img {
+  width: 32px;
 }
 
 .footer-title {

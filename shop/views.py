@@ -6,8 +6,8 @@ from . import models
 
 class IndexView(View):
     def get(self, request: HttpRequest, *args, **kwargs):
-        phone_category = get_object_or_404(models.Category, name='Смартфоны и планшеты')
-        phone_list = get_list_or_404(models.Product, category=phone_category)
+        phone_category = models.Category.objects.filter(name='Смартфоны и планшеты').first()
+        phone_list = models.Product.objects.filter(category=phone_category)
         return render(request, 'index.html', {
             'phone_list': phone_list
         })
@@ -18,8 +18,6 @@ class ProductDetailView(DetailView):
     
 
 def to_compare(request: HttpRequest, id: int) -> HttpResponse:
-    
-    
     product = get_object_or_404(models.Product, id=id)
     if product.compare.contains(request.user.profile):
         product.compare.remove(request.user.profile)

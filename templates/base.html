@@ -51,6 +51,7 @@
                 </a>
                 <a class="col-auto d-flex align-items-center flex-column btn rounded-0" href="{% url 'compares' %}">
                     <i class="bi bi-filter position-relative">
+                        {% if user.profile %}
                         {% with compares_count=user.profile.compare_products.count  %}
                         {% if compares_count != 0 %}
                         <span class="position-absolute ms-1 mt-1 top-0 start-100 translate-middle badge rounded-pill bg-primary">
@@ -58,11 +59,13 @@
                         </span>
                         {% endif %}
                         {% endwith %}
+                        {% endif %}
                     </i>
                     Сравнение
                 </a>
                 <a class="col-auto d-flex align-items-center flex-column btn rounded-0" href="{% url 'favorities' %}">
                     <i class="bi bi-heart position-relative">
+                        {% if user.profile %}
                         {% with favorities_count=user.profile.favorite_products.count  %}
                         {% if favorities_count != 0 %}
                         <span class="position-absolute ms-1 mt-1 top-0 start-100 translate-middle badge rounded-pill bg-primary">
@@ -70,6 +73,7 @@
                         </span>
                         {% endif %}
                         {% endwith %}
+                        {% endif %}
                     </i>
                     Избранные
                     
@@ -172,17 +176,17 @@
     </div>
 </div>
 <div class="bg--gray pb-4 pt-4">
-    <div class="container p-0 d-flex justify-content-between">
+    <div class="container p-0 d-flex justify-content-between align-items-center">
         <span>
             © 2022 А как права поставить
         </span>
         <span>
             Интернет-магазин создан на Django
         </span>
-        <span>
-            <img class="d-inline-block me-2" src="https://static.insales-cdn.com/files/1/1311/14550303/original/Group.svg" alt="">
-            <img class="d-inline-block me-2" src="https://static.insales-cdn.com/files/1/1305/14550297/original/Visa.svg" alt="">
-            <img class="d-inline-block" src="https://static.insales-cdn.com/files/1/1312/14550304/original/mir-logo_1.svg" alt="">
+        <span class='bank-cards-icons'>
+            <img class="d-inline-block me-2" src={% static 'icons/mastercard.svg' %} alt="">
+            <img class="d-inline-block me-2" src={% static 'icons/visa.svg' %} alt="">
+            <img class="d-inline-block" src={% static 'icons/mir.svg' %} alt="">
         </span>
     </div>
 </div>
