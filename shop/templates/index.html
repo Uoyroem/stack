@@ -27,29 +27,32 @@
 </section>
 {% if phone_list %}
 <section>
-    <div class="d-flex justify-content-between align-items-center">
-        <h4>Смартфоны и планшеты</h4>
+    <div class="mb-5 d-flex justify-content-between align-items-center">
+        <h4 >Смартфоны и планшеты</h4>
         <div></div>
     </div>
     <div id="phones-slider" class="carousel slide" data-ride="carousel">
         <div class="d-flex ">
             {% for phone in phone_list %}
             <div class="product">
-                <div>
+                <div class="d-flex flex-column justify-content-between p-1">
+                  <div>
                     <img class="product__image" src="{{ phone.image_url }}" alt="">
+                    
                     <h5 class="product__title">
                         <a class="lnk" href="{{ phone.get_absolute_url }}">{{ phone.name }}</a> 
                     </h5>
+                  </div>
                     <h4 class="m-0">{{ phone.get_price }}</h4>
                 </div>
                 
                 <div class="product__buttons">
                     <div>
-                        <button type="submit" class="btn rounded-0" data-to="{{phone.to_favorite_url}}">
-                            <i class="bi bi-heart{% if phone in user.profile.favorite_products.all %}-fill text-primary{% endif %}"></i>
+                        <button type="submit" class="btn rounded-0" data-to="{{favorite.to_favorite_url}}">
+                          <i class="bi bi-heart{% if phone in user.profile.favorite_products.all %}-fill text-primary{% endif %}"></i>
                         </button>
                         
-                        <button type="submit" class="btn rounded-0"  data-to="{{phone.to_compare_url}}">
+                        <button type="submit" class="btn rounded-0"  data-to="{{favorite.to_compare_url}}">
                             <i class="bi bi-filter {% if phone in user.profile.compare_products.all %}text-primary{% endif %}"></i>
                         </button>
                     </div>
@@ -58,7 +61,7 @@
                     </button>
                 </div>
                 
-            </div>
+              </div>
             {% endfor %}
           </div>
     </div>

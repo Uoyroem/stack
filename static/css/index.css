@@ -1,6 +1,11 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
 :root {
   --light-gray: #f4f4f5;
   --gray: #eaeaea;
+}
+
+* {
+  font-family: "Roboto", sans-serif;
 }
 
 .lnk {
@@ -30,8 +35,8 @@
 
 .categories-section {
   display: grid;
-  grid-template-columns: 2fr auto auto;
-  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
   grid-template-areas: "main category-1 category-2 category-3" "main category-4 category-5 category-6";
 }
 
@@ -101,12 +106,8 @@ footer {
 
 .product {
   display: flex;
-  width: 16.6666666667%;
-  margin: 10px 30px 10px 0;
-  padding: 20px 0;
-}
-.product:last-child {
-  margin-right: 0;
+  width: 237.5px;
+  height: 350px;
 }
 .product__image {
   height: 186px;

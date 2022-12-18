@@ -1,37 +1,42 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h4>Избранное</h4>
+<section>
+  <h4 class="mb-5">Избранное</h4>
   {% if favorite_list %}
-    {% for favorite in favorite_list  %}
+  <div class="d-flex align-items-center">
+    {% for favorite in favorite_list %}
     <div class="product">
-      <div>
+      <div class="d-flex flex-column justify-content-between p-1">
+        <div>
           <img class="product__image" src="{{ favorite.image_url }}" alt="">
+
           <h5 class="product__title">
-              <a class="lnk" href="{{ favorite.get_absolute_url }}">{{ favorite.name }}</a> 
+            <a class="lnk" href="{{ favorite.get_absolute_url }}">{{ favorite.name }}</a>
           </h5>
-          <h4 class="m-0">{{ favorite.get_price }}</h4>
+        </div>
+        <h4 class="m-0">{{ favorite.get_price }}</h4>
       </div>
-      
       <div class="product__buttons">
-          <div>
-              <button type="submit" class="btn rounded-0" data-to="{{favorite.to_favorite_url}}">
-                <i class="bi bi-heart{% if favorite in user.profile.favorite_products.all %}-fill text-primary{% endif %}"></i>
-              </button>
-              
-              <button type="submit" class="btn rounded-0"  data-to="{{favorite.to_compare_url}}">
-                  <i class="bi bi-filter {% if favorite in user.profile.compare_products.all %}text-primary{% endif %}"></i>
-              </button>
-          </div>
-          <button class="btn rounded-0 btn-primary">
-              <i class="bi bi-basket"></i>
+        <div>
+          <button type="submit" class="btn rounded-0" data-to="{{favorite.to_favorite_url}}">
+            <i
+              class="bi bi-heart{% if favorite in user.profile.favorite_products.all %}-fill text-primary{% endif %}"></i>
           </button>
+
+          <button type="submit" class="btn rounded-0" data-to="{{favorite.to_compare_url}}">
+            <i class="bi bi-filter {% if favorite in user.profile.compare_products.all %}text-primary{% endif %}"></i>
+          </button>
+        </div>
+        <button class="btn rounded-0 btn-primary">
+          <i class="bi bi-basket"></i>
+        </button>
       </div>
-      
-  </div>
+    </div>
     {% endfor %}
+  </div>
   {% else %}
-    <h4 class="mt-5 mb-5 fw-bold">Список избранного пуст</h4>
+  <h4 class="mt-5 mb-5 fw-bold">Список избранного пуст</h4>
   {% endif %}
-  
+</section>
 {% endblock content %}
