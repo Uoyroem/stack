@@ -5,14 +5,6 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "pgadmin4",
-      "type": "python",
-      "request": "launch",
-      "program": "${workspaceFolder}/venv/lib/python3.11/site-packages/pgadmin4/pgAdmin4.py",
-      "console": "integratedTerminal",
-      "justMyCode": true
-    },
-    {
       "name": "django",
       "type": "python",
       "request": "launch",
@@ -22,6 +14,15 @@
       ],
       "django": true,
       "justMyCode": true
-    }
+    },
+    {
+      "name": "pgadmin4",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/venv/lib/python3.11/site-packages/pgadmin4/pgAdmin4.py",
+      "console": "integratedTerminal",
+      "justMyCode": true
+    },
+    
   ]
 }

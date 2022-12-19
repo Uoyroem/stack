@@ -9,7 +9,7 @@ product_urlpatterns = [
 
 urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
-    path('product/<int:id>/', include(product_urlpatterns),  name='product'),
+    path('product/<int:pk>/', include(product_urlpatterns),  name='product'),
     path('search', views.SearchView.as_view(), name='search'),
     path('cart', views.CartView.as_view(), name='cart'),
     path('favorities', views.FavoritiesView.as_view(), name='favorities'),

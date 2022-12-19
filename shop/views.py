@@ -17,8 +17,8 @@ class ProductDetailView(DetailView):
     model = models.Product
     
 
-def to_compare(request: HttpRequest, id: int) -> HttpResponse:
-    product = get_object_or_404(models.Product, id=id)
+def to_compare(request: HttpRequest, pk: int) -> HttpResponse:
+    product = get_object_or_404(models.Product, id=pk)
     if product.compare.contains(request.user.profile):
         product.compare.remove(request.user.profile)
     else:
@@ -28,8 +28,8 @@ def to_compare(request: HttpRequest, id: int) -> HttpResponse:
     return HttpResponse('Добавлен')
 
 
-def to_favorities(request: HttpRequest, id: int) -> HttpResponse:
-    product = get_object_or_404(models.Product, id=id)
+def to_favorities(request: HttpRequest, pk: int) -> HttpResponse:
+    product = get_object_or_404(models.Product, id=pk)
     
     if product.favorite.contains(request.user.profile):
         product.favorite.remove(request.user.profile)

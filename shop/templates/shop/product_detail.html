@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% autoescape off %}
+<section>
+  <header>
+    <div class="mb-4">
+      {{product.bread_crumps}}
+
+    </div>
+    <h4 class="fw-bold">{{product}}</h4>
+    <div>
+      <button type="submit" class="btn rounded-0 ps-0" data-to="{{product.to_favorite_url}}">
+        <i class="me-1 bi bi-heart{% if product in user.profile.favorite_products.all %}-fill text-primary{% endif %}"></i>
+        {% if product in user.profile.favorite_products.all %}В избранном{% else %}В избранное{% endif %}
+      </button>
+      <button type="submit" class="btn rounded-0" data-to="{{product.to_compare_url}}">
+        <i class="me-1 bi bi-filter {% if product in user.profile.compare_products.all %}text-primary{% endif %}"></i>
+        {% if product in user.profile.compare_products.all %}В сравнении{% else %}Добавить в сравнение{% endif %}
+      </button>
+    </div>
+  </header>
+  <hr class="mt-1"/>
+  <div class="d-flex">
+    <div>ФОТКИ</div>
+    <div>ХАРАКТЕРИСТЕКИ</div>
+    <div></div>
+  </div>
+</section>
+{% endautoescape %}
+{% endblock content %}

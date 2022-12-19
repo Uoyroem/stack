@@ -16,10 +16,10 @@ class Product(models.Model):
     image_url = models.URLField()
     
     def to_favorite_url(self) -> str:
-        return reverse('to_favorite', kwargs={'id': self.id})
+        return reverse('to_favorite', kwargs={'pk': self.id})
     
     def to_compare_url(self) -> str:
-        return reverse('to_compare', kwargs={'id': self.id})
+        return reverse('to_compare', kwargs={'pk': self.id})
     
     def get_price(self) -> str:
         return ' '.join(re.findall(r'\d{1,3}', str(round(self.price))[::-1]))[::-1] + ' ₸'
@@ -28,15 +28,28 @@ class Product(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse("product_detail", kwargs={"id": self.id})
+        return reverse("product_detail", kwargs={"pk": self.id})
+    
+    def bread_crumps(self):
+        return self.category.bread_crumps()
     
 
 class Category(models.Model):
     name = models.CharField(max_length=256)
     parent = models.ForeignKey('shop.Category', on_delete=models.CASCADE, null=True, blank=True)
     
+    def bread_crumps(self):
+        divider = '<span class="user-select-none me-3 ms-3">/</span>'
+        html = '<a class="lnk" href="{% url \'index\' %}">Главная</a>'
+        html += divider
+        html += f'<a class="lnk" href="{self.get_absolute_url()}">{self}</a>'
+        return html
+    
     def __str__(self) -> str:
         return self.name
+    
+    def get_absolute_url(self):
+        return "category_detail"
 
 
 class Brand(models.Model):
