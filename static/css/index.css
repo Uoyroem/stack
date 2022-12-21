@@ -76,7 +76,8 @@
   margin-right: 16px;
 }
 
-html, body {
+html,
+body {
   height: 100%;
 }
 
@@ -108,6 +109,10 @@ footer {
   display: flex;
   width: 237.5px;
   height: 350px;
+  margin-right: 20px;
+}
+.product:last-child {
+  margin-right: 0;
 }
 .product__image {
   height: 186px;
@@ -118,10 +123,24 @@ footer {
   margin-bottom: 20px;
 }
 .product__buttons {
+  width: 42px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+}
+.product__price {
+  margin: 0;
+}
+.product__image-title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.detail-carousel {
+  width: 400px;
 }
 
 /*# sourceMappingURL=index.css.map */

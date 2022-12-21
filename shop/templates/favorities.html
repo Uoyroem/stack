@@ -8,19 +8,20 @@
     {% for favorite in favorite_list %}
     <div class="product">
       <div class="d-flex flex-column justify-content-between">
-        <div>
-          <img class="product__image" src="{{ favorite.image_url }}" alt="">
+        <div class="product__image-title">
+          <img class="product__image" src="{{ favorite.first_image }}" alt="">
 
           <h5 class="product__title">
             <a class="lnk" href="{{ favorite.get_absolute_url }}">{{ favorite.name }}</a>
           </h5>
         </div>
-        <h4 class="m-0">{{ favorite.get_price }}</h4>
+        <h4 class="product__price">{{ favorite.get_price }}</h4>
       </div>
       <div class="product__buttons">
         <div>
           <button type="submit" class=" btn rounded-0" data-to="{{favorite.to_favorite_url}}">
-            <i class="bi bi-heart{% if favorite in user.profile.favorite_products.all %}-fill text-primary{% endif %}"></i>
+            <i
+              class="bi bi-heart{% if favorite in user.profile.favorite_products.all %}-fill text-primary{% endif %}"></i>
           </button>
 
           <button type="submit" class="btn rounded-0" data-to="{{favorite.to_compare_url}}">
