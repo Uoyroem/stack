@@ -46,14 +46,16 @@ class Product(models.Model):
     def __str__(self) -> str:
         return self.name
 
-    def get_absolute_url(self):
+    def get_absolute_url(self) -> str:
         return reverse("product_detail", kwargs={"pk": self.id})
 
-    def bread_crumps(self):
+    def bread_crumps(self) -> str:
         return self.category.bread_crumps()
 
     def get_as_cart(self):
         cart_product = CartProduct.objects.filter(product=self).first()
+        if not cart_product.profile.user.is_authenticated:
+            return None
         return cart_product
 
 
@@ -106,12 +108,12 @@ class CartProduct(models.Model):
 
     def __str__(self) -> str:
         return self.product.__str__()
-    
+
     def get_increment_url(self) -> str:
         return reverse('cart_increment', kwargs={
             'pk': self.id
         })
-    
+
     def get_decrement_url(self) -> str:
         return reverse('cart_decrement', kwargs={
             'pk': self.id

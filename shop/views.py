@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import View, DetailView
 from django.http import HttpRequest, HttpResponse
 from . import models
@@ -22,11 +22,12 @@ def to_compare(request: HttpRequest, pk: int) -> HttpResponse:
     product = get_object_or_404(models.Product, id=pk)
     if product.compare.contains(request.user.profile):
         product.compare.remove(request.user.profile)
+        return HttpResponse('Успешно удалено из сравнение.')
     else:
         if request.user.profile.compare_products.count() >= 4:
             return HttpResponse('Максимальное количество продуктов в сравнений.')
         product.compare.add(request.user.profile)
-    return HttpResponse('Добавлен')
+    return HttpResponse('Успешно добавлено в сравнение.')
 
 
 def to_cart(request: HttpRequest, pk: int) -> HttpResponse:
@@ -34,6 +35,7 @@ def to_cart(request: HttpRequest, pk: int) -> HttpResponse:
     cart_product = models.CartProduct(
         profile=request.user.profile, product=product, count=1)
     cart_product.save()
+    return HttpResponse('Успешно добавлено в корзину.')
 
 
 def to_favorities(request: HttpRequest, pk: int) -> HttpResponse:
@@ -41,23 +43,28 @@ def to_favorities(request: HttpRequest, pk: int) -> HttpResponse:
 
     if product.favorite.contains(request.user.profile):
         product.favorite.remove(request.user.profile)
-    else:
-        product.favorite.add(request.user.profile)
-    return HttpResponse('Добавлен')
+        return HttpResponse('Успешно удален с избранных.')
+
+    product.favorite.add(request.user.profile)
+    return HttpResponse('Успешно добавлен в избранное.')
 
 
 def cart_increment(request: HttpRequest, pk: int) -> HttpResponse:
-    request.POST
     cart_product = get_object_or_404(models.CartProduct, id=pk)
     cart_product.count += 1
     cart_product.save()
+    return HttpResponse('')
 
 
 def cart_decrement(request: HttpRequest, pk: int) -> HttpResponse:
     cart_product = get_object_or_404(models.CartProduct, id=pk)
     cart_product.count -= 1
-    cart_product.save()
-    
+    if cart_product.count == 0:
+        cart_product.delete()
+    else:
+        cart_product.save()
+    return HttpResponse('')
+
 
 class SearchView(View):
     def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:

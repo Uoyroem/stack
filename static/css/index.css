@@ -160,4 +160,25 @@ footer {
   height: min-content;
 }
 
+.message {
+  background-color: #0d6efd;
+  color: white;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.message:last-child {
+  margin-bottom: 0;
+}
+
+.messages {
+  position: fixed;
+  z-index: 9999;
+  top: 20px;
+  right: 20px;
+  user-select: none;
+  text-align: center;
+  width: 200px;
+}
+
 /*# sourceMappingURL=index.css.map */
