@@ -116,6 +116,7 @@ footer {
     }
 
     &__price {
+        user-select: none;
         margin: 0;
     }
 
@@ -128,7 +129,20 @@ footer {
     }
 }
 
-.detail-carousel {
-    width: 400px;
+.specification {
+    &-name {
+        color: #999999;
+    }
+
+    &-value {
+        color: #333333;
+    }
+}
+
+.detail {
+    &-product-price {
+        border: 1px solid #ededed;
+        height: min-content;
+    }
 
 }

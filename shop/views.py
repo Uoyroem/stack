@@ -29,6 +29,13 @@ def to_compare(request: HttpRequest, pk: int) -> HttpResponse:
     return HttpResponse('Добавлен')
 
 
+def to_cart(request: HttpRequest, pk: int) -> HttpResponse:
+    product = get_object_or_404(models.Product, id=pk)
+    cart_product = models.CartProduct(
+        profile=request.user.profile, product=product, count=1)
+    cart_product.save()
+
+
 def to_favorities(request: HttpRequest, pk: int) -> HttpResponse:
     product = get_object_or_404(models.Product, id=pk)
 
@@ -50,7 +57,9 @@ class SearchView(View):
 class CartView(View):
     def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
 
-        return render(request, 'cart.html')
+        return render(request, 'cart.html', {
+            'cart_list': request.user.profile.cart_products.all()
+        })
 
 
 class ComparesView(View):

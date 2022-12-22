@@ -25,11 +25,20 @@ class Product(models.Model):
     def images(self) -> list[str]:
         return self.properties['images']
 
+    def specifications(self) -> list[str]:
+        specifications = self.properties['specifications']
+        return map(
+            lambda name: f'<span class="specification-name">{name}: </span><span class="specification-value">{specifications[name]}</span>',
+            specifications)
+
     def to_favorite_url(self) -> str:
         return reverse('to_favorite', kwargs={'pk': self.id})
 
     def to_compare_url(self) -> str:
         return reverse('to_compare', kwargs={'pk': self.id})
+
+    def to_cart_url(self) -> str:
+        return reverse('to_cart', kwargs={'pk': self.id})
 
     def get_price(self) -> str:
         return ' '.join(re.findall(r'\d{1,3}', str(round(self.price))[::-1]))[::-1] + ' ₸'
@@ -42,6 +51,10 @@ class Product(models.Model):
 
     def bread_crumps(self):
         return self.category.bread_crumps()
+
+    def get_as_cart(self):
+        cart_product = CartProduct.objects.filter(product=self).first()
+        return cart_product
 
 
 class Category(models.Model):
@@ -81,3 +94,15 @@ class Review(models.Model):
 
     def __str__(self) -> str:
         return super().__str__()
+
+
+class CartProduct(models.Model):
+    profile = models.ForeignKey(
+        Profile, on_delete=models.CASCADE, related_name='cart_products'
+    )
+    product = models.ForeignKey(
+        Product, on_delete=models.CASCADE, related_name='cart_products')
+    count = models.IntegerField()
+
+    def __str__(self) -> str:
+        return self.product.__str__()

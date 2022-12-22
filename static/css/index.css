@@ -130,6 +130,7 @@ footer {
   justify-content: space-between;
 }
 .product__price {
+  user-select: none;
   margin: 0;
 }
 .product__image-title {
@@ -139,8 +140,16 @@ footer {
   align-items: center;
 }
 
-.detail-carousel {
-  width: 400px;
+.specification-name {
+  color: #999999;
+}
+.specification-value {
+  color: #333333;
+}
+
+.detail-product-price {
+  border: 1px solid #ededed;
+  height: min-content;
 }
 
 /*# sourceMappingURL=index.css.map */

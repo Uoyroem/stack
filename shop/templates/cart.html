@@ -3,9 +3,11 @@
 {% block content %}
 <h4>Корзина</h4>
 {% if cart_list %}
-  
+{% for cart_product in cart_list %}
+{{cart_product}}
+{% endfor %}
 {% else %}
-  <h4 class="mt-5 mb-5 fw-bold">Ваша корзина пуста</h4>
+<h4 class="mt-5 mb-5 fw-bold">Ваша корзина пуста</h4>
 {% endif %}
 
 {% endblock content %}
