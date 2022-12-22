@@ -5,6 +5,6 @@ package-lock.json
 
 **/__pycache__
 static/**/*.css.map
-
+.vscode
 */migrations/*
 !*/migrations/__init__.py

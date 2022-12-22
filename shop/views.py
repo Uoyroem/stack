@@ -46,6 +46,19 @@ def to_favorities(request: HttpRequest, pk: int) -> HttpResponse:
     return HttpResponse('Добавлен')
 
 
+def cart_increment(request: HttpRequest, pk: int) -> HttpResponse:
+    request.POST
+    cart_product = get_object_or_404(models.CartProduct, id=pk)
+    cart_product.count += 1
+    cart_product.save()
+
+
+def cart_decrement(request: HttpRequest, pk: int) -> HttpResponse:
+    cart_product = get_object_or_404(models.CartProduct, id=pk)
+    cart_product.count -= 1
+    cart_product.save()
+    
+
 class SearchView(View):
     def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
         query = request.GET['query']

@@ -106,3 +106,13 @@ class CartProduct(models.Model):
 
     def __str__(self) -> str:
         return self.product.__str__()
+    
+    def get_increment_url(self) -> str:
+        return reverse('cart_increment', kwargs={
+            'pk': self.id
+        })
+    
+    def get_decrement_url(self) -> str:
+        return reverse('cart_decrement', kwargs={
+            'pk': self.id
+        })

@@ -45,6 +45,7 @@
           </div>
 
           <form class="col input-group input-group-lg" action="{% url 'search' %}">
+            {% csrf_token %}
             <input name="query" type="text" class="form-control rounded-0" placeholder="Поиск...">
             <button type="submit" class="btn btn-outline-primary rounded-0 text-center">
               <i class="bi bi-search"></i>
@@ -84,7 +85,17 @@
 
           </a>
           <a class="col-auto d-flex align-items-center flex-column btn rounded-0" href="{% url 'cart' %}">
-            <i class="bi bi-cart3"></i>
+            <i class="bi bi-cart3 position-relative">
+              {% if user.profile %}
+              {% with cart_items_count=user.profile.get_cart_items_count %}
+              {% if cart_items_count != 0 %}
+              <span class="position-absolute ms-1 mt-1 top-0 start-100 translate-middle badge rounded-pill bg-primary">
+                {{ cart_items_count }}
+              </span>
+              {% endif %}
+              {% endwith %}
+              {% endif %}
+            </i>
             Корзина
           </a>
         </div>
