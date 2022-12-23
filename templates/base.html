@@ -75,11 +75,10 @@
             <i class="bi bi-heart position-relative">
               {% if user.profile %}
               {% with favorities_count=user.profile.favorite_products.count %}
-              {% if favorities_count != 0 %}
-              <span class="position-absolute ms-1 mt-1 top-0 start-100 translate-middle badge rounded-pill bg-primary">
+              <span id="favorities-counter"
+                class="position-absolute ms-1 mt-1 top-0 start-100 translate-middle badge rounded-pill bg-primary">
                 {{ favorities_count }}
               </span>
-              {% endif %}
               {% endwith %}
               {% endif %}
             </i>

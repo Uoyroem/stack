@@ -62,12 +62,12 @@
 
         <div class="product__buttons">
           <div>
-            <button type="submit" class="btn rounded-0" data-to="{{phone.to_favorite_url}}">
+            <button type="submit" class="btn rounded-0" data-to="{{phone.to_favorite_url}}"
+              data-toggle="bi-heart <-> bi-heart-fill, text-primary" data-for-counter="favorities-counter">
               <i
                 class="bi bi-heart{% if phone in user.profile.favorite_products.all %}-fill text-primary{% endif %}"></i>
             </button>
-
-            <button type="submit" class="btn rounded-0" data-to="{{phone.to_compare_url}}">
+            <button type="submit" class="btn rounded-0" data-to="{{phone.to_compare_url}}" data-toggle="text-primary">
               <i class="bi bi-filter {% if phone in user.profile.compare_products.all %}text-primary{% endif %}"></i>
             </button>
           </div>
