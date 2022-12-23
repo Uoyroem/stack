@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
-<html lang="en">
+<html lang="ru">
 
 <head>
   <meta charset="UTF-8">
@@ -33,7 +33,6 @@
               <i class="bi bi-stack me-2"></i>
               Stack
             </a>
-
           </h3>
           <div class="catalog col-auto">
             <input class="d-none" type="checkbox" name="catalog" id="catalog">
@@ -45,7 +44,6 @@
               <span class="ps-3">Каталог</span>
             </label>
           </div>
-
           <form class="col input-group input-group-lg" action="{% url 'search' %}">
             {% csrf_token %}
             <input name="query" type="text" class="form-control rounded-0" placeholder="Поиск...">
@@ -62,7 +60,8 @@
               {% if user.profile %}
               {% with compares_count=user.profile.compare_products.count %}
               {% if compares_count != 0 %}
-              <span class="position-absolute ms-1 mt-1 top-0 start-100 translate-middle badge rounded-pill bg-primary">
+              <span id="compares-counter"
+                class="position-absolute ms-1 mt-1 top-0 start-100 translate-middle badge rounded-pill bg-primary">
                 {{ compares_count }}
               </span>
               {% endif %}
@@ -75,15 +74,16 @@
             <i class="bi bi-heart position-relative">
               {% if user.profile %}
               {% with favorities_count=user.profile.favorite_products.count %}
+              {% if favorities_count != 0 %}
               <span id="favorities-counter"
                 class="position-absolute ms-1 mt-1 top-0 start-100 translate-middle badge rounded-pill bg-primary">
                 {{ favorities_count }}
               </span>
+              {% endif %}
               {% endwith %}
               {% endif %}
             </i>
             Избранные
-
           </a>
           <a class="col-auto d-flex align-items-center flex-column btn rounded-0" href="{% url 'cart' %}">
             <i class="bi bi-cart3 position-relative">

@@ -13,9 +13,15 @@ class Profile(models.Model):
 
     def get_products(self):
         return [cart_product.product for cart_product in self.cart_products.all()]
-    
+
     def get_cart_items_count(self):
         return sum(cart_product.count for cart_product in self.cart_products.all())
+
+    def get_compare_items_count(self):
+        return self.compare_products.count()
+
+    def get_favorite_items_count(self):
+        return self.favorite_products.count()
 
 
 @receiver(post_save, sender=User)

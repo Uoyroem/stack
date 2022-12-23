@@ -22,7 +22,7 @@
     </div>
   </header>
   <hr class="mt-1" />
-  <div class="d-flex justify-content-between">
+  <div class="d-flex justify-content-between mb-4">
     <div class="d-flex">
       <div id="product_photos" class="carousel me-5" data-ride="carousel">
         <div class="carousel-inner">
@@ -44,12 +44,19 @@
         </a>
       </div>
       <div>
-        <h5 class="fw-bold">Характеристики</h5>
+        {% if product.specifications %}
+        <h5 class="fw-bold mb-2">Характеристики</h5>
+
         {% for specification in product.specifications %}
-        <div>
+        <div class="mb-2">
           {{specification}}
         </div>
         {% endfor %}
+
+        <a class="text-primary text-decoration-none" href="#specifications">Перейти к характеристикам</a>
+        {% else %}
+        <h4 class="fw-bold">Характеристики не указаны.</h4>
+        {% endif %}
       </div>
     </div>
     <div class="detail-product-price p-3 w-25">
@@ -70,6 +77,17 @@
       </button>
       {% endif %}
     </div>
+  </div>
+  <div>
+    <div class="d-flex">
+      <h4 class="tabs-item d-flex justify-content-center align-items-center m-0 p-3">
+        <label class="lnk" for="specifications-input">
+          <i class="bi bi-sliders me-2"></i>
+          Характеристики
+        </label>
+      </h4>
+    </div>
+    <input type="checkbox" id="specifications-input" class="d-none">
   </div>
 </section>
 {% endautoescape %}
