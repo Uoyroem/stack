@@ -175,3 +175,15 @@ footer {
     text-align: center;
     width: 200px;
 }
+.tabs-item {
+    color: #999999;
+    transition: all linear 0.2s;
+    cursor: pointer;
+}
+.tabs-item:hover {
+    color: #333333;
+}
+
+.tabs-item.active {
+    color: #333333;
+}

@@ -4,6 +4,10 @@ from users.models import Profile
 import re
 
 
+STAR = '<i class="bi bi-star me-1 d-flex align-items-center"></i>'
+STAR_ACTIVE = '<i class="bi bi-star-fill text-primary me-1 d-flex align-items-center"></i>'
+
+
 class Product(models.Model):
     name = models.CharField(max_length=256)
     price = models.FloatField()
@@ -16,20 +20,46 @@ class Product(models.Model):
     description = models.TextField(null=True, blank=True)
     properties = models.JSONField(null=True, blank=True)
 
-    def first_image(self):
+    def first_image(self) -> str:
         return self.images()[0]
 
-    def after_first_image(self):
+    def get_middle_rating_as_html(self) -> str:
+        count = self.reviews.count()
+        count_html = f'<span class="text-primary ms-2">({count})</span>'
+        if not self.reviews.all():
+            return STAR * 5 + count_html
+        middle = sum(review.rating for review in self.reviews.all()) // count
+        print(middle, count, count - middle)
+        return STAR_ACTIVE * middle + STAR * (5 - middle) + count_html
+        
+    def after_first_image(self) -> list[str]:
         return self.images()[1:]
 
     def images(self) -> list[str]:
         return self.properties['images']
-
-    def specifications(self) -> list[str]:
-        specifications = self.properties['specifications']
+    
+    def specifications(self) -> dict[str, str] | None:
+        return self.properties['specifications']
+    
+    def specifications_as_span_list(self) -> list[str]:
+        specifications = self.specifications()
         return map(
             lambda name: f'<span class="specification-name">{name}: </span><span class="specification-value">{specifications[name]}</span>',
             specifications)
+
+    def specifications_first_part_as_trs(self) -> list[str]:
+        specifications = self.specifications()
+        return map(
+            lambda key: f'<tr><td>{key}</td><td>{specifications[key]}</td></tr>',
+            list(specifications.keys())[:len(specifications) // 2]
+        )
+
+    def specifications_second_part_as_trs(self) -> list[str]:
+        specifications = self.specifications()
+        return map(
+            lambda key: f'<tr><td>{key}</td><td>{specifications[key]}</td></tr>',
+            list(specifications.keys())[len(specifications) // 2:]
+        )
 
     def to_favorite_url(self) -> str:
         return reverse('to_favorite', kwargs={'pk': self.id})
@@ -93,7 +123,10 @@ class Review(models.Model):
         Product, on_delete=models.CASCADE, related_name='reviews', null=True, blank=True)
     rating = models.IntegerField()
     review_text = models.TextField()
-
+    post_date = models.DateField(auto_now=True, null=True, blank=True)
+    def rating_as_html(self) -> str:
+        return STAR_ACTIVE * self.rating + STAR * (5 - self.rating)
+        
     def __str__(self) -> str:
         return super().__str__()
 
