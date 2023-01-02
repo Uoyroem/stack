@@ -5,6 +5,18 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Save products of json",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/manage.py",
+      "console": "integratedTerminal",
+      "justMyCode": true,
+      "args": [
+        "save_products",
+        "${workspaceFolder}/products.json"
+      ]
+    },
+    {
       "name": "Test",
       "type": "python",
       "request": "launch",
@@ -16,7 +28,7 @@
       "justMyCode": true
     },
     {
-      "name": "django",
+      "name": "Run server",
       "type": "python",
       "request": "launch",
       "program": "${workspaceFolder}/manage.py",

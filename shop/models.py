@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from users.models import Profile
+from utils import format
 import re
 
 
@@ -42,7 +43,8 @@ class Product(models.Model):
         return self.properties['specifications']
     
     def specifications_as_span_list(self) -> list[str]:
-        specifications = self.specifications()
+        specifications = dict(list(self.specifications().items())[:6])
+        
         return map(
             lambda name: f'<span class="specification-name">{name}: </span><span class="specification-value">{specifications[name]}</span>',
             specifications)
@@ -71,7 +73,7 @@ class Product(models.Model):
         return reverse('to_cart', kwargs={'pk': self.id})
 
     def get_price(self) -> str:
-        return ' '.join(re.findall(r'\d{1,3}', str(round(self.price))[::-1]))[::-1] + ' ₸'
+        return format.format_price(self.price)
 
     def __str__(self) -> str:
         return self.name
@@ -110,7 +112,6 @@ class Category(models.Model):
 
 class Brand(models.Model):
     name = models.CharField(max_length=256)
-    image_url = models.URLField()
 
     def __str__(self) -> str:
         return self.name
