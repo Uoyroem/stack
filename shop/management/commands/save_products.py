@@ -12,13 +12,3 @@ class Command(BaseCommand):
       for model_object in model_objects:
         model_object.delete()
     
-    with open(options['path']) as file:
-      categories = json.loads(file.read())
-      for category in categories:
-        category_model_object = Category.objects.create(name=category['name'])
-        for brand in category['brands']:
-          brand_model_object = Brand.objects.create(name=brand['name'])
-          for product in brand['products']:
-            Product.objects.create(
-                category=category_model_object, brand=brand_model_object, **product)
-    
