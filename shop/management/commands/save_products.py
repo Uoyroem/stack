@@ -4,16 +4,22 @@ from lxml import html
 import requests
 
 
-headers = {
+BASE_URL = 'https://kz.e-katalog.com/'
+HEADERS = {
   'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:99.0) Gecko/20100101 Firefox/99.0'
 }
 
 
 def save_branded(brand: str):
-  URL = 'https://kaspi.kz/shop/c/smartphones/brand-{brand}'
-  response = requests.get(URL, headers=headers)
-  tree = html.fromstring(response.text)
-  print(response.text)
+  """ 
+  TODO: Сделать парсинг сайта e-catalog. Достаточно будет 
+  трех страницы продуктов каждого из: смартфонов, ноутбуков, игровых консолей.
+  """
+  tree = html.fromstring(requests.get(BASE_URL + 'list/122/pr-1358/', headers=HEADERS).text)
+  for a in tree.xpath('//a[@class="model-short-title no-u"]'):
+    smartphone_tree = html.fromstring(requests.get(BASE_URL + a.get('href'), headers=HEADERS).text)
+    print(smartphone_tree.xpath('//div[@class="desc-short-prices"]/a/div/span[@itemprop="lowPrice"]/text()')[0])
+
   
 
 

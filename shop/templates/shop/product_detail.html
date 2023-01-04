@@ -141,7 +141,28 @@
           Отзывов еще никто не оставлял
         </h6>
       {% endif %}
-      <button class="btn btn-primary rounded-0">Написать отзыв</button>
+      {% if user.is_authenticated %}
+        {% if product not in user.profile.my_review_products %}
+        <input class="d-none" type="checkbox" id="review-form-checkbox">
+        <button class="btn btn-primary rounded-0">
+          <label for="review-form-checkbox">Написать отзыв</label>
+        
+        </button>
+        <form class="d-none review-form" action="" method="post">
+          <div class="text-right w-100">
+            <label class="text-primary" for="review-form-checkbox">Отмена</label>
+          </div>
+          <div>
+            <label for="review-text">Отзыв</label>
+            <textarea required="true" name="" id="review-text" cols="50" rows="4"></textarea>
+          </div>
+        </form>
+        {% endif %}
+      {% else %}
+        Вы должный зарегистрироваться что-бы написать отзыв.
+      {% endif %}
+      
+      
     </div>
   </div>
 </section>

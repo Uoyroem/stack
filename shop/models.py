@@ -20,7 +20,7 @@ class Product(models.Model):
         Profile, related_name='compare_products', blank=True)
     description = models.TextField(null=True, blank=True)
     properties = models.JSONField(null=True, blank=True)
-
+    
     def first_image(self) -> str:
         return self.images()[0]
 
@@ -125,6 +125,7 @@ class Review(models.Model):
     rating = models.IntegerField()
     review_text = models.TextField()
     post_date = models.DateField(auto_now=True, null=True, blank=True)
+    
     def rating_as_html(self) -> str:
         return STAR_ACTIVE * self.rating + STAR * (5 - self.rating)
         

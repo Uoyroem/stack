@@ -195,4 +195,17 @@ footer {
   color: #333333;
 }
 
+#review-form-checkbox:checked + button {
+  display: none !important;
+}
+#review-form-checkbox:checked + button + .review-form {
+  display: block !important;
+}
+
+.review-form {
+  background-color: #f7f7f7;
+  width: min-content;
+  padding: 15px;
+}
+
 /*# sourceMappingURL=index.css.map */

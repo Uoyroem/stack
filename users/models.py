@@ -11,6 +11,9 @@ class Profile(models.Model):
     def __str__(self) -> str:
         return super().__str__()
 
+    def my_review_products(self):
+        return [product_review.product for product_review in self.product_reviews.all()]
+    
     def get_products(self):
         return [cart_product.product for cart_product in self.cart_products.all()]
 
