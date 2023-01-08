@@ -1,7 +1,7 @@
-from django.shortcuts import render, get_object_or_404
-from django.views.generic import View, DetailView
-from django.http import HttpRequest, HttpResponse, JsonResponse
-from . import models
+from django.shortcuts import render, get_object_or_404, redirect
+from django.views.generic import View
+from django.http import HttpRequest, HttpResponse
+from . import models, forms
 
 
 class IndexView(View):
@@ -14,8 +14,23 @@ class IndexView(View):
         })
 
 
-class ProductDetailView(DetailView):
-    model = models.Product
+class ProductView(View):
+    def get(self, request: HttpRequest, pk: int):
+        return render(request, 'product.html', {
+            'product': get_object_or_404(models.Product, id=pk),
+            'review_form': forms.ReviewForm({
+                'rating': 0,
+                'review_text': ''
+            }) 
+        })
+    def post(self, request: HttpRequest, pk: int):
+        review_form = forms.ReviewForm(request.POST)
+        if review_form.is_valid():
+            review = review_form.save(commit=False)
+            review.sender = request.user.profile
+            review.product = get_object_or_404(models.Product, id=pk)
+            review.save()
+        return redirect('product', pk=pk)
 
 
 def to_compare(request: HttpRequest, pk: int) -> HttpResponse:

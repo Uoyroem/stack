@@ -79,7 +79,7 @@ class Product(models.Model):
         return self.name
 
     def get_absolute_url(self) -> str:
-        return reverse("product_detail", kwargs={"pk": self.id})
+        return reverse("product", kwargs={"pk": self.id})
 
     def bread_crumps(self) -> str:
         return self.category.bread_crumps()
@@ -122,7 +122,7 @@ class Review(models.Model):
                                related_name='product_reviews', null=True, blank=True)
     product = models.ForeignKey(
         Product, on_delete=models.CASCADE, related_name='reviews', null=True, blank=True)
-    rating = models.IntegerField()
+    rating = models.IntegerField(choices=zip(range(1, 6), range(1, 6)))
     review_text = models.TextField()
     post_date = models.DateField(auto_now=True, null=True, blank=True)
     

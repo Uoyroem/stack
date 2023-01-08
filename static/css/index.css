@@ -208,4 +208,14 @@ footer {
   padding: 15px;
 }
 
+.rating-star {
+  padding: 8px;
+}
+.rating-star:first-child {
+  padding-left: 0;
+}
+.rating-star:last-child {
+  padding-right: 0;
+}
+
 /*# sourceMappingURL=index.css.map */

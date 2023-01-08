@@ -146,23 +146,32 @@
         <input class="d-none" type="checkbox" id="review-form-checkbox">
         <button class="btn btn-primary rounded-0">
           <label for="review-form-checkbox">Написать отзыв</label>
-        
         </button>
-        <form class="d-none review-form" action="" method="post">
-          <div class="text-right w-100">
-            <label class="text-primary" for="review-form-checkbox">Отмена</label>
+        <form class="d-none review-form" method="post">
+          <p style="text-align: right;">
+            <label role="button" class="mb-3 text-primary" for="review-form-checkbox">Отмена</label>
+          </p>
+          {% csrf_token %} 
+          <div class="mb-3">
+            <div class="d-flex">
+              <h3 role="button"><i class="bi bi-star rating-star" data-changeable="true"></i></h3>
+              <h3 role="button"><i class="bi bi-star rating-star" data-changeable="true"></i></h3>
+              <h3 role="button"><i class="bi bi-star rating-star" data-changeable="true"></i></h3>
+              <h3 role="button"><i class="bi bi-star rating-star" data-changeable="true"></i></h3>
+              <h3 role="button"><i class="bi bi-star rating-star" data-changeable="true"></i></h3>
+            </div>
+            <div class="d-none">{{review_form.rating}}</div>
+          </div> 
+          <div class="mb-3">
+            {{ review_form.review_text.label }}
+            {{ review_form.review_text }}
           </div>
-          <div>
-            <label for="review-text">Отзыв</label>
-            <textarea required="true" name="" id="review-text" cols="50" rows="4"></textarea>
-          </div>
+          <button class="btn btn-primary btn-lg rounded-0 w-100" type="submit">Оставить отзыв</button>
         </form>
         {% endif %}
       {% else %}
-        Вы должный зарегистрироваться что-бы написать отзыв.
+        Вы должный <a href="#">зарегистрироваться</a> что-бы написать отзыв.
       {% endif %}
-      
-      
     </div>
   </div>
 </section>
@@ -202,6 +211,44 @@ document.addEventListener('DOMContentLoaded', () => {
         selectBlock(tabs.find(tab => tab.id == this.dataset.select));
       });
     }
+  }
+
+  const stars = document.querySelectorAll('.rating-star');
+  const rating = document.getElementById('id_rating');
+  console.log(rating);
+  for (const star of stars) {
+    star.addEventListener('mouseover', function () {
+      for (const star of stars) {
+        if (star.dataset.changeable == 'true') {
+          star.classList.remove('bi-star');
+          star.classList.add('bi-star-fill', 'text-primary');
+        }
+        if (star == this) break;
+      }
+    });
+    star.addEventListener('mouseout', function() {
+      for (const star of stars) {
+        if (star.dataset.changeable == 'true') {
+          star.classList.remove('bi-star-fill', 'text-primary');
+          star.classList.add('bi-star');
+        }
+        if (star == this) break;
+      }
+    });
+    star.addEventListener('click', function() {
+      stars.forEach(star => {
+        star.dataset.changeable = 'true';
+        star.classList.remove('bi-star-fill', 'text-primary');
+        star.classList.add('bi-star');
+      });
+      for (const star of stars) {
+        star.dataset.changeable = 'false';
+        star.classList.remove('bi-star');
+        star.classList.add('bi-star-fill', 'text-primary');
+        if (star == this) break;
+      }
+      rating.value = `${[...stars].indexOf(this) + 1}`
+    });
   }
 });
 </script>
