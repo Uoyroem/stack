@@ -153,3 +153,11 @@ class CartProduct(models.Model):
         return reverse('cart_decrement', kwargs={
             'pk': self.id
         })
+    
+    def get_delete_url(self) -> str:
+        return reverse('cart_delete', kwargs={
+            'pk': self.id
+        })
+    
+    def get_price(self) -> str:
+        return format.format_price(self.product.price * self.count)

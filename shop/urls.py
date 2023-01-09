@@ -4,7 +4,8 @@ from . import views
 cart_urlpatterns = [
     path('', views.CartView.as_view(), name='cart'),
     path('<int:pk>/increment', views.cart_increment, name='cart_increment'),
-    path('<int:pk>/decrement', views.cart_decrement, name='cart_decrement')
+    path('<int:pk>/decrement', views.cart_decrement, name='cart_decrement'),
+    path('<int:pk>/delete', views.cart_delete, name='cart_delete')
 ]
 
 product_urlpatterns = [

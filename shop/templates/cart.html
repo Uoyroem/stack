@@ -2,12 +2,56 @@
 
 {% block content %}
 <h4>Корзина</h4>
+<div class="mt-5 mb-5">
 {% if cart_list %}
-{% for cart_product in cart_list %}
-{{cart_product}}
-{% endfor %}
+<div class="d-flex">
+  <div class="d-flex">
+    {% for cart_product in cart_list %}
+    {% with product=cart_product.product %}
+    <div class="d-flex">
+      <img class="product__image me-4 ms-4" src="{{product.first_image}}" alt="">
+      <div class="me-4 ms-4">
+        <h3 class="fw-bold"><a class="lnk" href="{{product.get_absolute_url}}">{{product.name}}</a></h3>
+        <div>
+          <button class="btn rounded-0 ps-0" data-to="{{product.to_favorite_url}}">
+            <i
+              class="me-1 bi bi-heart{% if product in user.profile.favorite_products.all %}-fill text-primary{% endif %}"></i>
+            {% if product in user.profile.favorite_products.all %}В избранном{% else %}В избранное{% endif %}
+          </button>
+          <button class="btn rounded-0 ps-0" data-to="{{cart_product.get_delete_url}}">
+            <i class="me-1 bi bi-trash"></i>
+            Удалить
+          </button>
+        </div>
+      </div>
+      <div class="me-4 ms-4">
+        <h4>{{cart_product.get_price}}</h4>
+        <div class="btn-group w-100">
+          <button class="btn rounded-0" data-to="{{cart_product.get_decrement_url}}">-</button>
+          <div class="p-2 pe-3 ps-3" style="background-color: #ededed;">{{cart_product.count}}</div>
+          <button class="btn rounded-0" data-to="{{cart_product.get_increment_url}}">+</button>
+        </div>
+      </div>
+    </div>
+    {% endwith %}
+    {% endfor %}
+  </div>
+  <div class="position-sticky" style="background-color: #ededed; height: min-content;">
+    <div class="p-3">
+      <h4>В корзине</h4>
+      <div class="mb-3">
+        <span>Товаров: {{user.profile.get_cart_items_count}}</span>
+      </div>
+      <div>
+        <h3>{{user.profile.get_cart_items_price}}</h3>
+      </div>
+    </div>
+    
+    <button class="btn btn-primary btn-lg rounded-0">Оформить заказ</button>
+  </div>
+</div>
 {% else %}
-<h4 class="mt-5 mb-5 fw-bold">Ваша корзина пуста</h4>
+<h4 class="fw-bold">Ваша корзина пуста</h4>
 {% endif %}
-
+</div>
 {% endblock content %}

@@ -81,6 +81,11 @@ def cart_decrement(request: HttpRequest, pk: int) -> HttpResponse:
     return HttpResponse('')
 
 
+def cart_delete(request: HttpRequest, pk: int) -> HttpResponse:
+    get_object_or_404(models.CartProduct, id=pk).delete()
+    return HttpResponse('')
+
+
 class SearchView(View):
     def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
         query = request.GET['query']

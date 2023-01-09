@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from utils import format
 
 
 class Profile(models.Model):
@@ -25,6 +26,9 @@ class Profile(models.Model):
 
     def get_favorite_items_count(self):
         return self.favorite_products.count()
+    
+    def get_cart_items_price(self):
+        return format.format_price(sum(cart_product.product.price * cart_product.count for cart_product in self.cart_products.all()))
 
 
 @receiver(post_save, sender=User)
