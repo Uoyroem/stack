@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import View
 from django.http import HttpRequest, HttpResponse
+from django.core.exceptions import ObjectDoesNotExist
 from . import models, forms
 
 
@@ -47,10 +48,15 @@ def to_compare(request: HttpRequest, pk: int) -> HttpResponse:
 
 def to_cart(request: HttpRequest, pk: int) -> HttpResponse:
     product = get_object_or_404(models.Product, id=pk)
-    cart_product = models.CartProduct(
-        profile=request.user.profile, product=product, count=1)
-    cart_product.save()
-    return HttpResponse('Успешно добавлено в корзину.')
+    try:
+        models.CartProduct.objects.get(
+            profile=request.user.profile, product=product)
+        return HttpResponse('Этот продукт уже есть в корзине.')
+    except ObjectDoesNotExist:
+        cart_product = models.CartProduct(
+            profile=request.user.profile, product=product, count=1)
+        cart_product.save()
+        return HttpResponse('Успешно добавлено в корзину.')
 
 
 def to_favorities(request: HttpRequest, pk: int) -> HttpResponse:
