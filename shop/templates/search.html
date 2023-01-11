@@ -1,5 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
-  SEARCH {{ query }}
+<section>
+  <h4 class="mb-5">Результаты по запросу: {{query}}</h4>
+  <div class="d-flex flex-wrap">
+    {% for product in product_list %}
+      {% include "product_card.html" %}
+    {% empty %}
+    <h3 class="fw-bold">Ничего не найдено по запросу {{query}}</h3>
+    {% endfor %}
+  </div>
+</section>
 {% endblock content %}

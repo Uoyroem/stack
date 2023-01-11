@@ -96,7 +96,8 @@ class SearchView(View):
     def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
         query = request.GET['query']
         return render(request, 'search.html', {
-            'query': query
+            'query': query,
+            'product_list': models.Product.objects.filter(name__icontains=query) 
         })
 
 
