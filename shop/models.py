@@ -9,6 +9,13 @@ STAR = '<i class="bi bi-star me-1 d-flex align-items-center"></i>'
 STAR_ACTIVE = '<i class="bi bi-star-fill text-primary me-1 d-flex align-items-center"></i>'
 
 
+def product_default_properties():
+    return {
+        "specifications": {},
+        "images": []
+    }
+
+
 class Product(models.Model):
     name = models.CharField(max_length=256)
     price = models.FloatField()
@@ -19,7 +26,7 @@ class Product(models.Model):
     compare = models.ManyToManyField(
         Profile, related_name='compare_products', blank=True)
     description = models.TextField(null=True, blank=True)
-    properties = models.JSONField(null=True, blank=True)
+    properties = models.JSONField(default=product_default_properties)
     
     def first_image(self) -> str:
         return self.images()[0]
@@ -90,6 +97,9 @@ class Product(models.Model):
             return None
         return cart_product
 
+    def get_compare_delete_url(self):
+        return reverse('compare_delete', kwargs={'pk': self.id})
+    
 
 class Category(models.Model):
     name = models.CharField(max_length=256)

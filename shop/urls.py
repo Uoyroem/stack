@@ -12,7 +12,8 @@ product_urlpatterns = [
     path('', views.ProductView.as_view(),  name='product'),
     path('to-favorite', views.to_favorities,  name='to_favorite'),
     path('to-compare', views.to_compare, name='to_compare'),
-    path('to-cart', views.to_cart, name='to_cart')
+    path('to-cart', views.to_cart, name='to_cart'),
+    path('remove-of-compares', views.compare_delete, name='compare_delete')
 ]
 
 urlpatterns = [

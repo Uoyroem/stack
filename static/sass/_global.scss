@@ -7,6 +7,7 @@
 .lnk {
     color: black;
     text-decoration: none;
+    transition: color 0.2s linear;
 }
 
 .lnk:hover {
@@ -204,7 +205,7 @@ footer {
 }
 
 .rating-star {
-    padding: 8px ;
+    padding: 8px;
 
     &:first-child {
         padding-left: 0;
@@ -212,5 +213,52 @@ footer {
 
     &:last-child {
         padding-right: 0;
+    }
+}
+
+.compare_list {
+    display: flex;
+    margin-bottom: 30px;
+}
+
+.compare_product {
+    width: 24%;
+    margin-right: 30px;
+
+    &__rating {
+        display: flex;
+        margin-bottom: 20px;
+    }
+
+    &__image-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 10px;
+        & > img {
+            height: 300px;
+        }
+    }
+
+    &__info {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 130px;
+        margin-bottom: 10px;
+        h4 {
+            margin-bottom: 0;
+        }
+    }
+}
+
+.all_specificaitons {
+    .specificaitons {
+        &__item {
+            display: flex;
+        }
+        &__value {
+            width: 24%;
+        }
     }
 }

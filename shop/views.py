@@ -92,6 +92,15 @@ def cart_delete(request: HttpRequest, pk: int) -> HttpResponse:
     return HttpResponse('')
 
 
+def compare_delete(request: HttpRequest, pk: int) -> HttpRequest:
+    try:
+        print(request.user.profile.compare_products.remove(get_object_or_404(models.Product, id=pk)))
+    except ObjectDoesNotExist:
+        ...
+    finally:
+        return HttpResponse('')
+
+
 class SearchView(View):
     def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
         query = request.GET['query']
@@ -111,8 +120,21 @@ class CartView(View):
 
 class ComparesView(View):
     def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
+        compare_list = request.user.profile.compare_products.all()
+        general_specifications = set()
+        for compare_product in compare_list:
+            general_specifications.update(
+                compare_product.specifications().keys())
+        
+        all_specifications = {}  
+        for key in general_specifications:
+            all_specifications[key] = []
+            for compare_product in compare_list:
+                all_specifications[key].append(compare_product.specifications().get(key))
+        
         return render(request, 'compares.html', {
-            'compare_list': request.user.profile.compare_products.all()
+            'compare_list': compare_list,
+            'all_specifications': all_specifications
         })
 
 
