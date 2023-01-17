@@ -1,3 +1,4 @@
+{% load cart_tags %}
 <div class="product">
   <div class="d-flex flex-column justify-content-between">
     <div class="product__image-title">
@@ -18,8 +19,9 @@
       </button>
     </div>
     {% if product in user.profile.get_products %}
-    <button class="btn rounded-0 btn-primary" data-to="{{product.get_as_cart.get_increment_url}}">
-      <span>{{product.get_as_cart.count}}</span>
+    {% cart_product_from_user user product as cart_product %}
+    <button class="btn rounded-0 btn-primary" data-to="{{cart_product.get_increment_url}}">
+      <span>{{cart_product.count}}</span>
       +
     </button>
     {% else %}
@@ -27,6 +29,6 @@
       <i class="bi bi-basket"></i>
     </button>
     {% endif %}
-    
+
   </div>
 </div>

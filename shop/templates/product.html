@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 {% autoescape off %}
+{% load cart_tags %}
 <section>
   <header>
     <div class="mb-4">
@@ -11,7 +12,7 @@
     <div class="d-flex align-items-center">
       <a href="#reviews" class="d-flex btn rounded-0 ps-0 me-5" data-select="reviews">
 
-          {{product.get_middle_rating_as_html}}
+        {{product.get_middle_rating_as_html}}
       </a>
       <button class="btn rounded-0 ps-0" data-to="{{product.to_favorite_url}}">
         <i
@@ -56,7 +57,8 @@
         </div>
         {% endfor %}
 
-        <a class="text-primary text-decoration-none" href="#specifications" data-select="specifications">Перейти к характеристикам</a>
+        <a class="text-primary text-decoration-none" href="#specifications" data-select="specifications">Перейти к
+          характеристикам</a>
         {% else %}
         <h4 class="fw-bold">Характеристики не указаны.</h4>
         {% endif %}
@@ -65,13 +67,14 @@
     <div class="detail-product-price p-3 w-25">
       <h2>{{product.get_price}}</h2>
       {% if product in user.profile.get_products %}
+      {% cart_product_from_user user product as cart_product %}
       <div class="btn-group w-100">
-        <button class="btn btn-primary rounded-0" data-to="{{product.get_as_cart.get_decrement_url}}">-</button>
+        <button class="btn btn-primary rounded-0" data-to="{{cart_product.get_decrement_url}}">-</button>
         <a href="{% url 'cart' %}" class="d-flex flex-column btn btn-primary rounded-0">
-          <div>В корзине {{product.get_as_cart.count}} шт.</div>
+          <div>В корзине {{cart_product.count}} шт.</div>
           <div style="font-size: 0.7em;">Перейти</div>
         </a>
-        <button class="btn btn-primary rounded-0" data-to="{{product.get_as_cart.get_increment_url}}">+</button>
+        <button class="btn btn-primary rounded-0" data-to="{{cart_product.get_increment_url}}">+</button>
       </div>
       {% else %}
       <button class="btn btn-primary rounded-0 w-100" data-to="{{product.to_cart_url}}">
@@ -112,65 +115,67 @@
     <div id="block-specifications" class="d-flex justify-content-between d-none">
       <table class="w-50">
         {% for tr in product.specifications_first_part_as_trs %}
-          {{tr}}
+        {{tr}}
         {% endfor %}
       </table>
       <table class="w-50">
-        {% for tr in product.specifications_second_part_as_trs  %}
-          {{tr}}
+        {% for tr in product.specifications_second_part_as_trs %}
+        {{tr}}
         {% endfor %}
       </table>
     </div>
     <div id="block-reviews" class="d-none">
       {% if product.reviews.all %}
-        {% for review in product.reviews.all %}
-          <div class="d-flex justify-content-between mb-4">
-            <div class="w-25">
-              <div>{{review.sender.user}}</div>
-              <div class="d-flex">{{review.rating_as_html}}</div>
-              <div>{{review.post_date}}</div>
-            </div>
-            <div class="w-75">
-              <h6 class="fw-bold">Комментарий: </h6>
-              {{review.review_text}}
-            </div>
-          </div>
-        {% endfor %}
+      {% for review in product.reviews.all %}
+      <div class="d-flex justify-content-between mb-4">
+        <div class="w-25">
+          <div>{{review.sender.user}}</div>
+          <div class="d-flex">{{review.rating_as_html}}</div>
+          <div>{{review.post_date}}</div>
+        </div>
+        <div class="w-75">
+          <h6 class="fw-bold">Комментарий: </h6>
+          {{review.review_text}}
+        </div>
+      </div>
+      {% endfor %}
       {% else %}
-        <h6>
-          Отзывов еще никто не оставлял
-        </h6>
+      <h6>
+        Отзывов еще никто не оставлял
+      </h6>
       {% endif %}
       {% if user.is_authenticated %}
-        {% if product not in user.profile.my_review_products %}
-        <input class="d-none" type="checkbox" id="review-form-checkbox">
-        <button class="btn btn-primary rounded-0">
-          <label for="review-form-checkbox">Написать отзыв</label>
-        </button>
-        <form class="d-none review-form" method="post">
-          <p style="text-align: right;">
-            <label role="button" class="mb-3 text-primary" for="review-form-checkbox">Отмена</label>
-          </p>
-          {% csrf_token %} 
-          <div class="mb-3">
-            <div class="d-flex">
-              <h3 role="button"><i class="bi bi-star rating-star" data-changeable="true"></i></h3>
-              <h3 role="button"><i class="bi bi-star rating-star" data-changeable="true"></i></h3>
-              <h3 role="button"><i class="bi bi-star rating-star" data-changeable="true"></i></h3>
-              <h3 role="button"><i class="bi bi-star rating-star" data-changeable="true"></i></h3>
-              <h3 role="button"><i class="bi bi-star rating-star" data-changeable="true"></i></h3>
-            </div>
-            <div class="d-none">{{review_form.rating}}</div>
-          </div> 
-          <div class="mb-3">
-            {{ review_form.review_text.label }}
-            {{ review_form.review_text }}
+      {% if product not in user.profile.my_review_products %}
+      <input class="d-none" type="checkbox" id="review-form-checkbox">
+      <button class="btn btn-primary rounded-0">
+        <label for="review-form-checkbox">Написать отзыв</label>
+      </button>
+      <form class="d-none review-form" method="post">
+        <p style="text-align: right;">
+          <label role="button" class="mb-3 text-primary" for="review-form-checkbox">Отмена</label>
+        </p>
+        {% csrf_token %}
+        <div class="mb-3">
+          <div class="d-flex">
+            <h3 role="button"><i class="bi bi-star rating-star" data-changeable="true"></i></h3>
+            <h3 role="button"><i class="bi bi-star rating-star" data-changeable="true"></i></h3>
+            <h3 role="button"><i class="bi bi-star rating-star" data-changeable="true"></i></h3>
+            <h3 role="button"><i class="bi bi-star rating-star" data-changeable="true"></i></h3>
+            <h3 role="button"><i class="bi bi-star rating-star" data-changeable="true"></i></h3>
           </div>
-          <button class="btn btn-primary btn-lg rounded-0 w-100" type="submit">Оставить отзыв</button>
-        </form>
-        {% endif %}
+          <div class="d-none">{{review_form.rating}}</div>
+        </div>
+        <div class="mb-3">
+          {{ review_form.review_text.label }}
+          {{ review_form.review_text }}
+        </div>
+        <button class="btn btn-primary btn-lg rounded-0 w-100" type="submit">Оставить отзыв</button>
+      </form>
+      {% endif %}
       {% else %}
-        Вы должный <a href="#">зарегистрироваться</a> что-бы написать отзыв.
+      <div>
+        Вы должный <a href="{% url 'profile' %}">зарегистрироваться</a> что-бы написать отзыв.
+      </div>
       {% endif %}
     </div>
   </div>
@@ -180,76 +185,76 @@
 
 {% block scripts %}
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-  const tabs = ['description', 'specifications', 'reviews'].map(id => document.getElementById(id))
-    .filter(item => item != null);
-  const selects = document.querySelectorAll('*[data-select]')
-  const getBlock = (element) => document.getElementById('block-' + element.id);
+  document.addEventListener('DOMContentLoaded', () => {
+    const tabs = ['description', 'specifications', 'reviews'].map(id => document.getElementById(id))
+      .filter(item => item != null);
+    const selects = document.querySelectorAll('*[data-select]')
+    const getBlock = (element) => document.getElementById('block-' + element.id);
 
-  const selectBlock = (element) => {
-    tabs.forEach(tab => {
-      tab.classList.remove('active');
-      getBlock(tab).classList.add('d-none');
-    });
-    element.classList.add('active');
-    getBlock(element).classList.remove('d-none');
-  };
-
-  if (tabs) {
-    tabs[0].classList.add('active')
-    getBlock(tabs[0]).classList.remove('d-none');
-
-    for (const tab of tabs) {
-      tab.addEventListener('click', function() {
-        selectBlock(this)
+    const selectBlock = (element) => {
+      tabs.forEach(tab => {
+        tab.classList.remove('active');
+        getBlock(tab).classList.add('d-none');
       });
-    }
-  }
-  if (selects) {
-    for (const select of selects) {
-      select.addEventListener('click', function() {
-        selectBlock(tabs.find(tab => tab.id == this.dataset.select));
-      });
-    }
-  }
+      element.classList.add('active');
+      getBlock(element).classList.remove('d-none');
+    };
 
-  const stars = document.querySelectorAll('.rating-star');
-  const rating = document.getElementById('id_rating');
-  console.log(rating);
-  for (const star of stars) {
-    star.addEventListener('mouseover', function () {
-      for (const star of stars) {
-        if (star.dataset.changeable == 'true') {
-          star.classList.remove('bi-star');
-          star.classList.add('bi-star-fill', 'text-primary');
-        }
-        if (star == this) break;
+    if (tabs) {
+      tabs[0].classList.add('active')
+      getBlock(tabs[0]).classList.remove('d-none');
+
+      for (const tab of tabs) {
+        tab.addEventListener('click', function () {
+          selectBlock(this)
+        });
       }
-    });
-    star.addEventListener('mouseout', function() {
-      for (const star of stars) {
-        if (star.dataset.changeable == 'true') {
+    }
+    if (selects) {
+      for (const select of selects) {
+        select.addEventListener('click', function () {
+          selectBlock(tabs.find(tab => tab.id == this.dataset.select));
+        });
+      }
+    }
+
+    const stars = document.querySelectorAll('.rating-star');
+    const rating = document.getElementById('id_rating');
+    console.log(rating);
+    for (const star of stars) {
+      star.addEventListener('mouseover', function () {
+        for (const star of stars) {
+          if (star.dataset.changeable == 'true') {
+            star.classList.remove('bi-star');
+            star.classList.add('bi-star-fill', 'text-primary');
+          }
+          if (star == this) break;
+        }
+      });
+      star.addEventListener('mouseout', function () {
+        for (const star of stars) {
+          if (star.dataset.changeable == 'true') {
+            star.classList.remove('bi-star-fill', 'text-primary');
+            star.classList.add('bi-star');
+          }
+          if (star == this) break;
+        }
+      });
+      star.addEventListener('click', function () {
+        stars.forEach(star => {
+          star.dataset.changeable = 'true';
           star.classList.remove('bi-star-fill', 'text-primary');
           star.classList.add('bi-star');
+        });
+        for (const star of stars) {
+          star.dataset.changeable = 'false';
+          star.classList.remove('bi-star');
+          star.classList.add('bi-star-fill', 'text-primary');
+          if (star == this) break;
         }
-        if (star == this) break;
-      }
-    });
-    star.addEventListener('click', function() {
-      stars.forEach(star => {
-        star.dataset.changeable = 'true';
-        star.classList.remove('bi-star-fill', 'text-primary');
-        star.classList.add('bi-star');
+        rating.value = `${[...stars].indexOf(this) + 1}`
       });
-      for (const star of stars) {
-        star.dataset.changeable = 'false';
-        star.classList.remove('bi-star');
-        star.classList.add('bi-star-fill', 'text-primary');
-        if (star == this) break;
-      }
-      rating.value = `${[...stars].indexOf(this) + 1}`
-    });
-  }
-});
+    }
+  });
 </script>
 {% endblock scripts %}

@@ -2,52 +2,60 @@
 
 {% block content %}
 <section>
-<h4 class="mb-5">Сравнение</h4>
-{% if compare_list %}
-<div>
-  <div class="compare_list">
-    {% for compare_product in compare_list %}
-    <div class="compare_product">
-      <div class="compare_product__image-container">
-        <img src="{{compare_product.first_image}}" alt="">
-      </div>
-      
-      <div class="compare_product__info">
-        <h6><a class="lnk" href="{{compare_product.get_absolute_url}}">{{compare_product.name}}</a></h6>
-        <div>
-          {% autoescape off %}
-          <div class="compare_product__rating">{{compare_product.get_middle_rating_as_html}}</div>
-          {% endautoescape %}
-          <h4>{{compare_product.get_price}}</h4>
+  <h4>Сравнение</h4>
+  {% if user.is_authenticated %}
+  {% if compare_list %}
+  <div>
+    <div class="compare_list">
+      {% for compare_product in compare_list %}
+      <div class="compare_product">
+        <div class="compare_product__image-container">
+          <img src="{{compare_product.first_image}}" alt="">
         </div>
-      </div>
-      <button class="btn rounded-0 ps-0" data-to="{{compare_product.to_favorite_url}}">
-        <i class="me-1 bi bi-heart{% if compare_product in user.profile.favorite_products.all %}-fill text-primary{% endif %}"></i>
-      </button>
-      <button class="btn rounded-0 ps-0" data-to="{{compare_product.get_compare_delete_url}}">
-        <i class="me-1 bi bi-trash"></i>
-      </button>
-    </div>
-    {% endfor %}
-  </div>
-  <div class="all_specificaitons">
-    {% for name, specifications  in all_specifications.items %}
-    <div class="specificaitons">
-      <h6>{{name}}</h6>
-      <div class="specificaitons__item">
-        {% for specificaiton in specifications %}
-        <div class="specificaitons__value">
-          {{specificaiton}}
-        </div>
-        {% endfor %}
-      </div>
-    </div>
-    {% endfor %}
-  </div>
-</div>
 
-{% else %}
-<h4 class="mt-5 mb-5 fw-bold">Нет товаров для сравнения</h4>
-{% endif %}
+        <div class="compare_product__info">
+          <h6><a class="lnk" href="{{compare_product.get_absolute_url}}">{{compare_product.name}}</a></h6>
+          <div>
+            {% autoescape off %}
+            <div class="compare_product__rating">{{compare_product.get_middle_rating_as_html}}</div>
+            {% endautoescape %}
+            <h4>{{compare_product.get_price}}</h4>
+          </div>
+        </div>
+        <button class="btn rounded-0 ps-0" data-to="{{compare_product.to_favorite_url}}">
+          <i
+            class="me-1 bi bi-heart{% if compare_product in user.profile.favorite_products.all %}-fill text-primary{% endif %}"></i>
+        </button>
+        <button class="btn rounded-0 ps-0" data-to="{{compare_product.get_compare_delete_url}}">
+          <i class="me-1 bi bi-trash"></i>
+        </button>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="all_specificaitons">
+      {% for name, specifications in all_specifications.items %}
+      <div class="specificaitons">
+        <h6>{{name}}</h6>
+        <div class="specificaitons__item">
+          {% for specificaiton in specifications %}
+          <div class="specificaitons__value">
+            {{specificaiton}}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% else %}
+  <h4 class="mt-5 mb-5 fw-bold">Нет товаров для сравнения</h4>
+  {% endif %}
+  {% else %}
+  <div>
+    Вы должный <a href="{% url 'profile' %}">зарегистрироваться</a> что-бы увидеть товары в сравнение
+  </div>
+  {% endif %}
+
+
 </section>
 {% endblock content %}

@@ -22,5 +22,6 @@ urlpatterns = [
     path('search', views.SearchView.as_view(), name='search'),
     path('cart', include(cart_urlpatterns)),
     path('favorities', views.FavoritiesView.as_view(), name='favorities'),
-    path('compares', views.ComparesView.as_view(), name='compares')
+    path('compares', views.ComparesView.as_view(), name='compares'),
+    path('new_order', views.NewOrderView.as_view(), name='new_order')
 ]

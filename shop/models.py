@@ -1,6 +1,6 @@
 from django.db import models
 from django.urls import reverse
-from users.models import Profile
+import users.models as users_models
 from utils import format
 import re
 
@@ -22,12 +22,12 @@ class Product(models.Model):
     category = models.ForeignKey('shop.Category', on_delete=models.CASCADE)
     brand = models.ForeignKey('shop.Brand', on_delete=models.CASCADE)
     favorite = models.ManyToManyField(
-        Profile, related_name='favorite_products', blank=True)
+        users_models.Profile, related_name='favorite_products', blank=True)
     compare = models.ManyToManyField(
-        Profile, related_name='compare_products', blank=True)
+        users_models.Profile, related_name='compare_products', blank=True)
     description = models.TextField(null=True, blank=True)
     properties = models.JSONField(default=product_default_properties)
-    
+
     def first_image(self) -> str:
         return self.images()[0]
 
@@ -39,19 +39,19 @@ class Product(models.Model):
         middle = sum(review.rating for review in self.reviews.all()) // count
         print(middle, count, count - middle)
         return STAR_ACTIVE * middle + STAR * (5 - middle) + count_html
-        
+
     def after_first_image(self) -> list[str]:
         return self.images()[1:]
 
     def images(self) -> list[str]:
         return self.properties['images']
-    
+
     def specifications(self) -> dict[str, str] | None:
         return self.properties['specifications']
-    
+
     def specifications_as_span_list(self) -> list[str]:
         specifications = dict(list(self.specifications().items())[:6])
-        
+
         return map(
             lambda name: f'<span class="specification-name">{name}: </span><span class="specification-value">{specifications[name]}</span>',
             specifications)
@@ -91,15 +91,9 @@ class Product(models.Model):
     def bread_crumps(self) -> str:
         return self.category.bread_crumps()
 
-    def get_as_cart(self):
-        cart_product = CartProduct.objects.filter(product=self).first()
-        if not cart_product.profile.user.is_authenticated:
-            return None
-        return cart_product
-
     def get_compare_delete_url(self):
         return reverse('compare_delete', kwargs={'pk': self.id})
-    
+
 
 class Category(models.Model):
     name = models.CharField(max_length=256)
@@ -128,24 +122,24 @@ class Brand(models.Model):
 
 
 class Review(models.Model):
-    sender = models.ForeignKey(Profile, on_delete=models.CASCADE,
+    sender = models.ForeignKey(users_models.Profile, on_delete=models.CASCADE,
                                related_name='product_reviews', null=True, blank=True)
     product = models.ForeignKey(
         Product, on_delete=models.CASCADE, related_name='reviews', null=True, blank=True)
     rating = models.IntegerField(choices=zip(range(1, 6), range(1, 6)))
     review_text = models.TextField()
     post_date = models.DateField(auto_now=True, null=True, blank=True)
-    
+
     def rating_as_html(self) -> str:
         return STAR_ACTIVE * self.rating + STAR * (5 - self.rating)
-        
+
     def __str__(self) -> str:
         return super().__str__()
 
 
 class CartProduct(models.Model):
     profile = models.ForeignKey(
-        Profile, on_delete=models.CASCADE, related_name='cart_products'
+        users_models.Profile, on_delete=models.CASCADE, related_name='cart_products'
     )
     product = models.ForeignKey(
         Product, on_delete=models.CASCADE, related_name='cart_products')
@@ -163,11 +157,11 @@ class CartProduct(models.Model):
         return reverse('cart_decrement', kwargs={
             'pk': self.id
         })
-    
+
     def get_delete_url(self) -> str:
         return reverse('cart_delete', kwargs={
             'pk': self.id
         })
-    
+
     def get_price(self) -> str:
         return format.format_price(self.product.price * self.count)

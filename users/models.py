@@ -14,10 +14,10 @@ class Profile(models.Model):
 
     def my_review_products(self):
         return [product_review.product for product_review in self.product_reviews.all()]
-    
+
     def get_products(self):
         return [cart_product.product for cart_product in self.cart_products.all()]
-    
+
     def get_cart_items_count(self):
         return sum(cart_product.count for cart_product in self.cart_products.all())
 
@@ -26,7 +26,7 @@ class Profile(models.Model):
 
     def get_favorite_items_count(self):
         return self.favorite_products.count()
-    
+
     def get_cart_items_price(self):
         return format.format_price(sum(cart_product.product.price * cart_product.count for cart_product in self.cart_products.all()))
 

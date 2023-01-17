@@ -22,8 +22,9 @@ class ProductView(View):
             'review_form': forms.ReviewForm({
                 'rating': 0,
                 'review_text': ''
-            }) 
+            })
         })
+
     def post(self, request: HttpRequest, pk: int):
         review_form = forms.ReviewForm(request.POST)
         if review_form.is_valid():
@@ -35,6 +36,9 @@ class ProductView(View):
 
 
 def to_compare(request: HttpRequest, pk: int) -> HttpResponse:
+    if request.user.is_anonymous:
+        return HttpResponse('Вы должный зарегистрироваться')
+
     product = get_object_or_404(models.Product, id=pk)
     if product.compare.contains(request.user.profile):
         product.compare.remove(request.user.profile)
@@ -47,6 +51,9 @@ def to_compare(request: HttpRequest, pk: int) -> HttpResponse:
 
 
 def to_cart(request: HttpRequest, pk: int) -> HttpResponse:
+    if request.user.is_anonymous:
+        return HttpResponse('Вы должный зарегистрироваться')
+
     product = get_object_or_404(models.Product, id=pk)
     try:
         models.CartProduct.objects.get(
@@ -60,6 +67,9 @@ def to_cart(request: HttpRequest, pk: int) -> HttpResponse:
 
 
 def to_favorities(request: HttpRequest, pk: int) -> HttpResponse:
+    if request.user.is_anonymous:
+        return HttpResponse('Вы должный зарегистрироваться')
+
     product = get_object_or_404(models.Product, id=pk)
 
     if product.favorite.contains(request.user.profile):
@@ -93,8 +103,12 @@ def cart_delete(request: HttpRequest, pk: int) -> HttpResponse:
 
 
 def compare_delete(request: HttpRequest, pk: int) -> HttpRequest:
+    if request.user.is_anonymous:
+        return HttpResponse('Вы должный зарегистрироваться')
+
     try:
-        print(request.user.profile.compare_products.remove(get_object_or_404(models.Product, id=pk)))
+        print(request.user.profile.compare_products.remove(
+            get_object_or_404(models.Product, id=pk)))
     except ObjectDoesNotExist:
         ...
     finally:
@@ -106,32 +120,37 @@ class SearchView(View):
         query = request.GET['query']
         return render(request, 'search.html', {
             'query': query,
-            'product_list': models.Product.objects.filter(name__icontains=query) 
+            'product_list': models.Product.objects.filter(name__icontains=query)
         })
 
 
 class CartView(View):
     def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
-
+        cart_list = None
+        if request.user.is_authenticated:
+            cart_list = request.user.profile.cart_products.all()
         return render(request, 'cart.html', {
-            'cart_list': request.user.profile.cart_products.all()
+            'cart_list': cart_list
         })
 
 
 class ComparesView(View):
     def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
-        compare_list = request.user.profile.compare_products.all()
-        general_specifications = set()
-        for compare_product in compare_list:
-            general_specifications.update(
-                compare_product.specifications().keys())
-        
-        all_specifications = {}  
-        for key in general_specifications:
-            all_specifications[key] = []
+        all_specifications = {}
+        compare_list = None
+        if request.user.is_authenticated:
+            compare_list = request.user.profile.compare_products.all()
+            general_specifications = set()
             for compare_product in compare_list:
-                all_specifications[key].append(compare_product.specifications().get(key))
-        
+                general_specifications.update(
+                    compare_product.specifications().keys())
+
+            for key in general_specifications:
+                all_specifications[key] = []
+                for compare_product in compare_list:
+                    all_specifications[key].append(
+                        compare_product.specifications().get(key))
+
         return render(request, 'compares.html', {
             'compare_list': compare_list,
             'all_specifications': all_specifications
@@ -140,6 +159,16 @@ class ComparesView(View):
 
 class FavoritiesView(View):
     def get(self, request: HttpRequest, *args, **kwargs) -> HttpResponse:
+        favorite_list = None
+        if request.user.is_authenticated:
+            favorite_list = request.user.profile.favorite_products.all()
+
         return render(request, 'favorities.html', {
-            'favorite_list': request.user.profile.favorite_products.all()
+            'favorite_list': favorite_list
         })
+
+
+class NewOrderView(View):
+    def get(self, request: HttpRequest) -> HttpResponse:
+
+        return render(request, 'new_order.html')
