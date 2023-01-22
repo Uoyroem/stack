@@ -2,4 +2,8 @@
 
 {% block content %}
  {{ user }}
+ <form action="{% url 'logout' %}" method="post">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-primary rounded-0">Выйти</button>
+ </form>
 {% endblock content %}

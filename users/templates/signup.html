@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section>
+  <form action="signup/register" method="post">
+    {% csrf_token %}
+    <table>
+      {{form}}
+    </table>
+    <button type="submit" class="btn btn-primary rounded-0">Зарегистрироваться</button>
+  </form>
+</section>
+{% endblock content %}

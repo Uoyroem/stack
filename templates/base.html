@@ -45,7 +45,6 @@
             </label>
           </div>
           <form class="col input-group input-group-lg" action="{% url 'search' %}">
-            {% csrf_token %}
             <input name="query" type="text" class="form-control rounded-0" placeholder="Поиск...">
             <button type="submit" class="btn btn-outline-primary rounded-0 text-center">
               <i class="bi bi-search"></i>

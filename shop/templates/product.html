@@ -66,21 +66,27 @@
     </div>
     <div class="detail-product-price p-3 w-25">
       <h2>{{product.get_price}}</h2>
-      {% if product in user.profile.get_products %}
-      {% cart_product_from_user user product as cart_product %}
-      <div class="btn-group w-100">
-        <button class="btn btn-primary rounded-0" data-to="{{cart_product.get_decrement_url}}">-</button>
-        <a href="{% url 'cart' %}" class="d-flex flex-column btn btn-primary rounded-0">
-          <div>В корзине {{cart_product.count}} шт.</div>
-          <div style="font-size: 0.7em;">Перейти</div>
-        </a>
-        <button class="btn btn-primary rounded-0" data-to="{{cart_product.get_increment_url}}">+</button>
-      </div>
+      {% if user.is_authenticated %}
+        {% if product in user.profile.get_products %}
+        {% cart_product_from_user user product as cart_product %}
+        <div class="btn-group w-100">
+          <button class="btn btn-primary rounded-0" data-to="{{cart_product.get_decrement_url}}">-</button>
+          <a href="{% url 'cart' %}" class="d-flex flex-column btn btn-primary rounded-0">
+            <div>В корзине {{cart_product.count}} шт.</div>
+            <div style="font-size: 0.7em;">Перейти</div>
+          </a>
+          <button class="btn btn-primary rounded-0" data-to="{{cart_product.get_increment_url}}">+</button>
+        </div>
+        {% else %}
+        <button class="btn btn-primary rounded-0 w-100" data-to="{{product.to_cart_url}}">
+          В корзину
+          <i class="bi bi-basket"></i>
+        </button>
+        {% endif %}
       {% else %}
-      <button class="btn btn-primary rounded-0 w-100" data-to="{{product.to_cart_url}}">
-        В корзину
-        <i class="bi bi-basket"></i>
-      </button>
+      <div>
+        Вы должный <a href="{% url 'signup' %}">зарегистрироваться</a> или <a href="{% url 'profile' %}">войти</a>  что-бы добавить в корзину.
+      </div>
       {% endif %}
     </div>
   </div>
@@ -174,7 +180,7 @@
       {% endif %}
       {% else %}
       <div>
-        Вы должный <a href="{% url 'profile' %}">зарегистрироваться</a> что-бы написать отзыв.
+        Вы должный <a href="{% url 'signup' %}">зарегистрироваться</a> или <a href="{% url 'profile' %}">войти</a> что-бы написать отзыв.
       </div>
       {% endif %}
     </div>
