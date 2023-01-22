@@ -1,7 +1,9 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import View
+from django.views.generic import View, DetailView
 from django.http import HttpRequest, HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
+from django.forms.models import model_to_dict
+import json
 from . import models, forms
 
 
@@ -170,5 +172,20 @@ class FavoritiesView(View):
 
 class NewOrderView(View):
     def get(self, request: HttpRequest) -> HttpResponse:
+        return render(request, 'new_order.html', {
+            'cart_items_price': request.user.profile.get_cart_items_price_not_formatted()
+        })
+    
+    def post(self, request: HttpRequest) -> HttpResponse:
+        order = models.Order.objects.create(
+            profile=request.user.profile,
+            products_info=[model_to_dict(
+                cart_product) for cart_product in request.user.profile.cart_products.all()]
+        )
+        return redirect(order.get_absolute_url())
+    
 
-        return render(request, 'new_order.html')
+class OrderView(DetailView):
+    model = models.Order
+    template_name = 'order.html'
+    

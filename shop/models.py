@@ -2,7 +2,8 @@ from django.db import models
 from django.urls import reverse
 import users.models as users_models
 from utils import format
-import re
+import uuid
+
 
 
 STAR = '<i class="bi bi-star me-1 d-flex align-items-center"></i>'
@@ -165,3 +166,18 @@ class CartProduct(models.Model):
 
     def get_price(self) -> str:
         return format.format_price(self.product.price * self.count)
+
+
+class Order(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    profile = models.ForeignKey(
+        users_models.Profile, on_delete=models.CASCADE, related_name='orders'
+    )
+    products_info = models.JSONField()
+    order_date = models.DateField(auto_now_add=True)
+    
+    def get_absolute_url(self):
+        return reverse('order', kwargs={
+            'pk': self.id
+        })
+    

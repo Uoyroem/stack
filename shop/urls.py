@@ -23,5 +23,6 @@ urlpatterns = [
     path('cart', include(cart_urlpatterns)),
     path('favorities', views.FavoritiesView.as_view(), name='favorities'),
     path('compares', views.ComparesView.as_view(), name='compares'),
-    path('new_order', views.NewOrderView.as_view(), name='new_order')
+    path('new_order', views.NewOrderView.as_view(), name='new_order'),
+    path('order/<str:pk>', views.OrderView.as_view(), name='order')
 ]

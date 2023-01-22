@@ -2,18 +2,53 @@
 
 {% block content %}
 <section class="d-flex justify-content-between">
-    <div>
-        <h3>Оформление заказа</h3>
+    <div class="w-50">
+        <h2 class="mb-3 fw-bold">Оформление заказа</h2>
         <h4>Вы авторизовались как {{user}}</h4>
-        <div>
-            <span>{{user.email}}</span>
+        <div class="mb-3">
+            <span>Электронная почта: {{user.email}}</span>
         </div>
         <h4>Доставка</h4>
+        <div class="w-50 mb-3">
+            <div class="d-flex justify-content-between">
+                <div>
+                    <input checked type="radio" id="delivery-self-call" name="delivery" value="0">
+                    <label for="delivery-self-call">Самовызов</label>
+                </div>
+                <div>
+                    + 0 ₸
+                </div>
+            </div>
+            <div class="d-flex justify-content-between">
+                <div>
+                    <input type="radio" id="delivery-by-courier" name="delivery" value="1640">
+                    <label for="delivery-by-courier">Курьером</label>
+                </div>
+                <div>
+                    + 1640 ₸
+                </div>
+            </div>
+        </div>
 
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary w-50 rounded-0">Подтвердить заказ</button>
+        </form>
     </div>
-    <div>
+    <div class="w-50">
         <div>
-
+            {% for cart_product in user.profile.cart_products.all %}
+              <div class="d-flex justify-content-between align-items-center p-2">
+                <div class="w-25">
+                    <img style="height: 80px;" src="{{ cart_product.product.first_image }}" alt="">
+                </div>
+                
+                <h5>{{cart_product.product.name}}</h5>
+                <div class="w-25">
+                    {{ cart_product.count }}x <h4 class="d-inline fw-bold">{{cart_product.product.get_price}}</h4>
+                </div>
+              </div>
+            {% endfor %}
         </div>
         <hr>
         <div>
@@ -21,20 +56,50 @@
                 <div>
                     Сумма по товарам
                 </div>
-                <div></div>
+                <div >
+                    <span id="cart-items-price">{{cart_items_price}}</span> ₸
+                </div>
             </div>
             <div class="d-flex justify-content-between">
                 <div>
                     Стоимость доставки
                 </div>
-                <div></div>
+                <div>
+                    <span id="new-order-delivery">0</span> ₸
+                </div>
             </div>
         </div>
         <hr>
-        <div>
+        <div class="d-flex justify-content-between">
             <span>Итого:</span>
-            <h4 class="inline-block"></h4>
+            <h3 class="inline-block fw-bold"><span id="new-order-total">0</span> ₸</h4>
         </div>
     </div>
 </section>
 {% endblock content %}
+
+{% block scripts %}
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const deliveries = document.querySelectorAll('input[type="radio"][name="delivery"]');
+        const newOrderDelivery = document.getElementById('new-order-delivery');
+        const total = document.getElementById('new-order-total');
+        const cartItemsPrice = document.getElementById('cart-items-price');
+        function updateTotal() {
+            total.textContent = (parseInt(newOrderDelivery.textContent) + parseInt(cartItemsPrice.textContent)).toString();
+        }
+        updateTotal();
+        function updateDelivery() {
+            deliveries.forEach(delivery => {
+                if (delivery.checked) {
+                    newOrderDelivery.textContent = delivery.value;
+                }
+            })
+            
+            updateTotal();
+        }
+        updateDelivery();
+        deliveries.forEach(delivery => delivery.addEventListener('click', updateDelivery));
+    });
+  </script>
+{% endblock scripts %}
