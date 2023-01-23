@@ -2,7 +2,55 @@
 
 {% block content %}
   <section>
-    <h3>Заказ</h3>
-    {{order}}
+    <h2 class="fw-bold mb-3">Заказ № {{order}}</h2>
+    <h4>Информация о заказе</h4>
+    <hr>
+    <table class="info-table">
+      <tr>
+        <td>Дата оформления</td>
+        <td>{{order.order_date}}</td>
+      </tr>
+      <tr>
+        <td>Сумма и статус</td>
+        <td class="info-table__sum-and-status">
+          <div class="info-table__sum">234</div>
+          <div class="info-table__status">Принят</div>
+          <div class="info-table__status">Не оплачен</div>
+        </td>
+      </tr>
+      <tr>
+        <td>Получатель</td>
+        <td>{{user}} {{user.profile.phone_number}}</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+      </tr>
+      
+    </table>
   </section>
 {% endblock content %}
+
+{% block style %}
+  <style>
+    .info-table__sum-and-status {
+      display: flex;
+      align-items: center;
+    }
+
+    .info-table__status {
+      margin-left: 10px;
+      padding: 7px 10px;
+      border: 1px solid black;
+    }
+
+    .info-table tr td:first-child {
+      color: #747474;
+      width: 60%;
+    }
+  </style>
+{% endblock style %}

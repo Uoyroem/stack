@@ -174,10 +174,13 @@ class Order(models.Model):
         users_models.Profile, on_delete=models.CASCADE, related_name='orders'
     )
     products_info = models.JSONField()
-    order_date = models.DateField(auto_now_add=True)
+    order_date = models.DateTimeField(auto_now_add=True)
     
     def get_absolute_url(self):
         return reverse('order', kwargs={
             'pk': self.id
         })
+    
+    def __str__(self):
+        return str(self.order_date.day + self.order_date.year + self.order_date.month)
     
