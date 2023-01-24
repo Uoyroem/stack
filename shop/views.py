@@ -3,8 +3,10 @@ from django.views.generic import View, DetailView
 from django.http import HttpRequest, HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
 from django.forms.models import model_to_dict
-import json
 from . import models, forms
+from email.mime.text import MIMEText
+import smtplib, ssl
+
 
 
 class IndexView(View):
@@ -179,11 +181,37 @@ class NewOrderView(View):
     def post(self, request: HttpRequest) -> HttpResponse:
         order = models.Order.objects.create(
             profile=request.user.profile,
+            delivery_price=int(request.POST['delivery']),
+            cart_items_price=request.user.profile.get_cart_items_price_not_formatted(),
             products_info=[model_to_dict(
                 cart_product) for cart_product in request.user.profile.cart_products.all()]
         )
+        for cart_product in request.user.profile.cart_products.all():
+            cart_product.delete()
+        print(request.get_host() + order.get_accept_url())
+        sender = 'uoyroem.stack.info@gmail.com'
+        context = ssl.create_default_context()
+        link_to_accept = 'http://' + request.get_host() + order.get_accept_url()
+        email_html = f"""
+        <h2>Заказ № {order}</h2> 
+        <p>Сумма заказа: {order.total_price}</p>
+        <a href={link_to_accept}>Подтвердить заказ.</a>
+        """
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as server:
+            server.login(sender, 'tlghuscznmzebqwb')
+            msg = MIMEText(email_html, 'html')
+            msg['Subject'] = f'StackInfo: Подтвердите заказ № {order} на сумму {order.total_price}.'
+            server.send_message(msg, sender, request.user.email)
         return redirect(order.get_absolute_url())
     
+
+def order_accept(request: HttpRequest, pk: str) -> HttpResponse:
+    order = get_object_or_404(models.Order, id=pk)
+    order.is_accept = True   
+    order.is_paid = True 
+    order.save()
+    return redirect(order.get_absolute_url())
+
 
 class OrderView(DetailView):
     model = models.Order

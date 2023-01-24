@@ -5,7 +5,6 @@ from utils import format
 import uuid
 
 
-
 STAR = '<i class="bi bi-star me-1 d-flex align-items-center"></i>'
 STAR_ACTIVE = '<i class="bi bi-star-fill text-primary me-1 d-flex align-items-center"></i>'
 
@@ -175,12 +174,32 @@ class Order(models.Model):
     )
     products_info = models.JSONField()
     order_date = models.DateTimeField(auto_now_add=True)
-    
+    is_paid = models.BooleanField(default=False)
+    is_accept = models.BooleanField(default=False)
+    cart_items_price = models.FloatField(default=0)
+    delivery_price = models.FloatField(default=0)
     def get_absolute_url(self):
         return reverse('order', kwargs={
             'pk': self.id
         })
     
+    def get_accept_url(self):
+        return reverse('order_accept', kwargs={
+            'pk': self.id
+        })
+    
+    @property
+    def total_price(self):
+        return format.format_price(float(self.cart_items_price + self.delivery_price))
+    
+    @property
+    def delivery_price_formatted(self):
+        return format.format_price(self.delivery_price)
+    
+    @property
+    def products_with_count(self):
+        return [(Product.objects.get(id=product_info['product']), product_info['count']) for product_info in self.products_info]
+    
     def __str__(self):
-        return str(self.order_date.day + self.order_date.year + self.order_date.month)
+        return str(self.order_date.year + self.order_date.hour + self.order_date.second)
     

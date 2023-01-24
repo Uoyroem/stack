@@ -1,8 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <section>
-    <h2 class="fw-bold mb-3">Заказ № {{order}}</h2>
+  <section class="order-section">
+    <header>
+      <h2 class="order-section__header">Заказ № {{order}}</h2>    
+    </header>
+    
     <h4>Информация о заказе</h4>
     <hr>
     <table class="info-table">
@@ -13,9 +16,9 @@
       <tr>
         <td>Сумма и статус</td>
         <td class="info-table__sum-and-status">
-          <div class="info-table__sum">234</div>
-          <div class="info-table__status">Принят</div>
-          <div class="info-table__status">Не оплачен</div>
+          <div class="info-table__sum">{{order.total_price}}</div>
+          <div class="info-table__status {% if order.is_accept %}active{% endif %}">Принят {% if order.is_accept %}✔{% endif %}</div>
+          <div class="info-table__status {% if order.is_paid %}active{% endif %}">{% if order.is_accept %}Оплачен ✔{% else %}Не оплачен{% endif %}</div>
         </td>
       </tr>
       <tr>
@@ -23,34 +26,107 @@
         <td>{{user}} {{user.profile.phone_number}}</td>
       </tr>
       <tr>
-        <td></td>
-        <td></td>
+        <td>Email</td>
+        <td>{{user.email}}</td>
       </tr>
-      <tr>
-        <td></td>
-        <td></td>
-      </tr>
-      
+    </table>
+    <hr>
+    <h4>Состав заказа</h4>
+    <table class="order-products-info">
+      <thead>
+        <tr>
+          <th>Наименование</th>
+          <th>Количество</th>
+          <th>Стоимость</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for product, count in order.products_with_count %}
+          <tr>
+            <td>{{product.name}}</td>
+            <td>{{count}}</td>
+            <td>{{product.get_price}}</td>
+          </tr>
+        {% endfor %}
+        <tr>
+          <td>Доставка</td>
+          <td></td>
+          <td>{{order.delivery_price_formatted}}</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td></td>
+          <td></td>
+          <td>Итого: <span class="order-products-info__total-price">{{order.total_price}}</span></td>
+        </tr>
+      </tfoot>
     </table>
   </section>
 {% endblock content %}
 
 {% block style %}
   <style>
+    .order-section__header {
+      font-weight: bold;
+      margin-bottom: 2rem;
+    }
+
     .info-table__sum-and-status {
       display: flex;
       align-items: center;
     }
 
     .info-table__status {
+      user-select: none;
       margin-left: 10px;
       padding: 7px 10px;
       border: 1px solid black;
     }
 
+    .info-table__status.active {
+      color: white;
+      background-color: #0d6efd;
+      border: none;
+    }
+
     .info-table tr td:first-child {
       color: #747474;
       width: 60%;
+    }
+
+    .order-products-info {
+      width: 100%
+    }
+
+    .order-products-info th {
+      color: #747474;
+      font-weight: normal;
+    }
+
+    .order-products-info th {
+      padding: 10px;
+    }
+    
+    .order-products-info td {
+      padding: 5px 10px;
+    }
+
+    .order-products-info tr {
+      border: 1px solid #cccccc;
+    }
+
+    .order-products-info tbody > tr:nth-of-type(odd) {
+      background-color: #ededed;
+    }
+
+    .order-products-info tr td:last-child,
+    .order-products-info tr th:last-child {
+      text-align: right;
+    }
+
+    .order-products-info__total-price {
+      font-weight: bold;
     }
   </style>
 {% endblock style %}

@@ -9,6 +9,8 @@
             <span>Электронная почта: {{user.email}}</span>
         </div>
         <h4>Доставка</h4>
+        <form method="post">
+            {% csrf_token %}
         <div class="w-50 mb-3">
             <div class="d-flex justify-content-between">
                 <div>
@@ -29,8 +31,8 @@
                 </div>
             </div>
         </div>
-        <form method="post">
-            {% csrf_token %}
+        
+            
             <button type="submit" class="btn btn-primary w-50 rounded-0">Подтвердить заказ</button>
         </form>
     </div>

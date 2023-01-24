@@ -1,6 +1,7 @@
 from django.urls import path, include
 from . import views
 
+
 cart_urlpatterns = [
     path('', views.CartView.as_view(), name='cart'),
     path('<int:pk>/increment', views.cart_increment, name='cart_increment'),
@@ -24,5 +25,6 @@ urlpatterns = [
     path('favorities', views.FavoritiesView.as_view(), name='favorities'),
     path('compares', views.ComparesView.as_view(), name='compares'),
     path('new_order', views.NewOrderView.as_view(), name='new_order'),
-    path('order/<str:pk>', views.OrderView.as_view(), name='order')
+    path('order/<str:pk>', views.OrderView.as_view(), name='order'),
+    path('order/<str:pk>/accept', views.order_accept, name='order_accept')
 ]
