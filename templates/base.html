@@ -106,20 +106,9 @@
     </div>
     <hr class="w-100 border-opacity-50" />
     <div class="container p-0 mt-0 mb-0 d-flex align-items-center justify-content-between">
-      <a class="lnk" href="#">Смартфоны и планшеты</a>
-      <a class="lnk" href="#">Ноутбуки, планшеты и компьютеры</a>
-      <a class="lnk" href="#">Техника для дома</a>
-      <a class="lnk" href="#">Игры и развлечения</a>
-      <a class="lnk" href="#">Телевизоры, Аудио-видео, Hi-Fi</a>
-      <a class="lnk" href="#">Фото и видеотехника</a>
-      <div class="collection-rest">
-        <input class="d-none" type="checkbox" name="rest" id="rest">
-        <label class="d-inline-flex lnk" for="rest">
-          <span class="me-2">Еще</span>
-          <i class="bi bi-chevron-down d-inline-block"></i>
-          <i class="bi bi-chevron-up d-none"></i>
-        </label>
-      </div>
+      {% for category in category_list %}
+        <a class="lnk" href="{{category.get_absolute_url}}">{{category}}</a>
+      {% endfor %}
     </div>
   </header>
   <main>

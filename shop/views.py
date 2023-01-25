@@ -6,7 +6,7 @@ from django.forms.models import model_to_dict
 from . import models, forms
 from email.mime.text import MIMEText
 import smtplib, ssl
-
+from utils import products
 
 
 class IndexView(View):
@@ -15,7 +15,8 @@ class IndexView(View):
             name='Смартфоны и планшеты').first()
         phone_list = models.Product.objects.filter(category=phone_category)
         return render(request, 'index.html', {
-            'phone_list': phone_list
+            'phone_list': phone_list,
+            'category_list': models.Category.objects.all()
         })
 
 
@@ -37,6 +38,20 @@ class ProductView(View):
             review.product = get_object_or_404(models.Product, id=pk)
             review.save()
         return redirect('product', pk=pk)
+
+
+class CategoryView(View):
+    def get(self, request: HttpRequest, pk: int) -> HttpResponse:
+        print(request.GET)
+        category = get_object_or_404(models.Category, id=pk)
+        category_product_list = models.Product.objects.filter(
+            category=category)
+        
+        print(products.get_values_specifications(category_product_list))
+        return render(request, 'category.html', {
+            'category': category,
+            'category_product_list': category_product_list
+        })
 
 
 def to_compare(request: HttpRequest, pk: int) -> HttpResponse:

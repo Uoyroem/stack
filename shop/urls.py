@@ -19,7 +19,8 @@ product_urlpatterns = [
 
 urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
-    path('product/<int:pk>/', include(product_urlpatterns)),
+    path('product/<int:pk>', include(product_urlpatterns)),
+    path('category/<int:pk>', views.CategoryView.as_view(), name='category'),
     path('search', views.SearchView.as_view(), name='search'),
     path('cart', include(cart_urlpatterns)),
     path('favorities', views.FavoritiesView.as_view(), name='favorities'),
