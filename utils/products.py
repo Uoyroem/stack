@@ -1,3 +1,5 @@
+from operator import attrgetter
+
 
 def get_general_specifications(product_list):
     general = set()
@@ -7,14 +9,19 @@ def get_general_specifications(product_list):
     return general
 
 
-def get_values_specifications(product_list):
+def get_values_specifications(product_list, get):
   values = {}
   for specification in get_general_specifications(product_list):
     values[specification] = {}
     for product in product_list:
       if specification in (specifications := product.specifications()):
-        if specifications[specification] not in values[specification]:
-          values[specification][specifications[specification]] = 1
+        value = specifications[specification]
+        if value not in values[specification]:
+          values[specification][value] = [1, value if value in get else None]
         else:
-          values[specification][specifications[specification]] += 1
+          values[specification][value][0] += 1
   return values
+
+def get_minmax_products(product_list):
+  sorted_products = sorted(product_list, key=attrgetter('price'))
+  return sorted_products[0], sorted_products[-1]

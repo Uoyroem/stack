@@ -16,31 +16,49 @@
       <div class="category-section__product-list">
         {% for product in category_product_list %}
         {% include "product_card.html" %}
+        {% empty %}
+        <h5 class="category-section__product-list-empty">Ничего не соответсвует параметрам фильтра. <a href="{{category.get_absolute_url}}">Вы можете сбросить фильтры</a></h5>
         {% endfor %}
       </div>
       <form class="category-section__filter">
         <button class="category-section__filter-button" type="submit">Преминить фильтры</button>
         <div class="filter-item">
           <div class="filter-item__header">
-            <h4>Цена</h4>
+            <h4 class="filter-item__name">Цена</h4>
             <img class="filter-item__arrow" src="{% static 'icons/arrow.svg' %}" alt="">
           </div>
           <div class="filter-item__content">
             <div>
               <label for="price_min">От: </label>
-              <input type="number" minlength="0" name="price_min" value="0">
+              <input type="number" minlength="0" name="price_min" value="{{price_min}}">
             </div>
             <div>
               <label for="price_min">До: </label>
-              <input type="number" minlength="0" name="price_max" value="100000">
+              <input type="number" minlength="0" name="price_max" value="{{price_max}}">
             </div>
           </div>
         </div>
         <hr>
-
+        {% for specification, values in values_specifications.items %}
+          <div class="filter-item">
+            <div class="filter-item__header">
+              <h4 class="filter-item__name">{{specification}}</h4>
+              <img class="filter-item__arrow" src="{% static 'icons/arrow.svg' %}" alt="">
+            </div>
+            <div class="filter-item__content">
+              {% for name, count_and_value in values.items %}
+                <div>
+                  <input type="checkbox" name="{{name}}" {% if count_and_value.1 is not None %}checked{% endif %}>
+                  <label for="{{name}}">{{name}}</label>
+                  <span class="filter-item__count">{{count_and_value.0}}</span>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+          <hr>
+        {% endfor %}
       </form>
     </div>
-    
   </section>
 {% endblock content %}
 
@@ -60,7 +78,6 @@
 
     .category-section__product-list {
       display: flex;
-      align-items: center;
       flex-wrap: wrap;
       width: 70%;
       padding-right: 10px;
@@ -95,6 +112,10 @@
       width: 35px;
     }
 
+    .category-section__product-list-empty {
+
+    }
+
     .category-section__filter-button {
       color: white;
       width: 100%;
@@ -104,6 +125,16 @@
       background-color: #0d6efd;
       margin-bottom: 20px;
     }
+
+    .filter-item__count {
+      color: #747474;
+      margin-left: 10px;
+    }
+
+    .filter-item__name {
+      user-select: none;
+      cursor: pointer;
+    }
   </style>
 {% endblock style %}
 
@@ -111,9 +142,8 @@
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       document.addEventListener('click', (event) => {
-        console.log(event.target)
-        if (!event.target.classList.contains('filter-item__header')) return;
-        event.target.parentElement.classList.toggle('active')
+        if (!event.target.classList.contains('filter-item__name')) return;
+        event.target.parentElement.parentElement.classList.toggle('active');
       });
     });
   </script>

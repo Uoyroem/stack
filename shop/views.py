@@ -42,15 +42,30 @@ class ProductView(View):
 
 class CategoryView(View):
     def get(self, request: HttpRequest, pk: int) -> HttpResponse:
-        print(request.GET)
         category = get_object_or_404(models.Category, id=pk)
         category_product_list = models.Product.objects.filter(
             category=category)
-        
-        print(products.get_values_specifications(category_product_list))
+        min_price_product, max_price_product = products.get_minmax_products(category_product_list)
+        price_min, price_max = int(request.GET.get(
+            'price_min', min_price_product.price)), int(request.GET.get('price_max', max_price_product.price))
+        def filter_products(product):
+            specifications = product.specifications()
+            if price_min <= int(product.price) <= price_max:
+                for key in request.GET: 
+                    if key.startswith('price'):
+                        continue
+                    if key not in specifications.values():
+                        return False
+            else:
+                return False
+            return True
+        print(products.get_values_specifications(category_product_list, request.GET))
         return render(request, 'category.html', {
+            'price_min': price_min,
+            'price_max': price_max,
             'category': category,
-            'category_product_list': category_product_list
+            'category_product_list': filter(filter_products, category_product_list),
+            'values_specifications': products.get_values_specifications(category_product_list, request.GET)
         })
 
 
