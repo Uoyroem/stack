@@ -7,3 +7,4 @@ package-lock.json
 static/**/*.css.map
 */migrations/*
 !*/migrations/__init__.py
+db.sqlite3
