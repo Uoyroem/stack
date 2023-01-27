@@ -1,2 +1,12 @@
-@use "variables";
-@use "global";
+@import "base/reset";
+@import "base/typography";
+
+@import "utilities/variables";
+
+@import "layout/header";
+
+@import "components/link";
+@import "components/button";
+@import "components/icon";
+@import "components/input";
+@import "components/container";

@@ -1,0 +1,15 @@
+.input {
+    display: block;
+    border: 1px solid var(--light-gray);
+    height: 2.5rem;
+    padding: 0 1rem;
+    outline: none !important;
+
+    &--fullwidth {
+        width: 100%
+    }
+}
+
+.input-and-button {
+    display: flex;
+}

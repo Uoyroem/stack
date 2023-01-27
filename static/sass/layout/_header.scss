@@ -1,0 +1,43 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1rem;
+
+  &__title {
+    text-transform: uppercase;
+    color: var(--blue);
+  }
+}
+
+.contacts {
+  display: none;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0.625rem;
+}
+
+.navigation {
+  display: flex;
+  flex-direction: column;
+
+  &__menu-button {
+    margin-right: 1rem;
+  }
+
+  &__search-form {
+    width: 100%;
+  }
+
+  &__links {
+    margin-bottom: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__menu-and-search {
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+}

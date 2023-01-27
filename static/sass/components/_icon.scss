@@ -1,0 +1,12 @@
+.icon {
+    color: var(--text-color);
+    font-size: 2rem !important;
+
+    &.icon--white {
+        color: white;
+    }
+
+    &.icon--small {
+        font-size: 1.5rem !important;
+    }
+}

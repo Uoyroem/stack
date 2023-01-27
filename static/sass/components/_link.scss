@@ -1,0 +1,14 @@
+.link {
+    text-decoration: none;
+    color: inherit;
+    border-radius: 0;
+
+    &:focus {
+        outline: none;
+    }
+
+    &:hover {
+        color: var(--blue);
+
+    }
+}
