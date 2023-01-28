@@ -1,0 +1,24 @@
+
+.category-list {
+  border-top: 1px solid var(--gray);
+  margin-top: 1rem;
+  &__inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    @media screen and (max-width: $mobile-breakpoint) {
+      white-space: nowrap;
+      overflow-x: scroll;
+    }
+
+    & > .link {
+      margin-right: 1rem;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+  
+}

@@ -2,6 +2,7 @@
     text-decoration: none;
     color: inherit;
     border-radius: 0;
+    transition: color var(--transition-duration);
 
     &:focus {
         outline: none;

@@ -4,9 +4,14 @@
     height: 2.5rem;
     padding: 0 1rem;
     outline: none !important;
+    font: inherit;
 
     &--fullwidth {
         width: 100%
+    }
+
+    @media screen and (min-width: $mobile-breakpoint) {
+        height: 3rem;
     }
 }
 

@@ -2,7 +2,11 @@
     --blue: #0d6efd;
     --light-gray: #ededed;
     --gray: #999999;
-    --mobile-breadpoint: 768px;
     --transition-duration: 0.25s;
+    --animation-direction: 0.5s;
     --text-color: #333333;
+    --max-width: 1500px;
 }
+
+$mobile-breakpoint: 768px;
+$first-breakpoint: 1100px;

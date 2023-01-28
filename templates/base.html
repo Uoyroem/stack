@@ -17,60 +17,130 @@
 </head>
 
 <body>
-  <header class="header">
-    <div class="container contacts">
-      <a class="link" href="#">Доставка и оплата</a>
-      <a class="link" href="#">Пункты выдачи</a>
-      <a class="link" href="#">Поддержка</a>
-      <a class="link" href="#">+7(700) 900-99-99</a>
+  <input type="checkbox" id="catalog-active-checkbox">
+  <div class="catalog">
+    <div class="container">
+      <div class="catalog__header">
+        <h3>Каталог</h4>
+        <div>
+          <label class="material-symbols-outlined icon icon--small" for="catalog-active-checkbox">
+            close
+          </label>
+        </div>
+      </div>
+      <div class="catalog__content">
+        <div class="catalog__grid">
+          <div><a href="#" class="link">Смартфоны и планшеты</a></div>
+          <div><a href="#" class="link">Ноутбуки, планшеты и компьютеры</a></div>
+          <div><a href="#" class="link">Техника для дома</a></div>
+          <div><a href="#" class="link">Игры и развлечения</a></div>
+          <div><a href="#" class="link">Телевизоры, Аудио-видео, Hi-Fi</a></div>
+          <div><a href="#" class="link">Смартфоны и планшеты</a></div>
+        </div>
+      </div>
     </div>
-    <nav class="container navigation">
-      <div class="navigation__links">
-        <div>
-          <a class="link" href="#">
-            <span class="material-symbols-outlined icon">
-              person
-            </span>
-          </a>
-          <a class="link" href="#">
-            <span class="material-symbols-outlined icon">
-              align_vertical_bottom
-            </span>
-          </a>
-        </div>
-        <h2 class="header__title">Stack</h2>
-        <div>
-          <a href="#">
-            <span class="material-symbols-outlined icon">
-              favorite
-            </span>
-          </a>
-          <a href="#">
-            <span class="material-symbols-outlined icon">
-              shopping_cart
-            </span>
-          </a>
-        </div>
-      </div>
-      <div class="navigation__menu-and-search">
-        <button class="button navigation__menu-button">
-          <span class="material-symbols-outlined icon icon--white">
-            menu
+  </div>
+  <div class="contacts">
+    <div class="container">
+      <div class="contacts__inner">
+        <a class="link" href="#">Доставка и оплата</a>
+        <a class="link" href="#">Пункты выдачи</a>
+        <a class="link" href="#">Поддержка</a>
+        <a class="link" href="#">
+          <span class="material-symbols-outlined">
+            call
           </span>
-        </button>
-        <form class="navigation__search-form" method="post">
-          <div class="input-and-button">
-            <input placeholder="Поиск" class="input input--fullwidth" type="text">
-            <button class="button input-button">
-              <span class="material-symbols-outlined icon icon--white icon--small">
-                search
-              </span>
-            </button>
-          </div>
-        </form>
+          +7(700) 900-99-99
+        </a>
       </div>
-    </nav>
+    </div>
+  </div> <!-- .container -->
+  <header class="header">
+    <div class="container">
+      <nav class="navigation">
+        <div class="navigation__links">
+          <div>
+            <a class="link navigation__link badge-parent" href="#">
+              <span class="material-symbols-outlined icon">
+                person
+              </span>
+              <span class="navigation__link-text">Профиль</span>
+            </a>
+            <a class="link navigation__link badge-parent" href="#">
+              <div class="badge-parent">
+                <span class="material-symbols-outlined icon">
+                  align_vertical_bottom
+                </span>
+                <div class="badge">7</div>
+              </div>
+              <span class="navigation__link-text">Сравнение</span>
+            </a>
+          </div>
+          <h2 class="header__title first">Stack</h2>
+          <div>
+            <a class="link navigation__link " href="#">
+              <div class="badge-parent">
+                <span class="material-symbols-outlined icon">
+                  favorite
+                </span>
+                <div class="badge">7</div>
+              </div>
+              <span class="navigation__link-text">Избранные</span>
+            </a>
+            <a class="link navigation__link badge-parent" href="#">
+              <div class="badge-parent">
+                <span class="material-symbols-outlined icon">
+                  shopping_cart
+                </span>
+                <div class="badge">7</div>
+              </div>
+              <span class="navigation__link-text">Корзина</span>
+            </a>
+          </div>
+        </div>
+        <div class="navigation__menu-and-search">
+          <h1 class="header__title second">Stack</h1>
+          <button class="button button--large navigation__menu-button">
+            <label for="catalog-active-checkbox">
+              <span class="material-symbols-outlined icon icon--white" id="catalog-menu-open-button-icon">
+                menu
+              </span>
+              <span class="material-symbols-outlined icon icon--white" id="catalog-menu-close-button-icon">
+                close
+              </span>
+              <span class="navigation__menu-button-text">Каталог</span>
+            </label>
+            
+          </button>
+          <form class="navigation__search-form" method="post">
+            <div class="input-and-button">
+              <input placeholder="Поиск" class="input input--fullwidth" type="text">
+              <button class="button input-button">
+                <span class="material-symbols-outlined icon icon--white icon--small">
+                  search
+                </span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </nav>
+    </div> <!-- .container -->
+    <div class="category-list">
+      <div class="container">
+        <div class="category-list__inner">
+          <a href="#" class="link">Смартфоны и планшеты</a>
+          <a href="#" class="link">Ноутбуки, планшеты и компьютеры</a>
+          <a href="#" class="link">Техника для дома</a>
+          <a href="#" class="link">Игры и развлечения</a>
+          <a href="#" class="link">Телевизоры, Аудио-видео, Hi-Fi</a>
+          <a href="#" class="link">Смартфоны и планшеты</a>
+        </div>
+      </div> <!-- .container -->
+    </div> 
   </header>
+  
+  
+
   <!-- <header class="shadow mt-1 pt-4 pb-4">
     <div class="container p-0">
       <div class="d-grid">

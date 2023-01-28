@@ -1,0 +1,23 @@
+
+.badge-parent {
+  display: inline-block;
+  position: relative;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  position: absolute;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 0.80rem;
+  color: white;
+  --size: 1.3rem;
+  z-index: 6;
+  bottom: var(--size);
+  left: var(--size);
+  background-color: var(--blue);
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+}

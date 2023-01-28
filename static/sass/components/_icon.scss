@@ -1,5 +1,6 @@
 .icon {
     color: var(--text-color);
+    user-select: none;
     font-size: 2rem !important;
 
     &.icon--white {

@@ -1,12 +1,15 @@
+@import "utilities/variables";
+
 @import "base/reset";
 @import "base/typography";
 
-@import "utilities/variables";
-
 @import "layout/header";
+@import "layout/categories";
+@import "layout/catalog";
 
 @import "components/link";
 @import "components/button";
 @import "components/icon";
 @import "components/input";
 @import "components/container";
+@import "components/badge"

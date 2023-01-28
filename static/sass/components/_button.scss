@@ -2,6 +2,13 @@
     background-color: var(--blue);
     border: none;
     height: 2.5rem;
-    padding: 0 0.5em;
+    padding: 0 0.75em;
     color: white;
+    cursor: pointer;
+    font: inherit;
+    font-weight: bold;
+    @media screen and (min-width: $mobile-breakpoint) {
+        height: 3rem;
+        padding: 0 1rem;
+    }
 }

@@ -1,0 +1,87 @@
+
+@keyframes catalog-closing {
+  from {
+    right: 0;
+  }
+  to {
+    right: 100vw;
+  }
+}
+
+@keyframes catalog-opening {
+  from {
+    right: 100vw;
+  }
+
+  to {
+    right: 0;
+  }
+}
+
+#catalog-active-checkbox {
+  display: none;
+
+  &:checked + .catalog {
+    display: flex;
+    @media screen and (max-width: $mobile-breakpoint) {
+      right: 0;
+      animation: var(--animation-direction) linear catalog-opening;
+    }
+  }
+}
+
+.catalog {
+  z-index: 20;
+  top: 0;
+  position: fixed;
+  background-color: white;
+  @media screen and (min-width: $mobile-breakpoint) {
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(0, 0, 0, 0.25);
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: none;
+  }
+  @media screen and (max-width: $mobile-breakpoint) {
+    animation: var(--animation-direction) linear catalog-closing;
+    right: 100vw;
+    width: 100vw;
+    height: 100vh;
+  }
+  &__header {
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1rem;
+
+    @media screen and (max-width: $mobile-breakpoint) {
+      display: flex;
+    }
+  }
+
+  &__content {
+    margin: 1rem 0;
+
+    @media screen and (min-width: $mobile-breakpoint) {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: max-content;
+      margin: 0 auto;
+      padding: 3rem;
+      max-width: var(--max-width);
+      height: max-content;
+      background-color: white;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(1fr, 4);
+    gap: 1rem;
+  }
+}
