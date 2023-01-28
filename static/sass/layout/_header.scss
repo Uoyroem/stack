@@ -19,7 +19,7 @@
 
   &__title.second {
     display: block;
-    font-size: 2.5rem;
+    font-size: 2rem;
     margin-right: 1rem;
     @media screen and (max-width: $mobile-breakpoint) {
       display: none;
@@ -139,4 +139,40 @@
     display: flex;
     align-items: center;
   }
+}
+
+
+.mobile-navigation-links {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-top: 1px solid var(--light-gray);
+  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+
+  @media screen and (min-width: $mobile-breakpoint) {
+    display: none;
+  }
+
+  &__inner {
+    padding: 0.5rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+  }
+
+  &__item {
+    font-size: small;
+    display: flex;
+    flex-direction: column;
+
+    text-align: center;
+
+    &--active {
+      font-weight: bold !important;
+    }
+  }
+
+
 }

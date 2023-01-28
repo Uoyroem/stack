@@ -1,12 +1,13 @@
 
 document.addEventListener('DOMContentLoaded', () => {
-  const menuButton = document.querySelector('.button.button--large.navigation__menu-button');
+  const iconChangeButtons = document.querySelectorAll('button[data-menu-icon-change]');
   const menuOpenIcon = document.querySelector('#catalog-menu-open-button-icon');
   const menuCloseIcon = document.querySelector('#catalog-menu-close-button-icon');
   const menuActiveCheckbox = document.querySelector('#catalog-active-checkbox');
   menuOpenIcon.style.display = 'inline';
   menuCloseIcon.style.display = 'none';
-  menuButton.addEventListener('', () => {
+
+  const updateIcon = () => {
     if (!menuActiveCheckbox.checked) {
       menuOpenIcon.style.display = 'none';
       menuCloseIcon.style.display = 'inline';
@@ -14,5 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
       menuOpenIcon.style.display = 'inline';
       menuCloseIcon.style.display = 'none';
     }
-  });
+  };
+
+  iconChangeButtons.forEach(button => button.addEventListener('click', updateIcon));
 });

@@ -17,16 +17,53 @@
 </head>
 
 <body>
+  <div class="mobile-navigation-links">
+    <div class="container">
+      <div class="mobile-navigation-links__inner">
+        <a class="link link--hover-color--none mobile-navigation-links__item mobile-navigation-links__item--active">
+          <span class="material-symbols-outlined icon icon--small">
+            home
+          </span>
+          Главная
+        </a>
+        <a class="link link--hover-color--none mobile-navigation-links__item">
+          <span class="material-symbols-outlined icon icon--small">
+            search
+          </span>
+          Поиск
+        </a>
+        <a class="link link--hover-color--none mobile-navigation-links__item">
+          <span class="material-symbols-outlined icon icon--small">
+            shopping_cart
+          </span>
+          Корзина
+        </a>
+        <a class="link link--hover-color--none mobile-navigation-links__item">
+          <span class="material-symbols-outlined icon icon--small">
+            favorite
+          </span>
+          Избранные
+        </a>
+        <a class="link link--hover-color--none mobile-navigation-links__item">
+          <span class="material-symbols-outlined icon icon--small">
+            person
+          </span>
+          Профиль
+        </a>
+      </div>
+    </div>
+  </div>
+
   <input type="checkbox" id="catalog-active-checkbox">
   <div class="catalog">
     <div class="container">
       <div class="catalog__header">
         <h3>Каталог</h4>
-        <div>
+        <button class="button" data-menu-icon-change>
           <label class="material-symbols-outlined icon icon--small" for="catalog-active-checkbox">
             close
           </label>
-        </div>
+        </button>
       </div>
       <div class="catalog__content">
         <div class="catalog__grid">
@@ -100,22 +137,21 @@
         </div>
         <div class="navigation__menu-and-search">
           <h1 class="header__title second">Stack</h1>
-          <button class="button button--large navigation__menu-button">
+          <button class="button button--background--blue button button--font-weight--bold navigation__menu-button" data-menu-icon-change>
             <label for="catalog-active-checkbox">
-              <span class="material-symbols-outlined icon icon--white" id="catalog-menu-open-button-icon">
+              <span id="catalog-menu-open-button-icon" class="material-symbols-outlined icon icon--white">
                 menu
               </span>
-              <span class="material-symbols-outlined icon icon--white" id="catalog-menu-close-button-icon">
+              <span id="catalog-menu-close-button-icon" class="material-symbols-outlined icon icon--white">
                 close
               </span>
               <span class="navigation__menu-button-text">Каталог</span>
             </label>
-            
           </button>
           <form class="navigation__search-form" method="post">
             <div class="input-and-button">
               <input placeholder="Поиск" class="input input--fullwidth" type="text">
-              <button class="button input-button">
+              <button class="button button--background--blue input-button">
                 <span class="material-symbols-outlined icon icon--white icon--small">
                   search
                 </span>
@@ -133,14 +169,32 @@
           <a href="#" class="link">Техника для дома</a>
           <a href="#" class="link">Игры и развлечения</a>
           <a href="#" class="link">Телевизоры, Аудио-видео, Hi-Fi</a>
-          <a href="#" class="link">Смартфоны и планшеты</a>
         </div>
       </div> <!-- .container -->
     </div> 
   </header>
-  
-  
-
+  <main>
+    {% block content1 %}
+      
+    {% endblock content1 %}
+  </main>
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <div class="footer__rights">
+          © 2023 Django сайт без прав
+        </div>
+        <div class="footer__text">
+          Интернет магазин создан на Django в учебных целях
+        </div>
+        <div class="footer__banks-icons">
+          <img class="icon-img footer__banks-icon" src="{% static 'icons/visa.svg' %}" alt="">
+          <img class="icon-img footer__banks-icon" src="{% static 'icons/mir.svg' %}" alt="">
+          <img class="icon-img footer__banks-icon" src="{% static 'icons/mastercard.svg' %}" alt="">
+        </div>
+      </div>
+    </div>
+  </footer>
   <!-- <header class="shadow mt-1 pt-4 pb-4">
     <div class="container p-0">
       <div class="d-grid">

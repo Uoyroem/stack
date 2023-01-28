@@ -3,13 +3,17 @@
     color: inherit;
     border-radius: 0;
     transition: color var(--transition-duration);
+    cursor: pointer;
 
     &:focus {
         outline: none;
     }
-
+    
     &:hover {
         color: var(--blue);
+    }
 
+    &.link--hover-color--none {
+        color: inherit;
     }
 }

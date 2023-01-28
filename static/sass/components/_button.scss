@@ -1,14 +1,21 @@
 .button {
-    background-color: var(--blue);
+    background: none;
     border: none;
     height: 2.5rem;
     padding: 0 0.75em;
-    color: white;
     cursor: pointer;
+    color: var(--text-color);
     font: inherit;
-    font-weight: bold;
     @media screen and (min-width: $mobile-breakpoint) {
         height: 3rem;
         padding: 0 1rem;
+    }
+
+    &--font-weight--bold {
+        font-weight: bold;
+    }
+    &--background--blue {
+        background-color: var(--blue);
+        color: white;
     }
 }

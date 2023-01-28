@@ -4,6 +4,8 @@
     padding: 0;
 }
 
-.material-icons {
-    font-size: 2rem;
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
