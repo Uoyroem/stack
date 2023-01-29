@@ -1,4 +1,8 @@
 .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     background: none;
     border: none;
     height: 2.5rem;
@@ -17,5 +21,14 @@
     &--background--blue {
         background-color: var(--blue);
         color: white;
+    }
+    &--small {
+        width: 2.5rem;
+        height: 2.5rem;
+        padding: 0;
+    }
+
+    &.hidden {
+        display: none;
     }
 }

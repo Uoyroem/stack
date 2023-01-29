@@ -1,0 +1,20 @@
+
+.phone-list-section {
+  &__header {
+    margin-bottom: 1rem;
+  }
+}
+
+.phone-list {
+  display: flex;
+  align-items: center;
+  overflow-x: scroll;
+  padding: 1rem 0;
+
+  &__item {
+    margin-right: 1rem;
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}

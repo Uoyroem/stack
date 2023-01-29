@@ -1,34 +1,37 @@
 {% load cart_tags %}
-<div class="product">
-  <div class="d-flex flex-column justify-content-between">
-    <div class="product__image-title">
-      <img class="product__image" src="{{ product.first_image }}" alt="">
-      <h5 class="product__title">
-        <a class="lnk" href="{{ product.get_absolute_url }}">{{ product.name }}</a>
-      </h5>
+{% cart_product_from_user user product as cart_product %}
+<div class="product-card {{additional_classes}}">
+  <div class="product-card__column">
+    <div class="product-card__img-and-link">
+      <img class="product-card__img" src="{{product.first_image}}" alt="">
+      <a class="link product-card__link" href="{{product.get_absolute_url}}">{{product.name}}</a>
     </div>
-    <h4 class="product__price">{{ product.get_price }}</h4>
+    <div class="product-card__price">
+      {{product.get_price}}
+    </div>
   </div>
-  <div class="product__buttons">
+  <div class="product-card__column">
     <div>
-      <button type="submit" class=" btn rounded-0" data-to="{{product.to_favorite_url}}">
-        <i class="bi bi-heart{% if product in user.profile.favorite_products.all %}-fill text-primary{% endif %}"></i>
+      <button class="button button--small" data-count-updater="favorite" data-count-updater-url="{{product.to_favorite_url}}">
+        <span class="material-symbols-outlined icon icon--small {% if product in user.profile.favorite_products.all %}icon--blue{% else %}icon--gray{% endif %}">
+          favorite
+        </span>
       </button>
-      <button type="submit" class="btn rounded-0" data-to="{{product.to_compare_url}}">
-        <i class="bi bi-filter {% if product in user.profile.compare_products.all %}text-primary{% endif %}"></i>
+      <button class="button button--small" data-count-updater="compare" data-count-updater-url="{{product.to_compare_url}}">
+        <span class="material-symbols-outlined icon icon--small {% if product in user.profile.compare_products.all %}icon--blue{% else %}icon--gray{% endif %}">
+          align_vertical_bottom
+        </span>
       </button>
     </div>
-    {% if product in user.profile.get_products %}
-    {% cart_product_from_user user product as cart_product %}
-    <button class="btn rounded-0 btn-primary" data-to="{{cart_product.get_increment_url}}">
-      <span>{{cart_product.count}}</span>
-      +
+    <button class="button button--background--blue button--small" data-count-updater="cart" data-hide-if="count != 0" data-count-updater-url="{{product.to_cart_url}}">
+      <span class="material-symbols-outlined icon icon--white icon--small">
+        shopping_cart
+      </span>
     </button>
-    {% else %}
-    <button class="btn rounded-0 btn-primary" data-to="{{product.to_cart_url}}">
-      <i class="bi bi-basket"></i>
+    <button class="button button--background--blue button--small hidden" data-count-updater="cart" data-hide-if="count == 0" data-count-updater-url="{{cart_product.get_increment_url}}">
+      <span class="material-symbols-outlined icon icon--white icon--small">
+        add_shopping_cart
+      </span>
     </button>
-    {% endif %}
-
   </div>
 </div>

@@ -1,21 +1,15 @@
-<!DOCTYPE html>
 {% load static %}
+<!DOCTYPE html>
 <html lang="ru">
-
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="shortcut icon" href={% static "favicon.ico" %} type="image/x-icon">
-  <link rel="stylesheet" href={% static "css/index.css" %}>
-  <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
-  {% block style %}
-
-  {% endblock style %}
+  <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+  <link rel="stylesheet" href="{% static 'css/index.css' %}">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,300,0,0" />
   <title>Stack</title>
 </head>
-
 <body>
   <div class="mobile-navigation-links">
     <div class="container">
@@ -53,13 +47,12 @@
       </div>
     </div>
   </div>
-
   <input type="checkbox" id="catalog-active-checkbox">
   <div class="catalog">
     <div class="container">
       <div class="catalog__header">
         <h3>Каталог</h4>
-        <button class="button" data-menu-icon-change>
+        <button class="button">
           <label class="material-symbols-outlined icon icon--small" for="catalog-active-checkbox">
             close
           </label>
@@ -77,304 +70,142 @@
       </div>
     </div>
   </div>
-  <div class="contacts">
-    <div class="container">
-      <div class="contacts__inner">
-        <a class="link" href="#">Доставка и оплата</a>
-        <a class="link" href="#">Пункты выдачи</a>
-        <a class="link" href="#">Поддержка</a>
-        <a class="link" href="#">
-          <span class="material-symbols-outlined">
-            call
-          </span>
-          +7(700) 900-99-99
-        </a>
-      </div>
-    </div>
-  </div> <!-- .container -->
-  <header class="header">
-    <div class="container">
-      <nav class="navigation">
-        <div class="navigation__links">
-          <div>
-            <a class="link navigation__link badge-parent" href="#">
-              <span class="material-symbols-outlined icon">
-                person
-              </span>
-              <span class="navigation__link-text">Профиль</span>
-            </a>
-            <a class="link navigation__link badge-parent" href="#">
-              <div class="badge-parent">
-                <span class="material-symbols-outlined icon">
-                  align_vertical_bottom
-                </span>
-                <div class="badge">7</div>
-              </div>
-              <span class="navigation__link-text">Сравнение</span>
-            </a>
-          </div>
-          <h2 class="header__title first">Stack</h2>
-          <div>
-            <a class="link navigation__link " href="#">
-              <div class="badge-parent">
-                <span class="material-symbols-outlined icon">
-                  favorite
-                </span>
-                <div class="badge">7</div>
-              </div>
-              <span class="navigation__link-text">Избранные</span>
-            </a>
-            <a class="link navigation__link badge-parent" href="#">
-              <div class="badge-parent">
-                <span class="material-symbols-outlined icon">
-                  shopping_cart
-                </span>
-                <div class="badge">7</div>
-              </div>
-              <span class="navigation__link-text">Корзина</span>
-            </a>
-          </div>
-        </div>
-        <div class="navigation__menu-and-search">
-          <h1 class="header__title second">Stack</h1>
-          <button class="button button--background--blue button button--font-weight--bold navigation__menu-button" data-menu-icon-change>
-            <label for="catalog-active-checkbox">
-              <span id="catalog-menu-open-button-icon" class="material-symbols-outlined icon icon--white">
-                menu
-              </span>
-              <span id="catalog-menu-close-button-icon" class="material-symbols-outlined icon icon--white">
-                close
-              </span>
-              <span class="navigation__menu-button-text">Каталог</span>
-            </label>
-          </button>
-          <form class="navigation__search-form" method="post">
-            <div class="input-and-button">
-              <input placeholder="Поиск" class="input input--fullwidth" type="text">
-              <button class="button button--background--blue input-button">
-                <span class="material-symbols-outlined icon icon--white icon--small">
-                  search
-                </span>
-              </button>
-            </div>
-          </form>
-        </div>
-      </nav>
-    </div> <!-- .container -->
-    <div class="category-list">
+
+  <div class="page">
+    <div class="contacts">
       <div class="container">
-        <div class="category-list__inner">
-          <a href="#" class="link">Смартфоны и планшеты</a>
-          <a href="#" class="link">Ноутбуки, планшеты и компьютеры</a>
-          <a href="#" class="link">Техника для дома</a>
-          <a href="#" class="link">Игры и развлечения</a>
-          <a href="#" class="link">Телевизоры, Аудио-видео, Hi-Fi</a>
-        </div>
-      </div> <!-- .container -->
-    </div> 
-  </header>
-  <main>
-    {% block content1 %}
-      
-    {% endblock content1 %}
-  </main>
-  <footer class="footer">
-    <div class="container">
-      <div class="footer__inner">
-        <div class="footer__rights">
-          © 2023 Django сайт без прав
-        </div>
-        <div class="footer__text">
-          Интернет магазин создан на Django в учебных целях
-        </div>
-        <div class="footer__banks-icons">
-          <img class="icon-img footer__banks-icon" src="{% static 'icons/visa.svg' %}" alt="">
-          <img class="icon-img footer__banks-icon" src="{% static 'icons/mir.svg' %}" alt="">
-          <img class="icon-img footer__banks-icon" src="{% static 'icons/mastercard.svg' %}" alt="">
-        </div>
-      </div>
-    </div>
-  </footer>
-  <!-- <header class="shadow mt-1 pt-4 pb-4">
-    <div class="container p-0">
-      <div class="d-grid">
-        <div class="row align-items-center gap-3">
-          <h3 class="col-auto center d-flex text-uppercase text-center text-primary fw-bold d-inline">
-            <a class="text-primary text-decoration-none" href="{% url 'index' %}">
-              <i class="bi bi-stack me-2"></i>
-              Stack
-            </a>
-          </h3>
-          <div class="catalog col-auto">
-            <input class="d-none" type="checkbox" name="catalog" id="catalog">
-            <label class="position-relative btn btn-lg btn-primary ps-4 pe-4 rounded-0 text-center"
-              style="z-index: 10000;" for="catalog" data-bs-toggle="modal" data-bs-dismiss="modal"
-              data-bs-target="#catalog-modal">
-              <i class="bi bi-list"></i>
-              <i class="d-none bi bi-x-circle"></i>
-              <span class="ps-3">Каталог</span>
-            </label>
-          </div>
-          <form class="col input-group input-group-lg" action="{% url 'search' %}">
-            <input name="query" type="text" class="form-control rounded-0" placeholder="Поиск...">
-            <button type="submit" class="btn btn-outline-primary rounded-0 text-center">
-              <i class="bi bi-search"></i>
-            </button>
-          </form>
-          <a class="col-auto d-flex align-items-center flex-column btn rounded-0" href="{% url 'profile' %}">
-            <i class="bi bi-person"></i>
-            Профиль
-          </a>
-          <a class="col-auto d-flex align-items-center flex-column btn rounded-0" href="{% url 'compares' %}">
-            <i class="bi bi-filter position-relative">
-              {% if user.profile %}
-              {% with compares_count=user.profile.compare_products.count %}
-              {% if compares_count != 0 %}
-              <span id="compares-counter"
-                class="position-absolute ms-1 mt-1 top-0 start-100 translate-middle badge rounded-pill bg-primary">
-                {{ compares_count }}
-              </span>
-              {% endif %}
-              {% endwith %}
-              {% endif %}
-            </i>
-            Сравнение
-          </a>
-          <a class="col-auto d-flex align-items-center flex-column btn rounded-0" href="{% url 'favorities' %}">
-            <i class="bi bi-heart position-relative">
-              {% if user.profile %}
-              {% with favorities_count=user.profile.favorite_products.count %}
-              {% if favorities_count != 0 %}
-              <span id="favorities-counter"
-                class="position-absolute ms-1 mt-1 top-0 start-100 translate-middle badge rounded-pill bg-primary">
-                {{ favorities_count }}
-              </span>
-              {% endif %}
-              {% endwith %}
-              {% endif %}
-            </i>
-            Избранные
-          </a>
-          <a class="col-auto d-flex align-items-center flex-column btn rounded-0" href="{% url 'cart' %}">
-            <i class="bi bi-cart3 position-relative">
-              {% if user.profile %}
-              {% with cart_items_count=user.profile.get_cart_items_count %}
-              {% if cart_items_count != 0 %}
-              <span class="position-absolute ms-1 mt-1 top-0 start-100 translate-middle badge rounded-pill bg-primary">
-                {{ cart_items_count }}
-              </span>
-              {% endif %}
-              {% endwith %}
-              {% endif %}
-            </i>
-            Корзина
+        <div class="contacts__inner">
+          <a class="link" href="#">Доставка и оплата</a>
+          <a class="link" href="#">Пункты выдачи</a>
+          <a class="link" href="#">Поддержка</a>
+          <a class="link" href="#">
+            <span class="material-symbols-outlined">
+              call
+            </span>
+            +7(700) 900-99-99
           </a>
         </div>
       </div>
-    </div>
-    <hr class="w-100 border-opacity-50" />
-    <div class="container p-0 mt-0 mb-0 d-flex align-items-center justify-content-between">
-      {% for category in category_list %}
-      <a class="lnk" href="{{category.get_absolute_url}}">{{category}}</a>
-      {% endfor %}
-    </div>
-  </header> -->
-  <!-- <main>
-    <div class="modal" id="catalog-modal">
-      <div class="modal-fullscreen-sm-down">
-        <div class="container">
-          <div class="modal-header">
-            <button class="btn-close" data-bs-dismiss="modal"></button>
-          </div>
-          <div class="modal-content rounded-0">
-            <div class="modal-body">
-              Hello world
+    </div> <!-- .container -->
+    <header class="header">
+      <div class="container">
+        <nav class="navigation">
+          <div class="navigation__links">
+            <div>
+              <a class="link navigation__link badge-parent" href="/profile">
+                <span class="material-symbols-outlined icon">
+                  person
+                </span>
+                <span class="navigation__link-text">Профиль</span>
+              </a>
+              <a class="link navigation__link badge-parent" href="#">
+                <div class="badge-parent">
+                  <span class="material-symbols-outlined icon">
+                    align_vertical_bottom
+                  </span>
+                  {% if user.is_authenticated %}
+                  <div class="badge {% if not user.profile.get_compare_items_count %}hidden{% endif %}" data-update-count="compare">
+                    {{user.profile.get_compare_items_count}}
+                  </div>
+                  {% endif %}
+                </div>
+                <span class="navigation__link-text">Сравнение</span>
+              </a>
+            </div>
+            <h2 class="header__title first">Stack</h2>
+            <div>
+              <a class="link navigation__link " href="#">
+                <div class="badge-parent">
+                  <span class="material-symbols-outlined icon">
+                    favorite
+                  </span>
+                  {% if user.is_authenticated %}
+                  <div class="badge {% if not user.profile.get_favorite_items_count %}hidden{% endif %}" data-update-count="favorite">
+                    {{user.profile.get_favorite_items_count}}
+                  </div>
+                  {% endif %}
+                </div>
+                <span class="navigation__link-text">Избранные</span>
+              </a>
+              <a class="link navigation__link badge-parent" href="#">
+                <div class="badge-parent">
+                  <span class="material-symbols-outlined icon">
+                    shopping_cart
+                  </span>
+                  {% if user.is_authenticated %}
+                  <div class="badge {% if not user.profile.get_cart_items_count %}hidden{% endif %}" data-update-count="cart">
+                    {{user.profile.get_cart_items_count}}  
+                  </div>
+                  {% endif %}
+                </div>
+                <span class="navigation__link-text">Корзина</span>
+              </a>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-    <div class="container mt-4 mb-4 p-0">
+          <div class="navigation__menu-and-search">
+            <h1 class="header__title second">
+              <a class="link" href="/">Stack</a>
+            </h1>
+            <button class="button button--background--blue button button--font-weight--bold navigation__menu-button">
+              <label for="catalog-active-checkbox">
+                <span id="catalog-menu-open-button-icon" class="material-symbols-outlined icon icon--white">
+                  menu
+                </span>
+                <span id="catalog-menu-close-button-icon" class="material-symbols-outlined icon icon--white hidden">
+                  close
+                </span>
+                <span class="navigation__menu-button-text">Каталог</span>
+              </label>
+            </button>
+            <form class="navigation__search-form" method="post">
+              <div class="input-and-button">
+                <input placeholder="Поиск" class="input input--fullwidth" type="text">
+                <button class="button button--background--blue input-button">
+                  <span class="material-symbols-outlined icon icon--white icon--small">
+                    search
+                  </span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </nav>
+      </div> <!-- .container -->
+      <div class="category-list">
+        <div class="container">
+          <div class="category-list__inner">
+            <a href="#" class="link">Смартфоны и планшеты</a>
+            <a href="#" class="link">Ноутбуки, планшеты и компьютеры</a>
+            <a href="#" class="link">Техника для дома</a>
+            <a href="#" class="link">Игры и развлечения</a>
+            <a href="#" class="link">Телевизоры, Аудио-видео, Hi-Fi</a>
+          </div>
+        </div> <!-- .container -->
+      </div> 
+    </header>
+    <main>
       {% block content %}
-
+        
       {% endblock content %}
-    </div>
-  </main> -->
-  <!-- <footer>
-    <div class="container p-0 d-flex pb-5 pt-5">
-      <div class="d-flex flex-column" style="margin-right: 200px;">
-        <h1
-          class="mt-2 mb-lg-5 footer-title col-auto center d-flex text-uppercase text-center text-primary fw-bold d-inline">
-          <i class="bi bi-stack me-2"></i>
-          Stack
-        </h1>
-        <div class="mb-4">
-          <h4 class="m-0"><a class="lnk" href="">+7(700) 900-99-99</a></h4>
-          <span>справочная служба</span>
-        </div>
-        <div class="mb-4">
-          <h4 class="m-0">
-            <a class="lnk" href=""> +7(700) 900-99-99</a>
-
-          </h4>
-          <span>интернет-магазин</span>
-        </div>
-        <div class="mb-4">
-          <h5 class="m-0 mb-2">Оставайтесь на связи</h5>
-          <div class="footer-social d-flex text-primary">
-            <i class="bi bi-instagram"></i>
-            <i class="bi bi-facebook"></i>
-            <i class="bi bi-youtube"></i>
-            <i class="bi bi-linkedin"></i>
+    </main>
+    <footer class="footer">
+      <div class="container">
+        <div class="footer__inner">
+          <div class="footer__rights">
+            © 2023 Django сайт без прав
+          </div>
+          <div class="footer__text">
+            Интернет магазин создан на Django в учебных целях
+          </div>
+          <div class="footer__banks-icons">
+            <img class="icon-img footer__banks-icon" src="{% static 'icons/visa.svg' %}" alt="">
+            <img class="icon-img footer__banks-icon" src="{% static 'icons/mir.svg' %}" alt="">
+            <img class="icon-img footer__banks-icon" src="{% static 'icons/mastercard.svg' %}" alt="">
           </div>
         </div>
       </div>
-      <div class="d-flex">
-        <div class="d-flex flex-column me-5">
-          <h6 class="mb-3">О магазине</h6>
-          <div class="mb-2"><a href="" class="lnk">Условия обмена и возврата</a></div>
-          <div class="mb-2"><a href="" class="lnk">Каталог</a></div>
-          <div class="mb-2"><a href="" class="lnk">О компании</a></div>
-          <div class="mb-2"><a href="" class="lnk">Контакты</a></div>
-          <div class="mb-2"><a href="" class="lnk">Доставка</a></div>
-          <div class="mb-2"><a href="" class="lnk">Оплата</a></div>
-        </div>
-        <div class="d-flex flex-column me-5">
-          <h6 class="mb-3">Клиентам</h6>
-          <div class="mb-2"><a href="" class="lnk">Личный кабинет</a></div>
-          <div class="mb-2"><a href="" class="lnk">Блог</a></div>
-          <div class="mb-2"><a href="" class="lnk">Обратная связь</a></div>
-        </div>
-        <div class="d-flex flex-column me-5">
-          <h6 class="mb-3">Информация</h6>
-          <div class="mb-2"><a href="" class="lnk">Пользовательское соглашение</a></div>
-          <div class="mb-2"><a href="" class="lnk">Политика конфиденциальности и оферта</a></div>
-        </div>
-      </div>
-    </div>
-    <div class="bg--gray pb-4 pt-4">
-      <div class="container p-0 d-flex justify-content-between align-items-center">
-        <span>
-          © 2022 А как права поставить
-        </span>
-        <span>
-          Интернет-магазин создан на Django
-        </span>
-        <span class='bank-cards-icons'>
-          <img class="d-inline-block me-2" src={% static 'icons/mastercard.svg' %} alt="">
-          <img class="d-inline-block me-2" src={% static 'icons/visa.svg' %} alt="">
-          <img class="d-inline-block" src={% static 'icons/mir.svg' %} alt="">
-        </span>
-      </div>
-    </div>
-  </footer> -->
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-    crossorigin="anonymous"></script>
-  <script src={% static "js/script.js" %}></script>
-  {% block scripts %}
-
-  {% endblock scripts %}
+    </footer>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+  <script src="{% static 'js/script.js' %}"></script>
 </body>
-
 </html>
