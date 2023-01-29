@@ -8,27 +8,24 @@ $(function() {
 
   $('[data-count-updater][data-count-updater-url]').on('click', function() {
     $.ajax({
-      url: this.dataset.countUpdaterUrl,
-    }).done(({message, count}) => {
+      url: $(this).data('countUpdaterUrl'),
+    }).done(({message, count, totalCount}) => {
       const target = $(`[data-update-count="${$(this).data('countUpdater')}"]`);
       const icon = $(this).find('.icon');
+      console.log(message, count, totalCount)
       if (!count) {
-        target.hide();
         icon.removeClass('icon--blue');
         icon.addClass('icon--gray');
-        return;
       }
-      target.show();
-      target.text(count);
-      icon.removeClass('icon--gray');
-      icon.addClass('icon--blue');
-      if ($(this).attr('data-hide-if') == null) return;
-      console.log(eval($(this).data('hideIf')));
-      console.log(count);
-      if (eval($(this).data('hideIf'))) {
-        $(this).hide();
+      else {
+        icon.removeClass('icon--gray');
+        icon.addClass('icon--blue');
+      }
+      target.text(totalCount);
+      if (!totalCount) {
+        target.addClass('hidden');
       } else {
-        $(this).show();
+        target.removeClass('hidden');
       }
     });
   });
