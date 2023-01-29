@@ -23,12 +23,9 @@
         </span>
       </button>
     </div>
-    <button class="button button--background--blue button--small" data-count-updater="cart">
-      <span class="material-symbols-outlined icon icon--white icon--small" data-hide-if="count != 0" data-count-updater-url="{{product.to_cart_url}}">
-        shopping_cart
-      </span>
-      <span class="material-symbols-outlined icon icon--white icon--small hidden" data-hide-if="count == 0" data-count-updater-url="{{cart_product.get_increment_url}}">
-        add_shopping_cart
+    <button class="button button--background--blue button--small" data-count-updater="cart" data-count-updater-url="{{product.to_cart_url}}" data-increment-url="{{cart_product.get_increment_url}}">
+      <span class="material-symbols-outlined icon icon--white icon--small">
+        {% if user.is_authenticated and product in user.profile.get_products %}add_{% endif %}shopping_cart
       </span>
     </button>
   </div>
