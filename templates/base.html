@@ -104,7 +104,7 @@
                     align_vertical_bottom
                   </span>
                   {% if user.is_authenticated %}
-                  <div class="badge {% if not user.profile.get_compare_items_count %}hidden{% endif %}" data-update-count="compare" data-update-count-method="hideIf0">
+                  <div class="badge {% if not user.profile.get_compare_items_count %}hidden{% endif %}" data-update-count="compare">
                     {{user.profile.get_compare_items_count}}
                   </div>
                   {% endif %}
@@ -120,7 +120,7 @@
                     favorite
                   </span>
                   {% if user.is_authenticated %}
-                  <div class="badge {% if not user.profile.get_favorite_items_count %}hidden{% endif %}" data-update-count="favorite" data-update-count-method="hideIf0">
+                  <div class="badge {% if not user.profile.get_favorite_items_count %}hidden{% endif %}" data-update-count="favorite">
                     {{user.profile.get_favorite_items_count}}
                   </div>
                   {% endif %}
@@ -133,7 +133,7 @@
                     shopping_cart
                   </span>
                   {% if user.is_authenticated %}
-                  <div class="badge {% if not user.profile.get_cart_items_count %}hidden{% endif %}" data-update-count="cart" data-update-count-method="productCard">
+                  <div class="badge {% if not user.profile.get_cart_items_count %}hidden{% endif %}" data-update-count="cart">
                     {{user.profile.get_cart_items_count}}  
                   </div>
                   {% endif %}

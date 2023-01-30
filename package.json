@@ -3,15 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "compile:css": "sass --watch static/sass/main.scss static/css/index.css"
+    "compile:css": "sass --watch sass/main.scss static/css/index.css"
   },
   "keywords": [],
   "author": "Polatov Samat",
   "license": "ISC",
-  "dependencies": {
-    "sass": "^1.56.1"
-  },
   "devDependencies": {
-    "@types/jquery": "^3.5.16"
+    "@types/jquery": "^3.5.16",
+    "sass": "^1.56.1"
   }
 }

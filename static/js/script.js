@@ -39,8 +39,9 @@ $(function() {
     $.ajax({
       url: $(this).data('countUpdaterUrl'),
     }).done(data => {
-      const target = $(`[data-update-count="${$(this).data('countUpdater')}"][data-update-count-method]`); 
-      const methodName = target.data('updateCountMethod');
+      const target = $(`[data-update-count="${$(this).data('countUpdater')}"]`); 
+      const methodName = $(this).data('countUpdaterMethod');
+      console.log(data, target, methodName);
       if (!(methodName in METHODS)) {
         console.error(`${methodName} not in ${Object.keys(METHODS)}.`)
         return;
