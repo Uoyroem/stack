@@ -2,28 +2,37 @@
 
 const METHODS = {
   hideIf0(data, target, updater) {
-    target.text(data.totalCount);
-    if (!data.totalCount) target.addClass('hidden')
-    else target.removeClass('hidden');
-
+    let count = parseInt(target.text());
     const icon = updater.find('.icon');
-    if (data.count) {
-      icon.removeClass('icon--gray');
-      icon.addClass('icon--blue');
+    // Если кнопка активна то у него есть icon--blue класс.
+    if (icon.hasClass('icon--blue')) {
+      icon.removeClass('icon--blue').addClass('icon--gray');
+      target.text(--count);
+      if (!count) {
+        target.addClass('hidden');
+      }
     } else {
-      icon.removeClass('icon--blue');
-      icon.addClass('icon--gray');
+      icon.removeClass('icon--gray').addClass('icon--blue');
+      target.text(++count);
+      target.removeClass('hidden');
     }
   },
   productCard(data, target, updater) {
-    target.text(data.totalCount);
-    if (!data.totalCount) target.addClass('hidden')
-    else target.removeClass('hidden');
+    let count = parseInt(target.text());
+    const icon = updater.find('.icon');
+    const badge = updater.find('.badge');
+    console.log(icon.text(), count)
 
-    if (data.count) {
-      if (target.find('.icon').text() == 'shopping_cart') {
-        
-      }
+    if (icon.text().includes('add_shopping_cart')) {
+      target.text(++count);
+      badge.text(parseInt(badge.text()) + 1);
+    } else {
+      icon.text('add_shopping_cart');
+      updater.data('countUpdaterUrl', `/cart/${data.id}/increment`);
+      target.removeClass('hidden');
+      target.text(++count);
+      badge.removeClass('hidden');
+      badge.text(1);
     }
   }
 };
@@ -41,12 +50,15 @@ $(function() {
     }).done(data => {
       const target = $(`[data-update-count="${$(this).data('countUpdater')}"]`); 
       const methodName = $(this).data('countUpdaterMethod');
-      console.log(data, target, methodName);
       if (!(methodName in METHODS)) {
         console.error(`${methodName} not in ${Object.keys(METHODS)}.`)
         return;
       }
       METHODS[methodName](data, target, $(this));
+      if (data.message != null) {
+        const messageItem = $(`<div class="messages__item">${data.message}</div>`).appendTo('.messages__inner');
+        setTimeout(() => messageItem.remove(), 3000);
+      }
     });
   });
 });

@@ -7,6 +7,7 @@ from . import models, forms
 from email.mime.text import MIMEText
 import smtplib, ssl
 from utils import products
+from enum import StrEnum
 
 
 class IndexView(View):
@@ -59,7 +60,6 @@ class CategoryView(View):
             else:
                 return False
             return True
-        print(products.get_values_specifications(category_product_list, request.GET))
         return render(request, 'category.html', {
             'price_min': price_min,
             'price_max': price_max,
@@ -69,60 +69,50 @@ class CategoryView(View):
         })
 
 
-def message_and_count(message: str, count: int, total_count: int | None = None) -> JsonResponse:
-    return JsonResponse({
-        'message': message,
-        'count': count,
-        'totalCount': total_count or count
-    })
-
-
-def to_compare(request: HttpRequest, pk: int) -> HttpResponse:
+def to_compare(request: HttpRequest, pk: int) -> JsonResponse:
     if request.user.is_anonymous:
-        return message_and_count('Вы должный зарегистрироваться', 0)
-
+        return JsonResponse({ 'message': 'Вы должный зарегистрироваться' })
     product = get_object_or_404(models.Product, id=pk)
     if product.compare.contains(request.user.profile):
         product.compare.remove(request.user.profile)
-        return message_and_count('Успешно удалено из сравнение.', 0, request.user.profile.get_compare_items_count())
+        return JsonResponse({ 'message': 'Успешно удалено из сравнение.' })
     else:
         if request.user.profile.compare_products.count() >= 4:
-            return message_and_count('Максимальное количество продуктов в сравнений.', 0, request.user.profile.get_compare_items_count())
+            return JsonResponse({ 'message': 'Максимальное количество продуктов в сравнений.' })
         product.compare.add(request.user.profile)
-    return message_and_count('Успешно добавлено в сравнение.', request.user.profile.get_compare_items_count())
+    return JsonResponse({ 'message': 'Успешно добавлено в сравнение.' }) 
 
 
 def to_cart(request: HttpRequest, pk: int) -> JsonResponse:
     if request.user.is_anonymous:
-        return message_and_count('Вы должный зарегистрироваться', 0)
-
+        return JsonResponse({ 'message': 'Вы должный зарегистрироваться' })
     product = get_object_or_404(models.Product, id=pk)
     try:
         cart_product = models.CartProduct.objects.get(
             profile=request.user.profile, product=product)
-        return message_and_count('Этот продукт уже есть в корзине.', cart_product.count, request.user.profile.get_cart_items_count())
+        return JsonResponse({ 'message': 'Этот продукт уже есть в корзине.' })
     except ObjectDoesNotExist:
         cart_product = models.CartProduct(
             profile=request.user.profile, product=product, count=1)
         cart_product.save()
-        return message_and_count('Успешно добавлено в корзину.', cart_product.count, request.user.profile.get_cart_items_count())
+        return JsonResponse({ 'message': 'Успешно добавлено в корзину.', 'id': cart_product.id })
 
 
 def to_favorities(request: HttpRequest, pk: int) -> JsonResponse:
     if request.user.is_anonymous:
-        return message_and_count('Вы должный зарегистрироваться', 0)
+        return JsonResponse({ 'message': 'Вы должный зарегистрироваться' })
 
     product = get_object_or_404(models.Product, id=pk)
 
     if product.favorite.contains(request.user.profile):
         product.favorite.remove(request.user.profile)
-        return message_and_count('Успешно удален с избранных.', 0, request.user.profile.get_favorite_items_count())
+        return JsonResponse({ 'message': 'Успешно удален с избранных.' })
 
     product.favorite.add(request.user.profile)
-    return message_and_count('Успешно добавлен в избранное.', 1, request.user.profile.get_favorite_items_count())
+    return JsonResponse({ 'message': 'Успешно добавлен в избранное.'})
 
 
-def cart_increment(request: HttpRequest, pk: int) -> JsonResponse:
+def cart_increment(request: HttpRequest, pk: int) -> HttpResponse:
     try:
         cart_product = models.CartProduct.objects.get(id=pk)
         cart_product.count += 1
@@ -130,10 +120,10 @@ def cart_increment(request: HttpRequest, pk: int) -> JsonResponse:
     except ObjectDoesNotExist:
         ...
     finally:
-        return message_and_count('', request.user.profile.get_cart_items_count())
+        return HttpResponse()
 
 
-def cart_decrement(request: HttpRequest, pk: int) -> JsonResponse:
+def cart_decrement(request: HttpRequest, pk: int) -> HttpResponse:
     try:
         cart_product = models.CartProduct.objects.get(id=pk)
         cart_product.count -= 1
@@ -144,8 +134,8 @@ def cart_decrement(request: HttpRequest, pk: int) -> JsonResponse:
     except ObjectDoesNotExist:
         ...
     finally:
-        return message_and_count('', request.user.profile.get_cart_items_count())
-
+        return HttpResponse() 
+    
 
 def cart_delete(request: HttpRequest, pk: int) -> JsonResponse:
     try:
@@ -153,19 +143,19 @@ def cart_delete(request: HttpRequest, pk: int) -> JsonResponse:
     except ObjectDoesNotExist:
         ...
     finally:
-        return message_and_count('', request.user.profile.get_cart_items_count())
+        return JsonResponse({ 'totalCount': request.user.profile.get_cart_items_count() })
 
 
 def compare_delete(request: HttpRequest, pk: int) -> JsonResponse:
     if request.user.is_anonymous:
-        return message_and_count('Вы должный зарегистрироваться', 0)
+        return JsonResponse({ 'message': 'Вы должный зарегистрироваться' })
     try:
         request.user.profile.compare_products.remove(
             get_object_or_404(models.Product, id=pk))
     except ObjectDoesNotExist:
         ...
     finally:
-        return message_and_count('', request.user.profile.get_compare_items_count())
+        return JsonResponse({ 'message': 'Успешно удален из сравнение.' })
 
 
 class SearchView(View):

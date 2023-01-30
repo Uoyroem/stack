@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
 :root {
   --blue: #0d6efd;
+  --red: #dc3545;
   --light-gray: #ededed;
   --gray: #999999;
   --transition-duration: 0.25s;
@@ -365,6 +366,25 @@
   min-height: 100vh;
 }
 
+.messages {
+  margin-top: 1rem;
+  z-index: 100;
+  position: fixed;
+  top: 0;
+  right: 0;
+}
+.messages__item {
+  border-radius: 0.5rem;
+  color: var(--blue);
+  background-color: whitesmoke;
+  padding: 1rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+.messages__item:last-child {
+  margin-bottom: 0;
+}
+
 .link {
   text-decoration: none;
   color: inherit;
@@ -489,7 +509,7 @@
   font-weight: bold;
   font-size: 0.8rem;
   color: white;
-  --size: 1.3rem;
+  --size: 1.4rem;
   z-index: 6;
   bottom: var(--size);
   left: var(--size);
@@ -500,6 +520,9 @@
 }
 .badge.hidden {
   display: none;
+}
+.badge.badge--background-color--red {
+  background-color: var(--red);
 }
 
 .section {

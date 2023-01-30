@@ -23,10 +23,11 @@
         </span>
       </button>
     </div>
-    <button class="button button--background--blue button--small" data-count-updater="cart" data-count-updater-url="{{product.to_cart_url}}" data-increment-url="{{cart_product.get_increment_url}}" data-count-updater-method="productCard">
-      <span class="material-symbols-outlined icon icon--white icon--small">
-        {% if user.is_authenticated and product in user.profile.get_products %}add_{% endif %}shopping_cart
-      </span>
+    <button class="badge-parent button button--background--blue button--small" data-count-updater="cart" data-count-updater-url="{% if cart_product is None %}{{product.to_cart_url}}{% else %}{{cart_product.get_increment_url}}{% endif %}" data-count-updater-method="productCard">
+        <span class="material-symbols-outlined icon icon--white icon--small">
+          {% if user.is_authenticated and product in user.profile.get_products %}add_{% endif %}shopping_cart
+        </span>
+        <div class="badge badge--background-color--red {% if cart_product is None %}hidden{% endif %}">{% if cart_product is None %}0{% else %}{{cart_product.count}}{% endif %}</div> 
     </button>
   </div>
 </div>
