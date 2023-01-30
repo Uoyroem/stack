@@ -401,6 +401,10 @@
 .link.link--hover-color--none {
   color: inherit;
 }
+.link.link--underline {
+  color: var(--blue);
+  text-decoration: underline;
+}
 
 .button {
   display: inline-flex;
@@ -435,6 +439,9 @@
 }
 .button.hidden {
   display: none;
+}
+.button--fullwidth {
+  width: 100%;
 }
 
 .icon {
@@ -482,6 +489,11 @@
 
 .input-and-button {
   display: flex;
+}
+
+.input-label-required::after {
+  content: " *";
+  color: var(--red);
 }
 
 .container {
@@ -544,6 +556,19 @@
 }
 .phone-list__item:last-child {
   margin-right: 0;
+}
+
+.login-section__header {
+  margin-bottom: 1rem;
+}
+.login-section__login-button {
+  margin-right: 1rem;
+}
+.login-section__signup-button {
+  margin: 0 1rem;
+}
+.login-section__login-inputs {
+  margin-bottom: 1rem;
 }
 
 /*# sourceMappingURL=index.css.map */

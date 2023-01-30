@@ -16,4 +16,9 @@
     &.link--hover-color--none {
         color: inherit;
     }
+
+    &.link--underline {
+        color: var(--blue);
+        text-decoration: underline;
+    }
 }

@@ -18,3 +18,8 @@
 .input-and-button {
     display: flex;
 }
+
+.input-label-required::after {
+    content: " *";
+    color: var(--red);
+}

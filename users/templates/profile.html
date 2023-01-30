@@ -1,9 +1,16 @@
 {% extends "base.html" %}
 
 {% block content %}
- {{ user }}
+<section class="section">
+  {{ user }}
  <form action="{% url 'logout' %}" method="post">
   {% csrf_token %}
-  <button type="submit" class="btn btn-primary rounded-0">Выйти</button>
+  
+    <button type="submit" class="btn btn-primary rounded-0">Выйти</button> 
+    
+  
+  
  </form>
+</section>
+ 
 {% endblock content %}
