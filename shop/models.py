@@ -5,8 +5,8 @@ from utils import format
 import uuid
 
 
-STAR = '<i class="bi bi-star me-1 d-flex align-items-center"></i>'
-STAR_ACTIVE = '<i class="bi bi-star-fill text-primary me-1 d-flex align-items-center"></i>'
+STAR = '<span class="material-symbols-outlined icon">star</span>'
+STAR_ACTIVE = '<span class="material-symbols-outlined icon icon--blue">star</span>'
 
 
 def product_default_properties():
@@ -101,10 +101,10 @@ class Category(models.Model):
         'shop.Category', on_delete=models.CASCADE, null=True, blank=True)
 
     def bread_crumps(self):
-        divider = '<span class="user-select-none me-3 ms-3">/</span>'
-        html = '<a class="lnk" href="{% url \'index\' %}">Главная</a>'
+        divider = '<span class="bread-crumps__divider">/</span>'
+        html = '<a class="link bread-crumps__link" href="/">Главная</a>'
         html += divider
-        html += f'<a class="lnk" href="{self.get_absolute_url()}">{self}</a>'
+        html += f'<a class="link bread-crumps__link" href="{self.get_absolute_url()}">{self}</a>'
         return html
 
     def __str__(self) -> str:

@@ -20,5 +20,22 @@
       }
     }
   }
-  
+}
+
+.bread-crumps {
+  &__link {
+    margin: 0 0.75em;
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  &__divider {
+    user-select: none;
+  }
 }

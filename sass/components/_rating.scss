@@ -1,0 +1,13 @@
+
+.rating {
+  display: flex;
+  align-items: center;
+
+  &__star {
+    margin-right: 0.5rem;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}

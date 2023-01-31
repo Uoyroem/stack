@@ -223,6 +223,19 @@
   margin-right: 0;
 }
 
+.bread-crumps__link {
+  margin: 0 0.75em;
+}
+.bread-crumps__link:first-child {
+  margin-left: 0;
+}
+.bread-crumps__link:last-child {
+  margin-right: 0;
+}
+.bread-crumps__divider {
+  user-select: none;
+}
+
 @keyframes catalog-closing {
   from {
     right: 0;
