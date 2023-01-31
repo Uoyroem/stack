@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="section login-section">
+  <div class="container">
+    <header class="login-section__header">
+      <h1>Вход в кабинет покупателя</h1>
+    </header>
+    <form method="post">
+      {% csrf_token %}
+      <div class="login-section__login-inputs">
+        
+        <span class="input-label-required">{{ form.username.label }}</span>
+        {{form.username}}
+      
+        <span class="input-label-required">{{ form.password.label }}</span>
+        {{form.password}}
+        
+      </div>
+      <div class="login-section__button-and-links">
+        <button type="submit" class="button button--background--blue login-section__login-button">Войти</button>
+        <a href="#" class="link link--underline">Восстановить пароль</a>
+        <a href="{% url 'signup' %}" class="link link--underline login-section__signup-button">Зарегистрироваться</a>
+      </div>
+    </form>
+  </div>
+</section>
+
+{% endblock content %}

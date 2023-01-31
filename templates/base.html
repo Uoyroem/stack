@@ -14,28 +14,44 @@
   <div class="mobile-navigation-links">
     <div class="container">
       <div class="mobile-navigation-links__inner">
-        <a class="link link--hover-color--none mobile-navigation-links__item mobile-navigation-links__item--active">
+        <a href="/" class="link link--hover-color--none mobile-navigation-links__item mobile-navigation-links__item--active">
           <span class="material-symbols-outlined icon icon--small">
             home
           </span>
           Главная
         </a>
+        <label for="search-input">
+          <a class="link link--hover-color--none mobile-navigation-links__item">
+            <span class="material-symbols-outlined icon icon--small">
+              search
+            </span>
+            Поиск
+          </a>
+        </label>
         <a class="link link--hover-color--none mobile-navigation-links__item">
-          <span class="material-symbols-outlined icon icon--small">
-            search
-          </span>
-          Поиск
-        </a>
-        <a class="link link--hover-color--none mobile-navigation-links__item">
-          <span class="material-symbols-outlined icon icon--small">
-            shopping_cart
-          </span>
+          <div class="badge-parent">
+            <span class="material-symbols-outlined icon icon--small">
+              shopping_cart
+            </span>
+            {% if user.is_authenticated %}
+              <div class="badge {% if not user.profile.get_cart_items_count %}hidden{% endif %}" data-update-count="cart">
+                {{user.profile.get_cart_items_count}}  
+              </div>
+            {% endif %}
+          </div>
           Корзина
         </a>
         <a class="link link--hover-color--none mobile-navigation-links__item">
-          <span class="material-symbols-outlined icon icon--small">
-            favorite
-          </span>
+          <div class="badge-parent">
+            <span class="material-symbols-outlined icon icon--small">
+              favorite
+            </span>
+            {% if user.is_authenticated %}
+            <div class="badge {% if not user.profile.get_favorite_items_count %}hidden{% endif %}" data-update-count="favorite">
+              {{user.profile.get_favorite_items_count}}
+            </div>
+            {% endif %}
+          </div>
           Избранные
         </a>
         <a class="link link--hover-color--none mobile-navigation-links__item">
@@ -93,7 +109,7 @@
         </div>
       </div>
     </div> <!-- .container -->
-    <header class="header">
+    <header id="header" class="header">
       <div class="container">
         <nav class="navigation">
           <div class="navigation__links">
@@ -165,7 +181,7 @@
             </button>
             <form class="navigation__search-form" method="post">
               <div class="input-and-button">
-                <input placeholder="Поиск" class="input input--fullwidth" type="text">
+                <input placeholder="Поиск" class="input input--fullwidth" id="search-input" type="text">
                 <button class="button button--background--blue input-button">
                   <span class="material-symbols-outlined icon icon--white icon--small">
                     search

@@ -2,15 +2,14 @@
 
 {% block content %}
 <section class="section">
-  {{ user }}
+  <div class="container">
+    {{ user }}
  <form action="{% url 'logout' %}" method="post">
   {% csrf_token %}
-  
     <button type="submit" class="btn btn-primary rounded-0">Выйти</button> 
-    
-  
-  
  </form>
+  </div>
+  
 </section>
  
 {% endblock content %}

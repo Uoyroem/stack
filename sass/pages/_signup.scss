@@ -1,0 +1,30 @@
+
+.signup-section {
+  &__signup-inputs {
+    margin-bottom: 1rem;
+
+    & > .input {
+      margin-bottom: 0.5rem;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  &__signup-button {
+    margin-right: 1rem;
+  }
+
+  &__button-and-link {
+    display: flex;
+
+    @media screen and (max-width: $mobile-breakpoint) {
+      flex-direction: column;
+      .signup-section__signup-button {
+        margin: 0;
+        margin-bottom: 0.5rem;
+      }
+    }
+  }
+}

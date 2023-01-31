@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from django.http import HttpRequest, HttpResponse
 from django.views.generic import View, FormView
-from .forms import SignupForm
+from .forms import SignupForm, LoginForm
 from django.contrib import auth
+from django.contrib.auth.views import LoginView
 
 
 class ProfileView(View):
@@ -11,7 +13,13 @@ class ProfileView(View):
             return redirect('login')
         return render(request, 'profile.html')
     
-    
+
+class UserLoginView(LoginView):
+    form_class = LoginForm
+    success_url = reverse_lazy('index')
+    template_name = 'login.html'
+
+   
 class SignupView(FormView):
     form_class = SignupForm
     template_name = 'signup.html'

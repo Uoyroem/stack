@@ -69,9 +69,14 @@ class CategoryView(View):
         })
 
 
+def is_anonymous_response():
+    return JsonResponse({ 'message': 'Вы должный войти или зарегистрироваться.' })
+    
+
+
 def to_compare(request: HttpRequest, pk: int) -> JsonResponse:
     if request.user.is_anonymous:
-        return JsonResponse({ 'message': 'Вы должный зарегистрироваться' })
+        return is_anonymous_response()
     product = get_object_or_404(models.Product, id=pk)
     if product.compare.contains(request.user.profile):
         product.compare.remove(request.user.profile)
@@ -85,7 +90,7 @@ def to_compare(request: HttpRequest, pk: int) -> JsonResponse:
 
 def to_cart(request: HttpRequest, pk: int) -> JsonResponse:
     if request.user.is_anonymous:
-        return JsonResponse({ 'message': 'Вы должный зарегистрироваться' })
+        return is_anonymous_response()
     product = get_object_or_404(models.Product, id=pk)
     try:
         cart_product = models.CartProduct.objects.get(
@@ -100,7 +105,7 @@ def to_cart(request: HttpRequest, pk: int) -> JsonResponse:
 
 def to_favorities(request: HttpRequest, pk: int) -> JsonResponse:
     if request.user.is_anonymous:
-        return JsonResponse({ 'message': 'Вы должный зарегистрироваться' })
+        return is_anonymous_response()
 
     product = get_object_or_404(models.Product, id=pk)
 
@@ -148,7 +153,7 @@ def cart_delete(request: HttpRequest, pk: int) -> JsonResponse:
 
 def compare_delete(request: HttpRequest, pk: int) -> JsonResponse:
     if request.user.is_anonymous:
-        return JsonResponse({ 'message': 'Вы должный зарегистрироваться' })
+        return is_anonymous_response()
     try:
         request.user.profile.compare_products.remove(
             get_object_or_404(models.Product, id=pk))

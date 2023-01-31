@@ -61,4 +61,8 @@ $(function() {
       }
     });
   });
+
+  $('.badge-parent').each(function() {
+    console.log(this);
+  });
 });

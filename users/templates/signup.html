@@ -1,13 +1,29 @@
 {% extends "base.html" %}
 
 {% block content %}
-<section>
-  <form action="signup/register" method="post">
-    {% csrf_token %}
-    <table>
-      {{form}}
-    </table>
-    <button type="submit" class="btn btn-primary rounded-0">Зарегистрироваться</button>
-  </form>
+<section class="section signup-section">
+  <div class="container">
+    <form action="signup/register" method="post">
+      {% csrf_token %}
+      <div class="signup-section__signup-inputs">
+        <span class="input-label-required">{{ form.username.label }}</span>
+        {{form.username}}
+        <span class="input-label-required">{{ form.email.label }}</span>
+        {{form.email}}
+        <span class="input-label-required">{{ form.phone_number.label }}</span>
+        {{form.phone_number}}
+        <span class="input-label-required">{{ form.password1.label }}</span>
+        {{form.password1}}
+        <span class="input-label-required">{{ form.password2.label }}</span>
+        {{form.password2}}
+      </div>
+      <div class="signup-section__button-and-link">
+        <button type="submit" class="button button--background--blue signup-section__signup-button">Зарегистрироваться</button>
+        <a class="link link--underline" href="{% url 'login' %}">У меня есть аккаунт</a>
+      </div>
+      
+    </form>
+  </div>
+  
 </section>
 {% endblock content %}

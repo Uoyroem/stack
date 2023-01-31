@@ -12,10 +12,12 @@
   font-weight: bold;
   font-size: 0.80rem;
   color: white;
-  --size: 1.4rem;
+  --size: 1.2rem;
   z-index: 6;
-  bottom: var(--size);
-  left: var(--size);
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
   background-color: var(--blue);
   width: var(--size);
   height: var(--size);
