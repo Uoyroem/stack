@@ -2,7 +2,7 @@
 
 const METHODS = {
   hideIf0(data, target, updater) {
-    let count = parseInt(target.text());
+    let count = parseInt(target.first().text());
     const icon = updater.find('.icon');
     // Если кнопка активна то у него есть icon--blue класс.
     if (icon.hasClass('icon--blue')) {
@@ -16,12 +16,12 @@ const METHODS = {
       target.text(++count);
       target.removeClass('hidden');
     }
+
   },
   productCard(data, target, updater) {
-    let count = parseInt(target.text());
+    let count = parseInt(target.first().text());
     const icon = updater.find('.icon');
     const badge = updater.find('.badge');
-    console.log(icon.text(), count)
 
     if (icon.text().includes('add_shopping_cart')) {
       target.text(++count);
@@ -59,10 +59,12 @@ $(function() {
         const messageItem = $(`<div class="messages__item">${data.message}</div>`).appendTo('.messages__inner');
         setTimeout(() => messageItem.remove(), 3000);
       }
+    }).fail(({responseJSON}) => {
+      if (responseJSON.message != null) {
+        if ($('.messages__item').toArray().some(item => $(item).text() == responseJSON.message)) return;
+        const messageItem = $(`<div class="messages__item messages__item--error">${responseJSON.message}</div>`).appendTo('.messages__inner');
+        setTimeout(() => messageItem.remove(), 3000);
+      }
     });
-  });
-
-  $('.badge-parent').each(function() {
-    console.log(this);
   });
 });

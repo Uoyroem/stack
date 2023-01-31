@@ -16,5 +16,11 @@
     &:last-child {
       margin-bottom: 0;
     }
+
+    &--error {
+      background-color: var(--red);
+      color: white;
+    }
   }
+  
 }

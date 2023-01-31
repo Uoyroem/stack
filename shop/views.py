@@ -7,7 +7,7 @@ from . import models, forms
 from email.mime.text import MIMEText
 import smtplib, ssl
 from utils import products
-from enum import StrEnum
+from utils.responses import is_anonymous_response
 
 
 class IndexView(View):
@@ -67,10 +67,6 @@ class CategoryView(View):
             'category_product_list': filter(filter_products, category_product_list),
             'values_specifications': products.get_values_specifications(category_product_list, request.GET)
         })
-
-
-def is_anonymous_response():
-    return JsonResponse({ 'message': 'Вы должный войти или зарегистрироваться.' })
     
 
 

@@ -1,22 +1,26 @@
 {% extends "base.html" %}
 
 {% block content %}
-<section>
-  <h4>Избранное</h4>
-  {% if user.is_authenticated %}
-  {% if favorite_list %}
-  <div class="d-flex align-items-center">
-    {% for favorite in favorite_list %}
-    {% include "product_card.html" with product=favorite %}
-    {% endfor %}
+<section class="section">
+  <div class="container">
+    <header class="section__header">
+      <h4>Избранное</h4>
+    </header>
+    {% if user.is_authenticated %}
+      {% if favorite_list %}
+      <div class="list-products list-products--scrollable">
+        {% for favorite in favorite_list %}
+          {% include "product_card.html" with product=favorite additional_classes="list-products__item" %}
+        {% endfor %}
+      </div>
+      {% else %}
+      <h4>Список избранного пуст</h4>
+      {% endif %}
+    {% else %}
+    <div>
+      Вы должный <a href="{% url 'signup' %}">зарегистрироваться</a> или <a href="{% url 'profile' %}">войти</a> что-бы увидеть товары в избранных.
+    </div>
+    {% endif %}
   </div>
-  {% else %}
-  <h4 class="mt-5 mb-5 fw-bold">Список избранного пуст</h4>
-  {% endif %}
-  {% else %}
-  <div>
-    Вы должный <a href="{% url 'signup' %}">зарегистрироваться</a> или <a href="{% url 'profile' %}">войти</a> что-бы увидеть товары в избранных
-  </div>
-  {% endif %}
 </section>
 {% endblock content %}

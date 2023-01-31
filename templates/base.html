@@ -28,7 +28,7 @@
             Поиск
           </a>
         </label>
-        <a class="link link--hover-color--none mobile-navigation-links__item">
+        <a class="link link--hover-color--none mobile-navigation-links__item" href="{% url 'cart' %}">
           <div class="badge-parent">
             <span class="material-symbols-outlined icon icon--small">
               shopping_cart
@@ -41,7 +41,7 @@
           </div>
           Корзина
         </a>
-        <a class="link link--hover-color--none mobile-navigation-links__item">
+        <a class="link link--hover-color--none mobile-navigation-links__item" href="{% url 'favorities' %}">
           <div class="badge-parent">
             <span class="material-symbols-outlined icon icon--small">
               favorite
@@ -54,7 +54,7 @@
           </div>
           Избранные
         </a>
-        <a class="link link--hover-color--none mobile-navigation-links__item">
+        <a class="link link--hover-color--none mobile-navigation-links__item" href="{% url 'profile' %}">
           <span class="material-symbols-outlined icon icon--small">
             person
           </span>
@@ -114,13 +114,13 @@
         <nav class="navigation">
           <div class="navigation__links">
             <div>
-              <a class="link navigation__link badge-parent" href="/profile">
+              <a class="link navigation__link badge-parent" href="{% url 'profile' %}">
                 <span class="material-symbols-outlined icon">
                   person
                 </span>
                 <span class="navigation__link-text">Профиль</span>
               </a>
-              <a class="link navigation__link badge-parent" href="#">
+              <a class="link navigation__link badge-parent" href="{% url 'compares' %}">
                 <div class="badge-parent">
                   <span class="material-symbols-outlined icon">
                     align_vertical_bottom
@@ -136,7 +136,7 @@
             </div>
             <h2 class="header__title first">Stack</h2>
             <div>
-              <a class="link navigation__link " href="#">
+              <a class="link navigation__link " href="{% url 'favorities' %}">
                 <div class="badge-parent">
                   <span class="material-symbols-outlined icon">
                     favorite
@@ -149,7 +149,7 @@
                 </div>
                 <span class="navigation__link-text">Избранные</span>
               </a>
-              <a class="link navigation__link badge-parent" href="#">
+              <a class="link navigation__link badge-parent" href="{% url 'cart' %}">
                 <div class="badge-parent">
                   <span class="material-symbols-outlined icon">
                     shopping_cart
@@ -179,9 +179,9 @@
                 <span class="navigation__menu-button-text">Каталог</span>
               </label>
             </button>
-            <form class="navigation__search-form" method="post">
+            <form class="navigation__search-form" action="{% url 'search' %}">
               <div class="input-and-button">
-                <input placeholder="Поиск" class="input input--fullwidth" id="search-input" type="text">
+                <input placeholder="Поиск" class="input input--fullwidth" name="query" id="search-input" type="text">
                 <button class="button button--background--blue input-button">
                   <span class="material-symbols-outlined icon icon--white icon--small">
                     search

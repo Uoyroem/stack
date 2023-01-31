@@ -25,9 +25,10 @@
 
   &__button-and-links {
     display: flex;
-
+    align-items: center;
     @media screen and (max-width: $mobile-breakpoint) {
       flex-direction: column;
+      align-items: unset;
 
       .login-section__login-button {
         margin: 0;

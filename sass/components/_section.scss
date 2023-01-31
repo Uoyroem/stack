@@ -1,4 +1,8 @@
 
 .section {
   margin: 2rem 0;
+
+  &__header {
+    margin-bottom: 1rem;
+  }
 }

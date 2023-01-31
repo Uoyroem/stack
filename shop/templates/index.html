@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
-<section class="section phone-list-section">
+<section class="section">
   <div class="container">
-    <header class="phone-list-section__header">
+    <header class="section__header">
       <h2>Смартфоны и планшеты</h2>
     </header>
-    <div class="phone-list">
+    <div class="list-products list-products--scrollable">
       {% for phone in phone_list %}
-        {% include "product_card.html" with product=phone additional_classes="phone-list__item"%}
+        {% include "product_card.html" with product=phone additional_classes="list-products__item"%}
       {% endfor %}
     </div>
   </div>
