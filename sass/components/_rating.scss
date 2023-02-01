@@ -2,12 +2,11 @@
 .rating {
   display: flex;
   align-items: center;
-
   &__star {
-    margin-right: 0.5rem;
+    font-size: 0.75rem;
+  }
 
-    &:last-child {
-      margin-right: 0;
-    }
+  &__count {
+    color: var(--blue);
   }
 }

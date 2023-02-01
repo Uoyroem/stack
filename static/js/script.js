@@ -67,4 +67,10 @@ $(function() {
       }
     });
   });
+
+  $('.product__img-container').on('click', function() {
+    $('.product__img-container.selected').removeClass('selected');
+    $(this).addClass('selected');
+    $('.product__main-img').attr('src', $(this).find('.product__img').attr('src'));
+  });
 });

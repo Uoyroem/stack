@@ -5,8 +5,8 @@ from utils import format
 import uuid
 
 
-STAR = '<span class="material-symbols-outlined icon">star</span>'
-STAR_ACTIVE = '<span class="material-symbols-outlined icon icon--blue">star</span>'
+STAR = '<span class="material-symbols-outlined icon rating__star">star</span>'
+STAR_ACTIVE = '<span class="material-symbols-outlined icon icon--blue rating__star">star</span>'
 
 
 def product_default_properties():
@@ -33,11 +33,10 @@ class Product(models.Model):
 
     def get_middle_rating_as_html(self) -> str:
         count = self.reviews.count()
-        count_html = f'<span class="text-primary ms-2">({count})</span>'
+        count_html = f'<span class="rating__count">({count})</span>'
         if not self.reviews.all():
             return STAR * 5 + count_html
         middle = sum(review.rating for review in self.reviews.all()) // count
-        print(middle, count, count - middle)
         return STAR_ACTIVE * middle + STAR * (5 - middle) + count_html
 
     def after_first_image(self) -> list[str]:
