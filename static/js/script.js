@@ -16,7 +16,26 @@ const METHODS = {
       target.text(++count);
       target.removeClass('hidden');
     }
-
+  },
+  changeFavorite(data, target, updater) {
+    this.hideIf0(data, target, updater);
+    const updaterText = updater.find('.text');
+    const icon = updater.find('.icon');
+    if (icon.hasClass('icon--blue')) {
+      updaterText.text('В избранном');
+    } else {
+      updaterText.text('В избранное');
+    }
+  },
+  changeCompare(data, target, updater) {
+    this.hideIf0(data, target, updater);
+    const updaterText = updater.find('.text');
+    const icon = updater.find('.icon');
+    if (icon.hasClass('icon--blue')) {
+      updaterText.text('В сравнении');
+    } else {
+      updaterText.text('Добавить в сравнение');
+    }
   },
   productCard(data, target, updater) {
     let count = parseInt(target.first().text());
@@ -38,6 +57,13 @@ const METHODS = {
 };
 
 
+function sendMessage(message, delayMs = 3000) {
+  if ($('.messages__item').toArray().some(item => $(item).text().trim() == message)) return;
+  const messageItem = $(`<div class="messages__item">${message}</div>`).appendTo('.messages__inner');
+  setTimeout(() => messageItem.remove(), delayMs);
+}
+
+
 $(function() {
   $('#catalog-active-checkbox').on('change', function() {
     const icon = $('#catalog-menu-open-button-icon, #catalog-menu-close-button-icon');
@@ -56,14 +82,11 @@ $(function() {
       }
       METHODS[methodName](data, target, $(this));
       if (data.message != null) {
-        const messageItem = $(`<div class="messages__item">${data.message}</div>`).appendTo('.messages__inner');
-        setTimeout(() => messageItem.remove(), 3000);
+        sendMessage(data.message)
       }
     }).fail(({responseJSON}) => {
       if (responseJSON.message != null) {
-        if ($('.messages__item').toArray().some(item => $(item).text() == responseJSON.message)) return;
-        const messageItem = $(`<div class="messages__item messages__item--error">${responseJSON.message}</div>`).appendTo('.messages__inner');
-        setTimeout(() => messageItem.remove(), 3000);
+        sendMessage(responseJSON.message);
       }
     });
   });
@@ -72,5 +95,9 @@ $(function() {
     $('.product__img-container.selected').removeClass('selected');
     $(this).addClass('selected');
     $('.product__main-img').attr('src', $(this).find('.product__img').attr('src'));
+  });
+
+  $('.accordion__header').on('click', function() {
+    $(this).parent('.accordion').toggleClass('active');
   });
 });

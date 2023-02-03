@@ -51,4 +51,28 @@
   &__padding-0-25rem {
     padding-right: 0.25rem;
   }
+
+  &__sku {
+    color: var(--gray);
+  }
+
+  &__sku-info {
+    margin-bottom: 2rem;
+  }
+}
+
+.specification {
+  margin-bottom: 1rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &__name {
+    color: var(--gray)
+  }
+}
+
+.review_list {
+  margin: 1rem 0;
 }

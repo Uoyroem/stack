@@ -1,0 +1,37 @@
+
+.accordion {
+  
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--gray);
+    margin: 0.75rem 0;
+    &-text {
+      display: flex;
+      align-items: center;
+    }
+    &-icon {
+      margin-right: 0.5rem;
+    }
+  }
+
+  &__content {
+    display: none;
+  }
+
+  &.active {
+    .accordion__header {
+      color: var(--text-color);
+    }
+
+    .accordion__content {
+      display: block;
+    }
+
+    .accordion__expand-icon {
+      transform: rotateZ(180deg);
+    }
+  }
+}

@@ -48,27 +48,6 @@ class Product(models.Model):
     def specifications(self) -> dict[str, str] | None:
         return self.properties['specifications']
 
-    def specifications_as_span_list(self) -> list[str]:
-        specifications = dict(list(self.specifications().items())[:6])
-
-        return map(
-            lambda name: f'<span class="specification-name">{name}: </span><span class="specification-value">{specifications[name]}</span>',
-            specifications)
-
-    def specifications_first_part_as_trs(self) -> list[str]:
-        specifications = self.specifications()
-        return map(
-            lambda key: f'<tr><td>{key}</td><td>{specifications[key]}</td></tr>',
-            list(specifications.keys())[:len(specifications) // 2]
-        )
-
-    def specifications_second_part_as_trs(self) -> list[str]:
-        specifications = self.specifications()
-        return map(
-            lambda key: f'<tr><td>{key}</td><td>{specifications[key]}</td></tr>',
-            list(specifications.keys())[len(specifications) // 2:]
-        )
-
     def to_favorite_url(self) -> str:
         return reverse('to_favorite', kwargs={'pk': self.id})
 
@@ -92,7 +71,12 @@ class Product(models.Model):
 
     def get_compare_delete_url(self):
         return reverse('compare_delete', kwargs={'pk': self.id})
-
+    
+    @property
+    def sku(self):
+        return 15687 + self.id 
+    
+    
 
 class Category(models.Model):
     name = models.CharField(max_length=256)

@@ -1,9 +1,9 @@
 .icon {
     text-align: center;
-    color: var(--text-color);
+    color: inherit;
     user-select: none;
     font-size: 2rem !important;
-    font-weight: 300;
+    font-weight: inherit;
 
     &.icon--white {
         color: white;
