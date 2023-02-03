@@ -76,3 +76,44 @@
 .review_list {
   margin: 1rem 0;
 }
+
+#review-form-active {
+  display: none;
+  &:checked ~ .review-form {
+    display: block;
+  }
+  
+  &:checked + .review-form-active-button {
+    display: none;
+  }
+}
+
+.review-form {
+  width: 100%;
+  max-width: $mobile-breakpoint;
+  background-color: var(--light-gray);
+  display: none;
+  padding: 1rem;
+
+  &__cancel {
+    width: 100%;
+    text-align: right;
+    font-size: 0.8rem;
+    color: var(--blue);
+  }
+
+  &__rating {
+    margin-bottom: 1rem;
+    &-input {
+      display: none;
+    }
+  }
+
+  &__review {
+    padding: 0.5rem;
+    resize: vertical;
+    width: 100%;
+    min-height: 150px;
+    margin-bottom: 1rem;
+  }
+}

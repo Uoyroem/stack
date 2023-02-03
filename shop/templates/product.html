@@ -76,7 +76,7 @@
             </span>
           </div>
           <div class="accordion__content">
-            {{product.description}}
+            <p>{{product.description}}</p>
           </div>
         </div>
         <hr>
@@ -116,10 +116,38 @@
               {% endfor %}
             </div>
             
-
-            <button class="button button--background--blue">
-              Написать отзыв
+            <input id="review-form-active" type="checkbox">
+            <button class="review-form-active-button button button--background--blue">
+              <label for="review-form-active">Написать отзыв</label> 
             </button>
+            <form class="review-form" action="" method="post">
+              <div class="review-form__cancel">
+                <label for="review-form-active">Отмена</label>
+              </div>
+              <div class="review-form__rating">
+                <input class="review-form__rating-input" type="number" name="rating" required>
+                <div>
+                  <span class="material-symbols-outlined icon">
+                    star
+                  </span>
+                  <span class="material-symbols-outlined icon">
+                    star
+                  </span>
+                  <span class="material-symbols-outlined icon">
+                    star
+                  </span>
+                  <span class="material-symbols-outlined icon">
+                    star
+                  </span>
+                  <span class="material-symbols-outlined icon">
+                    star
+                  </span>
+                </div>
+              </div>
+              <label class="input-label-required" for="review">Отзыв</label>
+              <textarea id="review" placeholder="Отзыв" class="review-form__review" required></textarea>
+              <button class="button button--background--blue button--fullwidth">Оставить отзыв</button>
+            </form>
           </div>
         </div>
       </div>
