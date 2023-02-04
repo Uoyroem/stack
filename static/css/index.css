@@ -508,12 +508,32 @@ hr {
 .review-form__rating-input {
   display: none;
 }
-.review-form__review {
+.review-form__review-text {
   padding: 0.5rem;
   resize: vertical;
+  font: inherit;
   width: 100%;
   min-height: 150px;
   margin-bottom: 1rem;
+}
+.review-form__rating-stars {
+  display: flex;
+}
+
+.review {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  flex: 30% 70%;
+}
+.review__info {
+  margin-bottom: 1rem;
+}
+.review__post-date {
+  color: var(--gray);
+}
+.review__text-label {
+  font-weight: bold;
 }
 
 .link {
@@ -580,7 +600,7 @@ hr {
   color: inherit;
   user-select: none;
   font-size: 2rem !important;
-  font-weight: inherit;
+  font-weight: inherit !important;
 }
 .icon.icon--white {
   color: white;

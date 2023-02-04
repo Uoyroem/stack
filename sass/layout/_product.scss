@@ -109,11 +109,35 @@
     }
   }
 
-  &__review {
+  &__review-text {
     padding: 0.5rem;
     resize: vertical;
+    font: inherit;
     width: 100%;
     min-height: 150px;
     margin-bottom: 1rem;
   }
+
+  &__rating-stars {
+    display: flex;
+  }
 }
+
+.review {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  flex: 30% 70%;
+  &__info {
+    margin-bottom: 1rem;
+  }
+  &__post-date {
+    color: var(--gray);
+  }
+  &__text {
+    &-label {
+      font-weight: bold;
+    }
+  }
+}
+

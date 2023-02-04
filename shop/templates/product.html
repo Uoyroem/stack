@@ -111,43 +111,64 @@
           <div class="accordion__content">
             <div class="review_list">
               {% for review in product.reviews.all %}
+              <div class="review">
+                <div class="review__info">
+                  <div class="review__rating">
+                    {% autoescape off %}
+                      {{review.rating_as_html}}
+                    {% endautoescape %}
+                  </div>
+                  <div class="review__username">
+                    {{review.sender.user}}
+                  </div>
+                  <div class="review__post-date">
+                    {{review.post_date}}
+                  </div>
+                </div>
+                <div class="review__text">
+                  <span class="review__text-label">Комментарий: </span>{{review.review_text}}
+                </div>
+              </div>
+              <hr>
               {% empty %}
               <h3>Отзывов еще никто не оставлял</h3>
               {% endfor %}
             </div>
-            
-            <input id="review-form-active" type="checkbox">
-            <button class="review-form-active-button button button--background--blue">
-              <label for="review-form-active">Написать отзыв</label> 
-            </button>
-            <form class="review-form" action="" method="post">
-              <div class="review-form__cancel">
-                <label for="review-form-active">Отмена</label>
-              </div>
-              <div class="review-form__rating">
-                <input class="review-form__rating-input" type="number" name="rating" required>
-                <div>
-                  <span class="material-symbols-outlined icon">
-                    star
-                  </span>
-                  <span class="material-symbols-outlined icon">
-                    star
-                  </span>
-                  <span class="material-symbols-outlined icon">
-                    star
-                  </span>
-                  <span class="material-symbols-outlined icon">
-                    star
-                  </span>
-                  <span class="material-symbols-outlined icon">
-                    star
-                  </span>
+            {% if product not in user.profile.my_review_products %}
+              <input id="review-form-active" type="checkbox">
+              <button class="review-form-active-button button button--background--blue">
+                <label for="review-form-active">Написать отзыв</label> 
+              </button>
+              <form class="review-form" method="post">
+                {% csrf_token %}
+                <div class="review-form__cancel">
+                  <label for="review-form-active">Отмена</label>
                 </div>
-              </div>
-              <label class="input-label-required" for="review">Отзыв</label>
-              <textarea id="review" placeholder="Отзыв" class="review-form__review" required></textarea>
-              <button class="button button--background--blue button--fullwidth">Оставить отзыв</button>
-            </form>
+                <div class="review-form__rating">
+                  <input class="review-form__rating-input" type="number" name="rating" required>
+                  <div class="review-form__rating-stars">
+                    <span class="material-symbols-outlined icon">
+                      star
+                    </span>
+                    <span class="material-symbols-outlined icon">
+                      star
+                    </span>
+                    <span class="material-symbols-outlined icon">
+                      star
+                    </span>
+                    <span class="material-symbols-outlined icon">
+                      star
+                    </span>
+                    <span class="material-symbols-outlined icon">
+                      star
+                    </span>
+                  </div>
+                </div>
+                <label class="input-label-required" for="review">Отзыв</label>
+                <textarea id="review" placeholder="Отзыв" name="review_text" class="review-form__review-text" required></textarea>
+                <button type="submit" class="button button--background--blue button--fullwidth">Оставить отзыв</button>
+              </form>
+            {% endif %}
           </div>
         </div>
       </div>

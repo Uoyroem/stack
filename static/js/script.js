@@ -100,4 +100,15 @@ $(function() {
   $('.accordion__header').on('click', function() {
     $(this).parent('.accordion').toggleClass('active');
   });
+
+  $('.review-form__rating-stars .icon').hover(
+    function() {
+      $(this).prevAll().addBack().addClass('icon--blue');
+    }, function() {
+      $(this).prevAll().addBack().filter(':not([data-selected])').removeClass('icon--blue');
+    }).on('click', function() {
+      $('.review-form__rating-stars .icon').removeClass('icon--blue').removeAttr('data-selected');
+      $('.review-form__rating-input').val($(this).index() + 1);
+      $(this).prevAll().addBack().addClass('icon--blue').attr('data-selected', true);
+    });
 });
