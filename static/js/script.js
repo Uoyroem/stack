@@ -53,6 +53,9 @@ const METHODS = {
       badge.removeClass('hidden');
       badge.text(1);
     }
+  },
+  productCart(data, target, updater) {
+    
   }
 };
 

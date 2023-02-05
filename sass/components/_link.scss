@@ -1,6 +1,6 @@
 .link {
     text-decoration: none;
-    color: inherit;
+    color: var(--text-color);
     border-radius: 0;
     transition: color var(--transition-duration);
     cursor: pointer;
@@ -13,11 +13,11 @@
         color: var(--blue);
     }
 
-    &.link--hover-color--none {
-        color: inherit;
+    &--hover-color--none {
+        color: var(--text-color) !important;
     }
 
-    &.link--underline {
+    &--underline {
         color: var(--blue);
         text-decoration: underline;
     }

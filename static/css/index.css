@@ -34,6 +34,10 @@ hr {
   margin: 0.5rem 0;
 }
 
+.text--color--blue {
+  color: var(--blue);
+}
+
 .header {
   display: flex;
   flex-direction: column;
@@ -538,7 +542,7 @@ hr {
 
 .link {
   text-decoration: none;
-  color: inherit;
+  color: var(--text-color);
   border-radius: 0;
   transition: color var(--transition-duration);
   cursor: pointer;
@@ -549,10 +553,10 @@ hr {
 .link:hover {
   color: var(--blue);
 }
-.link.link--hover-color--none {
-  color: inherit;
+.link--hover-color--none {
+  color: var(--text-color) !important;
 }
-.link.link--underline {
+.link--underline {
   color: var(--blue);
   text-decoration: underline;
 }
@@ -593,6 +597,22 @@ hr {
 }
 .button--fullwidth {
   width: 100%;
+}
+.button--width--25 {
+  width: 25%;
+}
+
+.button-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid var(--gray);
+}
+.button-group > .button:hover {
+  background-color: #e6e6e6;
+}
+.button-group.hidden {
+  display: none;
 }
 
 .icon {

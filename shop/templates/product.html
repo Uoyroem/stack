@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load cart_tags %}
 {% block content %}
+{% cart_product_from_user user product as cart_product %}
 <section class="section">
   <div class="container">
     <div class="product">
@@ -38,12 +39,24 @@
         <h1 class="product__price">
           {{product.get_price}}
         </h1>
-        <button class="button button--background--blue button--fullwidth product__cart-button">
-          В корзину
-          <span class="material-symbols-outlined icon icon--small icon--white product__button-icon">
-            shopping_cart
-          </span>
-        </button>
+        <div>
+          <button class="button {% if cart_product %}hidden{% endif %} button--background--blue button--fullwidth product__cart-button" data-count-updater="cart" data-count-updater-url="{{product.to_cart_url}}" data-count-updater-method="productCart">
+            В корзину
+            <span class="material-symbols-outlined icon icon--small icon--white product__button-icon">
+              shopping_cart
+            </span>
+          </button>
+          <div class="button-group {% if not cart_product %}hidden{% endif %}">
+            <button class="button button--width--25">-</button>
+            <button class="button button--fullwidth">
+              <a class="link link--hover-color--none" href="{% url 'cart' %}">
+                <span class="text text--color--blue">В корзине <span>{{cart_product.count}}</span> шт</span> <br>
+                <span>Перейти</span>
+              </a>
+            </button>
+            <button class="button button--width--25">+</button>
+          </div>
+        </div>
         <button class="button" data-count-updater="favorite" data-count-updater-url="{{product.to_favorite_url}}" data-count-updater-method="changeFavorite">
           <span class="material-symbols-outlined icon icon--small product__padding-0-25rem {% if product in user.profile.favorite_products.all %}icon--blue{% else %}icon--gray{% endif %}">
             favorite
