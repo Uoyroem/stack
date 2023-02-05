@@ -1,19 +1,23 @@
 
 .accordion {
-  
-
   &__header {
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: space-between;
     color: var(--gray);
     margin: 0.75rem 0;
+    transition: color --transition-duration linear;
     &-text {
       display: flex;
       align-items: center;
     }
     &-icon {
       margin-right: 0.5rem;
+    }
+
+    &:hover {
+      color: var(--text-color);
     }
   }
 

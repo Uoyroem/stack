@@ -769,11 +769,13 @@ hr {
 }
 
 .accordion__header {
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: space-between;
   color: var(--gray);
   margin: 0.75rem 0;
+  transition: color --transition-duration linear;
 }
 .accordion__header-text {
   display: flex;
@@ -781,6 +783,9 @@ hr {
 }
 .accordion__header-icon {
   margin-right: 0.5rem;
+}
+.accordion__header:hover {
+  color: var(--text-color);
 }
 .accordion__content {
   display: none;

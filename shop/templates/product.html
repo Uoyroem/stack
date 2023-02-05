@@ -47,14 +47,14 @@
             </span>
           </button>
           <div class="button-group {% if not cart_product %}hidden{% endif %}">
-            <button class="button button--width--25">-</button>
+            <button class="button button--width--25" data-count-updater="cart" data-count-updater-url="{{cart_product.get_decrement_url}}" data-count-updater-method="cartDecrement">-</button>
             <button class="button button--fullwidth">
               <a class="link link--hover-color--none" href="{% url 'cart' %}">
-                <span class="text text--color--blue">В корзине <span>{{cart_product.count}}</span> шт</span> <br>
+                <span class="text text--color--blue">В корзине <span class="product__cart-count">{{cart_product.count}}</span> шт</span> <br>
                 <span>Перейти</span>
               </a>
             </button>
-            <button class="button button--width--25">+</button>
+            <button class="button button--width--25" data-count-updater="cart" data-count-updater-url="{{cart_product.get_increment_url}}" data-count-updater-method="cartIncrement">+</button>
           </div>
         </div>
         <button class="button" data-count-updater="favorite" data-count-updater-url="{{product.to_favorite_url}}" data-count-updater-method="changeFavorite">

@@ -1,20 +1,56 @@
 /// <reference types="jquery"/>
 
+// HELPERS
+function combine(...functions) {
+  return function(...args) {
+    return functions.reduce((value, currentFunction) => value == null ? currentFunction.apply(this, args) : currentFunction.call(this, value), null);
+  }
+}
+function increment(_, oldCount) {
+  return parseInt(oldCount.trim()) + 1;
+}
+function decrement(_, oldCount) {
+  return parseInt(oldCount.trim()) - 1;
+}
+function addOrRemoveClassesIf(addOrRemove, classes, predicate) {
+  return function(value) {
+    if (predicate.call(this, value)) {
+      if (addOrRemove == 'add' || addOrRemove == 'remove') {
+        $(this)[`${addOrRemove}Class`](classes);
+      } else {
+        console.error('The argument addOrRemove should be "add" or "remove"');
+      }
+    }
+    return value;
+  }
+}
+const addHiddenIf0 = addOrRemoveClassesIf('add', 'hidden', value => value == 0);
+function removeHiddenClass(value) {
+  $(this).removeClass('hidden');
+  return value;
+}
+
+const incrementAndRemoveHiddenClass = combine(increment, removeHiddenClass);
+const decrementAndAddHiddenIf0 = combine(decrement, addHiddenIf0);
+
+function productCartDecremented(value) {
+  if (value == 0) {
+    $(this).parent('.button-group').addClass('hidden').prev().removeClass('hidden');
+  }
+  return value;
+}
+
+// Знаю что ужасно всё это выглядит, но пока это лучшее что мне пришло в голову. 
 const METHODS = {
   hideIf0(data, target, updater) {
-    let count = parseInt(target.first().text());
     const icon = updater.find('.icon');
     // Если кнопка активна то у него есть icon--blue класс.
     if (icon.hasClass('icon--blue')) {
       icon.removeClass('icon--blue').addClass('icon--gray');
-      target.text(--count);
-      if (!count) {
-        target.addClass('hidden');
-      }
+      target.text(decrementAndAddHiddenIf0);
     } else {
       icon.removeClass('icon--gray').addClass('icon--blue');
-      target.text(++count);
-      target.removeClass('hidden');
+      target.text(incrementAndRemoveHiddenClass);
     }
   },
   changeFavorite(data, target, updater) {
@@ -38,24 +74,35 @@ const METHODS = {
     }
   },
   productCard(data, target, updater) {
-    let count = parseInt(target.first().text());
     const icon = updater.find('.icon');
     const badge = updater.find('.badge');
 
     if (icon.text().includes('add_shopping_cart')) {
-      target.text(++count);
-      badge.text(parseInt(badge.text()) + 1);
+      target.text(increment);
+      badge.text(increment);
     } else {
       icon.text('add_shopping_cart');
       updater.data('countUpdaterUrl', `/cart/${data.id}/increment`);
-      target.removeClass('hidden');
-      target.text(++count);
-      badge.removeClass('hidden');
-      badge.text(1);
+      target.text(incrementAndRemoveHiddenClass);
+      badge.text(incrementAndRemoveHiddenClass);
     }
   },
   productCart(data, target, updater) {
-    
+    updater.addClass('hidden');
+    const buttonGroup = updater.next();
+    target.text(incrementAndRemoveHiddenClass);
+    buttonGroup.removeClass('hidden');
+    buttonGroup.find('.product__cart-count').text(1);
+    buttonGroup.children().first().attr('data-count-updater-url', `/cart/${data.id}/decrement`).end()
+                          .last().attr('data-count-updater-url', `/cart/${data.id}/increment`);
+  },
+  cartIncrement(data, target, updater) {
+    target.text(increment);
+    updater.prev().find('.product__cart-count').text(increment);
+  },
+  cartDecrement(data, target, updater) {
+    target.text(decrementAndAddHiddenIf0);
+    updater.next().find('.product__cart-count').text(combine(decrement, productCartDecremented));
   }
 };
 
@@ -79,6 +126,7 @@ $(function() {
     }).done(data => {
       const target = $(`[data-update-count="${$(this).data('countUpdater')}"]`); 
       const methodName = $(this).data('countUpdaterMethod');
+      
       if (!(methodName in METHODS)) {
         console.error(`${methodName} not in ${Object.keys(METHODS)}.`)
         return;
