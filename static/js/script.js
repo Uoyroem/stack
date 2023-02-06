@@ -33,12 +33,7 @@ function removeHiddenClass(value) {
 const incrementAndRemoveHiddenClass = combine(increment, removeHiddenClass);
 const decrementAndAddHiddenIf0 = combine(decrement, addHiddenIf0);
 
-function productCartDecremented(value) {
-  if (value == 0) {
-    $(this).parent('.button-group').addClass('hidden').prev().removeClass('hidden');
-  }
-  return value;
-}
+
 
 // Знаю что ужасно всё это выглядит, но пока это лучшее что мне пришло в голову. 
 const METHODS = {
@@ -102,7 +97,12 @@ const METHODS = {
   },
   cartDecrement(data, target, updater) {
     target.text(decrementAndAddHiddenIf0);
-    updater.next().find('.product__cart-count').text(combine(decrement, productCartDecremented));
+    updater.next().find('.product__cart-count').text(combine(decrement, function(value) {
+      if (value == 0) {
+        $(this).parents('.button-group').addClass('hidden').prev().removeClass('hidden');
+      }
+      return value;
+    }));
   }
 };
 
@@ -161,5 +161,14 @@ $(function() {
       $('.review-form__rating-stars .icon').removeClass('icon--blue').removeAttr('data-selected');
       $('.review-form__rating-input').val($(this).index() + 1);
       $(this).prevAll().addBack().addClass('icon--blue').attr('data-selected', true);
+    });
+
+    $('.tabs .tabs__tab[data-active-tab-content]').on('click', function() {
+      $(this).siblings().removeClass('active');
+      $(this).addClass('active');
+      
+      const tabContent = $(`#${$(this).data('activeTabContent')}`);
+      tabContent.siblings().removeClass('active');
+      tabContent.addClass('active');
     });
 });

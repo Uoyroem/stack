@@ -59,6 +59,58 @@
   &__sku-info {
     margin-bottom: 2rem;
   }
+
+  &__accordions {
+    @media screen and (min-width: $mobile-breakpoint) {
+      display: none;
+    }
+  }
+
+  &__tabs {
+    display: none;
+    @media screen and (min-width: $mobile-breakpoint) {
+      display: block;
+    }
+  }
+
+  &__tab {
+    margin-right: 1rem;
+    padding: 0.5rem;
+
+    &:first-child {
+      padding-left: 0;
+    }
+    &:last-child {
+      margin-right: 0;
+
+      padding-right: 0;
+    }
+  }
+
+  &__tab-specifications {
+    &-item {
+      display: flex;
+      align-items: center;
+      
+    }
+
+    &-dots {
+      width: 100%;
+      border-bottom: 1px dotted var(--gray);
+    }
+
+    &-name {
+      padding: 0.25rem;
+      max-width: 200px;
+    }
+
+    &-value {
+      padding: 0.25rem;
+
+      width: 100%;
+      max-width: 200px;
+    }
+  }
 }
 
 .specification {

@@ -5,6 +5,10 @@
     transition: color var(--transition-duration);
     cursor: pointer;
 
+    &--color--blue {
+        color: var(--blue);
+    }
+
     &:focus {
         outline: none;
     }

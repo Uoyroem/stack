@@ -1,0 +1,37 @@
+
+.tabs {
+  &__header {
+
+    
+  }
+
+  &__tab {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gray);
+
+    &:hover, &.active {
+      color: var(--text-color);
+    }
+
+    &-icon {
+      margin-right: 0.5rem;
+    }
+
+    &-content {
+      display: none;
+      &.active {
+        display: block;
+      }
+    }
+  }
+
+
+  &__contents {
+
+  }
+
+  
+}
