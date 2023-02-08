@@ -12,70 +12,114 @@
         {% endautoescape %}
         </div>
         <h3>{{product.name}}</h3>
-        <a href="#" class="link link--hover-color--none">
-          <div class="rating">
-          {% autoescape off %}
-            {{product.get_middle_rating_as_html}}
-          {% endautoescape %}
+        <div class="product__up-buttons-and-sku-info">
+          <div class="product__up-buttons">
+            <a href="#" class="link link--hover-color--none">
+              <div class="rating">
+              {% autoescape off %}
+                {{product.get_middle_rating_as_html}}
+              {% endautoescape %}
+              </div>
+            </a>
+            <div class="product__fc-buttons-2">
+              <button class="button" data-count-updater="favorite" data-count-updater-url="{{product.to_favorite_url}}" data-count-updater-method="changeFavorite">
+                <span class="material-symbols-outlined icon icon--small product__padding-0-25rem {% if product in user.profile.favorite_products.all %}icon--blue{% else %}icon--gray{% endif %}">
+                  favorite
+                </span>
+                <span class="text">
+                  {% if product in user.profile.favorite_products.all %}В избранном{% else %}В избранное{% endif %}
+                </span>
+              </button>
+              <button class="button" data-count-updater="compare" data-count-updater-url="{{product.to_compare_url}}" data-count-updater-method="changeCompare">
+                <span class="material-symbols-outlined icon icon--small product__padding-0-25rem {% if product in user.profile.compare_products.all %}icon--blue{% else %}icon--gray{% endif %}">
+                  align_vertical_bottom
+                </span>
+                <span class="text">
+                  {% if product in user.profile.compare_products.all %}В сравнении{% else %}Добавить в сравнение{% endif %}
+                </span>
+              </button>
+            </div>
           </div>
-        </a>
+          <div class="product__sku-info product__sku-info-2">
+            <span class="product__sku">арт.</span> {{product.sku}}
+          </div>
+        </div>
       </header>
-      <div class="product__slider">
-        <img class="product__main-img" src="{{product.first_image}}" alt="">
-        <div class="product__img-list-container">
-          <div class="product__img-list">
-            <div class="product__img-container selected">
-              <img class="product__img" src="{{product.first_image}}" alt="">
+      <div class="product__content">
+        <div class="product__slider-and-specifications">
+          <div class="product__slider">
+            <img class="product__main-img" src="{{product.first_image}}" alt="">
+            <div class="product__img-list-container">
+              <div class="product__img-list">
+                <div class="product__img-container selected">
+                  <img class="product__img" src="{{product.first_image}}" alt="">
+                </div>
+                {% for image in product.after_first_image %}
+                <div class="product__img-container">
+                  <img class="product__img" src="{{image}}" alt="">
+                </div>
+                {% endfor %}
+              </div>
             </div>
-            {% for image in product.after_first_image %}
-            <div class="product__img-container">
-              <img class="product__img" src="{{image}}" alt="">
+          </div>
+          <div class="product__specifications">
+            <h4 class="product__specifications-header">Характеристики</h4>
+            <div>
+              {% for name, value in product.specifications.items %}
+                <div class="specification">
+                  <span class="specification__name">{{name}}: </span>
+                  <span class="specification__value">{{value}}</span>
+                </div>
+              {% endfor %}
             </div>
-            {% endfor %}
           </div>
         </div>
-      </div>
-      <div>
-        <h1 class="product__price">
-          {{product.get_price}}
-        </h1>
         <div>
-          <button class="button {% if cart_product %}hidden{% endif %} button--background--blue button--fullwidth product__cart-button" data-count-updater="cart" data-count-updater-url="{{product.to_cart_url}}" data-count-updater-method="productCart">
-            В корзину
-            <span class="material-symbols-outlined icon icon--small icon--white product__button-icon">
-              shopping_cart
-            </span>
-          </button>
-          <div class="button-group {% if not cart_product %}hidden{% endif %}">
-            <button class="button button--width--25" data-count-updater="cart" data-count-updater-url="{{cart_product.get_decrement_url}}" data-count-updater-method="cartDecrement">-</button>
-            <button class="button button--fullwidth">
-              <a class="link link--hover-color--none" href="{% url 'cart' %}">
-                <span class="text text--color--blue">В корзине <span class="product__cart-count">{{cart_product.count}}</span> шт</span> <br>
-                <span>Перейти</span>
-              </a>
+          <div class="product__price-and-button-group">
+            <h1 class="product__price">
+              {{product.get_price}}
+            </h1>
+            <div>
+              <button class="button {% if cart_product %}hidden{% endif %} button--background--blue button--fullwidth product__cart-button" data-count-updater="cart" data-count-updater-url="{{product.to_cart_url}}" data-count-updater-method="productCart">
+                В корзину
+                <span class="material-symbols-outlined icon icon--small icon--white product__button-icon">
+                  shopping_cart
+                </span>
+              </button>
+              <div class="button-group {% if not cart_product %}hidden{% endif %}">
+                <button class="button button--width--25" data-count-updater="cart" data-count-updater-url="{{cart_product.get_decrement_url}}" data-count-updater-method="cartDecrement">-</button>
+                <button class="button button--fullwidth">
+                  <a class="link link--hover-color--none" href="{% url 'cart' %}">
+                    <span class="text text--color--blue">В корзине <span class="product__cart-count">{{cart_product.count}}</span> шт</span> <br>
+                    <span>Перейти</span>
+                  </a>
+                </button>
+                <button class="button button--width--25" data-count-updater="cart" data-count-updater-url="{{cart_product.get_increment_url}}" data-count-updater-method="cartIncrement">+</button>
+              </div>
+            </div>
+          </div>
+          <div class="product__fc-buttons-1">
+            <button class="button" data-count-updater="favorite" data-count-updater-url="{{product.to_favorite_url}}" data-count-updater-method="changeFavorite">
+              <span class="material-symbols-outlined icon icon--small product__padding-0-25rem {% if product in user.profile.favorite_products.all %}icon--blue{% else %}icon--gray{% endif %}">
+                favorite
+              </span>
+              <span class="text">
+                {% if product in user.profile.favorite_products.all %}В избранном{% else %}В избранное{% endif %}
+              </span>
             </button>
-            <button class="button button--width--25" data-count-updater="cart" data-count-updater-url="{{cart_product.get_increment_url}}" data-count-updater-method="cartIncrement">+</button>
+            <button class="button" data-count-updater="compare" data-count-updater-url="{{product.to_compare_url}}" data-count-updater-method="changeCompare">
+              <span class="material-symbols-outlined icon icon--small product__padding-0-25rem {% if product in user.profile.compare_products.all %}icon--blue{% else %}icon--gray{% endif %}">
+                align_vertical_bottom
+              </span>
+              <span class="text">
+                {% if product in user.profile.compare_products.all %}В сравнении{% else %}Добавить в сравнение{% endif %}
+              </span>
+            </button>
           </div>
         </div>
-        <button class="button" data-count-updater="favorite" data-count-updater-url="{{product.to_favorite_url}}" data-count-updater-method="changeFavorite">
-          <span class="material-symbols-outlined icon icon--small product__padding-0-25rem {% if product in user.profile.favorite_products.all %}icon--blue{% else %}icon--gray{% endif %}">
-            favorite
-          </span>
-          <span class="text">
-            {% if product in user.profile.favorite_products.all %}В избранном{% else %}В избранное{% endif %}
-          </span>
-        </button>
-        <button class="button" data-count-updater="compare" data-count-updater-url="{{product.to_compare_url}}" data-count-updater-method="changeCompare">
-          <span class="material-symbols-outlined icon icon--small product__padding-0-25rem {% if product in user.profile.compare_products.all %}icon--blue{% else %}icon--gray{% endif %}">
-            align_vertical_bottom
-          </span>
-          <span class="text">
-            {% if product in user.profile.compare_products.all %}В сравнении{% else %}Добавить в сравнение{% endif %}
-          </span>
-        </button>
       </div>
       <hr>
-      <div class="product__sku-info">
+      <div class="product__sku-info product__sku-info-1">
         <span class="product__sku">арт.</span> {{product.sku}}
       </div>
       <div class="product__accordions">
@@ -220,8 +264,25 @@
               </div>
               {% endfor %}
             </div>
-            <div>
-
+            <div class="product__tab-specifications-2">
+              <div class="product__tab-specifications-2-first-part">
+                {% for name, value in product.specifications_first_part.items %}
+                <div class="product__tab-specifications-item">
+                  <div class="product__tab-specifications-name">{{name}}</div>
+                  <div class="product__tab-specifications-dots"></div>
+                  <div class="product__tab-specifications-value">{{value}}</div>
+                </div>
+                {% endfor %}
+              </div>
+              <div class="product__tab-specifications-2-second-part">
+                {% for name, value in product.specifications_second_part.items %}
+                <div class="product__tab-specifications-item">
+                  <div class="product__tab-specifications-name">{{name}}</div>
+                  <div class="product__tab-specifications-dots"></div>
+                  <div class="product__tab-specifications-value">{{value}}</div>
+                </div>
+                {% endfor %}
+              </div>
             </div>
           </div>
           <div id="tab-reviews" class="tabs__tab-content">

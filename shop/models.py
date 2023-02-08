@@ -48,6 +48,14 @@ class Product(models.Model):
     def specifications(self) -> dict[str, str] | None:
         return self.properties['specifications']
 
+    def specifications_first_part(self):
+        specifications = self.specifications()
+        return dict(list(specifications.items())[:len(specifications) // 2])
+    
+    def specifications_second_part(self):
+        specifications = self.specifications()
+        return dict(list(specifications.items())[len(specifications) // 2:])
+    
     def to_favorite_url(self) -> str:
         return reverse('to_favorite', kwargs={'pk': self.id})
 

@@ -43,7 +43,19 @@
     padding-left: 0.25rem;
   }
 
+  &__price-and-button-group {
+
+    @media screen and (min-width: $first-breakpoint) {
+      width: 340px;
+      padding: 0.5rem;
+      border: 1px solid var(--light-gray);
+    }
+  }
+
   &__price {
+    @media screen and (min-width: $first-breakpoint) {
+      font-size: 1.5rem;
+    }
     font-size: 2.5rem;
     margin-bottom: 0.5rem;
   }
@@ -54,10 +66,27 @@
 
   &__sku {
     color: var(--gray);
-  }
 
+    
+  }
+  &__up-buttons-and-sku-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
   &__sku-info {
     margin-bottom: 2rem;
+    &-2 {
+      display: none;
+      @media screen and (min-width: $first-breakpoint) {
+        display: block;
+      }
+    }
+    &-1 {
+      @media screen and (max-width: $first-breakpoint) {
+        display: none;
+      }
+    }
   }
 
   &__accordions {
@@ -84,6 +113,70 @@
       margin-right: 0;
 
       padding-right: 0;
+    }
+  }
+
+  &__fc-buttons-1 {
+    @media screen and (min-width: $first-breakpoint) {
+      display: none;
+    }
+  }
+
+  &__slider-and-specifications {
+    display: flex;
+    @media screen and (max-width: $first-breakpoint) {
+      justify-content: center;
+    }
+  }
+
+  &__specifications {
+    @media screen and (max-width: $first-breakpoint) {
+      display: none;
+    }
+    &-header {
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  &__content {
+    display: block;
+
+    @media screen and (min-width: $first-breakpoint) {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+
+  &__up-buttons {
+    display: flex;
+    align-items: center;
+  }
+
+  &__fc-buttons-2 {
+    display: block;
+    @media screen and (max-width: $first-breakpoint) {
+      display: none;
+    }
+  }
+
+  &__tab-specifications-1 {
+    @media screen and (min-width: $first-breakpoint) {
+      display: none;
+    }
+  }
+
+  &__tab-specifications-2 {
+    width: 100%;
+    display: flex;
+    @media screen and (max-width: $first-breakpoint) {
+      display: none;
+    }
+
+    &-first-part {
+      width: 50%;
+    }
+    &-second-part {
+      width: 50%;
     }
   }
 
