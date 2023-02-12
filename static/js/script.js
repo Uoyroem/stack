@@ -1,6 +1,13 @@
 /// <reference types="jquery"/>
 
 // HELPERS
+function formatPrice(price, sep = ' ', denomination = '₸') {
+  if (!price) {
+    return null;
+  }
+  return [...price.toString()].reverse().join('').match(/\d{1,3}/g).reverse().map(part => [...part].reverse().join('')).join(sep) + ' ' + denomination;
+}
+
 function combine(...functions) {
   return function(...args) {
     return functions.reduce((value, currentFunction) => value == null ? currentFunction.apply(this, args) : currentFunction.call(this, value), null);
@@ -33,6 +40,21 @@ function removeHiddenClass(value) {
 const incrementAndRemoveHiddenClass = combine(increment, removeHiddenClass);
 const decrementAndAddHiddenIf0 = combine(decrement, addHiddenIf0);
 
+function cartRemoveIf0(cartProduct) {
+  return function(value) {
+    if (value == 0) {
+      const cartList = cartProduct.parent();
+      cartProduct.next().remove();
+      cartProduct.remove();
+      if (!cartList.children().length) {
+        const parent = cartList.parent()
+        parent.children().remove();
+        $('<div>Корзина пуста</div>').appendTo(parent);
+      }
+    }
+    return value;
+  }
+}
 
 
 // Знаю что ужасно всё это выглядит, но пока это лучшее что мне пришло в голову. 
@@ -103,6 +125,60 @@ const METHODS = {
       }
       return value;
     }));
+  },
+  cartProductIncrement(data, target, updater) {
+    const totalPrice = $('.cart-buy .cart-buy__info-price');
+    const cartProduct = $(updater).parents('.cart-product');
+    const productPrice = cartProduct.find('.cart-product__info-price');
+    const counter = updater.prev();
+    const count = parseInt(counter.text());
+    const price = parseInt(productPrice.text().split(' ').join('')) / count
+    totalPrice.text(function(_, oldPrice) {
+      oldPrice = oldPrice.split(' ').join('');
+      return formatPrice(parseInt(oldPrice) + price);
+    });
+    target.text(incrementAndRemoveHiddenClass);
+    counter.text(combine(increment, function(value) {
+      productPrice.text(formatPrice(price * value));
+      return value;
+    }));
+  },
+  cartProductDecrement(data, target, updater) {
+    target.text(decrementAndAddHiddenIf0);
+    const totalPrice = $('.cart-buy .cart-buy__info-price');
+    const cartProduct = $(updater).parents('.cart-product');
+    const productPrice = cartProduct.find('.cart-product__info-price');
+    const counter = updater.next();
+    const count = parseInt(counter.text());
+    const price = parseInt(productPrice.text().split(' ').join('')) / count
+    totalPrice.text(function(_, oldPrice) {
+      oldPrice = oldPrice.split(' ').join('');
+      return formatPrice(parseInt(oldPrice) - parseInt(price));
+    });
+    updater.next().text(combine(decrement, cartRemoveIf0(cartProduct), function(value) {
+      productPrice.text(formatPrice(price * value));
+      return value;
+    }));
+  },
+  cartProductDelete(data, target, updater) {
+    const totalPrice = $('.cart-buy .cart-buy__info-price');
+    const cartProduct = $(updater).parents('.cart-product');
+    const productPrice = cartProduct.find('.cart-product__info-price');
+    const counter = cartProduct.find('.cart-product__info-count');
+    const count = parseInt(counter.text());
+    const price = parseInt(productPrice.text().split(' ').join('')) / count;
+    totalPrice.text(function(_, oldPrice) {
+      oldPrice = oldPrice.split(' ').join('');
+      return formatPrice(parseInt(oldPrice) - price * count);
+    });
+    target.text(combine(function(_, oldCount) {
+      console.log(oldCount, count)
+      console.log(parseInt(oldCount) - count)
+      return parseInt(oldCount) - count
+    }, cartRemoveIf0(cartProduct), addHiddenIf0));
+    cartProduct.next().remove();
+    cartProduct.remove();
+    
   }
 };
 
@@ -170,5 +246,9 @@ $(function() {
       const tabContent = $(`#${$(this).data('activeTabContent')}`);
       tabContent.siblings().removeClass('active');
       tabContent.addClass('active');
+    });
+
+    $('.button.button--link[data-href]').on('click', function() {
+      location.replace($(this).data('href'));
     });
 });

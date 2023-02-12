@@ -1,63 +1,76 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h4>Корзина</h4>
-{% if user.is_authenticated %}
-<div>
-  {% if cart_list %}
-  <div class="d-flex">
-    <div>
-      {% for cart_product in cart_list %}
-      {% with product=cart_product.product %}
-      <div class="d-flex">
-        <img class="product__image me-4 ms-4" src="{{product.first_image}}" alt="">
-        <div class="me-4 ms-4">
-          <h3 class="fw-bold"><a class="lnk" href="{{product.get_absolute_url}}">{{product.name}}</a></h3>
-          <div>
-            <button class="btn rounded-0 ps-0" data-to="{{product.to_favorite_url}}">
-              <i
-                class="me-1 bi bi-heart{% if product in user.profile.favorite_products.all %}-fill text-primary{% endif %}"></i>
-              {% if product in user.profile.favorite_products.all %}В избранном{% else %}В избранное{% endif %}
-            </button>
-            <button class="btn rounded-0 ps-0" data-to="{{cart_product.get_delete_url}}">
-              <i class="me-1 bi bi-trash"></i>
-              Удалить
+<section class="section cart-section">
+  <div class="container">
+    <header class="cart-section__header">
+      <h1>Корзина</h1>
+    </header>
+    <div class="cart-info">
+      {% if user.is_authenticated %}
+        {% if cart_list %}
+          <div class="cart-list">
+            {% for cart_product in cart_list %}
+              {% with product=cart_product.product  %}
+                <div class="cart-product">
+                  <div class="cart-product__img-container">
+                    <img class="cart-product__img" src="{{product.first_image}}" alt="">
+                  </div>
+                  <div class="cart-product__info">
+                    <h3 class="cart-product__info-name">
+                      <a class="link link--hover-color--none" href="{{product.get_absolute_url}}">{{product.name}}</a>
+                    </h3>
+                    <h2 class="cart-product__info-price">{{cart_product.get_price}}</h2>
+                    <div class="cart-product__buttons">
+                      <div class="button-group button-group--width--min-content cart-product__button-group ">
+                        <button class="button button--small" data-count-updater="cart" data-count-updater-url="{{cart_product.get_decrement_url}}" data-count-updater-method="cartProductDecrement">-</button>
+                        <div class="cart-product__info-count">{{cart_product.count}}</div>
+                        <button class="button button--small" data-count-updater="cart" data-count-updater-url="{{cart_product.get_increment_url}}" data-count-updater-method="cartProductIncrement">+</button>
+                      </div>
+                      <hr class="cart-product__buttons-hr">
+                      <div>
+                        <button class="button" data-count-updater="favorite" data-count-updater-url="{{product.to_favorite_url}}" data-count-updater-method="changeFavorite">
+                          <span class="material-symbols-outlined icon icon--small cart-product__button-icon {% if product in user.profile.favorite_products.all %}icon--blue{% else %}icon--gray{% endif %}">
+                            favorite
+                          </span>
+                          <span class="text">
+                            {% if product in user.profile.favorite_products.all %}В избранном{% else %}В избранное{% endif %}
+                          </span>
+                        </button>
+                        <button class="button" data-count-updater="cart" data-count-updater-url="{{cart_product.get_delete_url}}" data-count-updater-method="cartProductDelete">
+                          <span class="material-symbols-outlined icon icon--small cart-product__button-icon">
+                            delete
+                          </span>
+                          Удалить
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <hr>
+              {% endwith %}
+            {% endfor %}
+          </div>
+          <div class="cart-buy">
+            <div class="cart-buy__info">
+              <h1 class="cart-buy__info-title">В корзине</h1>
+              <div class="cart-buy__info-count">Товаров: <span data-update-count="cart">{{user.profile.get_cart_items_count}}</span></div>
+              <h1 class="cart-buy__info-price">{{user.profile.get_cart_items_price}}</h1>
+            </div>
+            <button class="button button--link button--background--blue button--fullwidth" data-href="{% url 'new_order' %}">
+              Оформить заказ
             </button>
           </div>
-        </div>
-        <div class="me-4 ms-4">
-          <h4>{{cart_product.get_price}}</h4>
-          <div class="btn-group w-100">
-            <button class="btn rounded-0" data-to="{{cart_product.get_decrement_url}}">-</button>
-            <div class="p-2 pe-3 ps-3" style="background-color: #ededed;">{{cart_product.count}}</div>
-            <button class="btn rounded-0" data-to="{{cart_product.get_increment_url}}">+</button>
-          </div>
-        </div>
-      </div>
-      {% endwith %}
-      {% endfor %}
-    </div>
-    <div class="position-sticky" style="background-color: #ededed; height: min-content;">
-      <div class="p-3">
-        <h4>В корзине</h4>
-        <div class="mb-3">
-          <span>Товаров: {{user.profile.get_cart_items_count}}</span>
-        </div>
+        {% else %}
+        <div>Корзина пуста</div>
+        {% endif %}
+      {% else %}
         <div>
-          <h3>{{user.profile.get_cart_items_price}}</h3>
+          Вы должный <a href="{% url 'signup' %}">зарегистрироваться</a> или <a href="{% url 'profile' %}">войти</a> что-бы увидеть товары в избранных.
         </div>
-      </div>
-
-      <a href="{% url 'new_order' %}" class="btn btn-primary btn-lg rounded-0">Оформить заказ</a>
+      {% endif %}
     </div>
   </div>
-  {% else %}
-  <h4 class="fw-bold">Ваша корзина пуста</h4>
-  {% endif %}
-  {% else %}
-  <div>
-    Вы должный <a href="{% url 'signup' %}">зарегистрироваться</a> или <a href="{% url 'profile' %}">войти</a> что-бы увидеть товары в корзине
-  </div>
-</div>
-{% endif %}
+</section>
+
 {% endblock content %}

@@ -45,6 +45,7 @@
           </div>
         </div>
       </header>
+      <hr class="product__sku-info product__sku-info-2">
       <div class="product__content">
         <div class="product__slider-and-specifications">
           <div class="product__slider">
@@ -62,10 +63,11 @@
               </div>
             </div>
           </div>
+          {% if product.specifications %}
           <div class="product__specifications">
             <h4 class="product__specifications-header">Характеристики</h4>
             <div>
-              {% for name, value in product.specifications.items %}
+              {% for name, value in product.specifications.items|slice:":6" %}
                 <div class="specification">
                   <span class="specification__name">{{name}}: </span>
                   <span class="specification__value">{{value}}</span>
@@ -73,6 +75,9 @@
               {% endfor %}
             </div>
           </div>
+          {% else %}
+            <h3 class="product__specifications">Характеристики не указаны.</h3>
+          {% endif %}
         </div>
         <div>
           <div class="product__price-and-button-group">
@@ -118,11 +123,12 @@
           </div>
         </div>
       </div>
-      <hr>
       <div class="product__sku-info product__sku-info-1">
+        <hr>
         <span class="product__sku">арт.</span> {{product.sku}}
       </div>
       <div class="product__accordions">
+        {% if product.descriptiton %}
         <div class="accordion">
           <div class="accordion__header">
             <h4 class="accordion__header-text"><span class="material-symbols-outlined icon accordion__header-icon">
@@ -137,6 +143,8 @@
           </div>
         </div>
         <hr>
+        {% endif %}
+        {% if product.specifictions %}
         <div class="accordion">
           <div class="accordion__header">
             <h4 class="accordion__header-text"><span class="material-symbols-outlined icon accordion__header-icon">
@@ -156,6 +164,7 @@
           </div>
         </div>
         <hr>
+        {% endif %}
         <div class="accordion">
           <div class="accordion__header">
             <h4 class="accordion__header-text"><span class="material-symbols-outlined icon accordion__header-icon">
@@ -231,18 +240,23 @@
       </div>
       <div class="tabs product__tabs">
         <div class="tabs__header">
+          {% if product.description %}
           <div class="tabs__tab product__tab active" data-active-tab-content="tab-description">
             <span class="material-symbols-outlined icon tabs__tab-icon">
               feed
             </span>
             Описание
           </div>
+          {% endif %}
+          {% if product.speficiations %}
           <div class="tabs__tab product__tab" data-active-tab-content="tab-specifications">
             <span class="material-symbols-outlined icon tabs__tab-icon">
               tune
             </span>
             Характеристики
           </div>
+          {% endif %}
+         
           <div class="tabs__tab product__tab" data-active-tab-content="tab-reviews">
             <span class="material-symbols-outlined icon tabs__tab-icon">
               forum
@@ -251,9 +265,12 @@
           </div>
         </div>
         <div class="tabs__content">
+          {% if product.description %}
           <div id="tab-description" class="tabs__tab-content active">
             <p>{{product.description}}</p>
           </div>
+          {% endif %}
+          {% if product.speficiations %}
           <div id="tab-specifications" class="tabs__tab-content">
             <div class="product__tab-specifications-1">
               {% for name, value in product.specifications.items %}
@@ -285,6 +302,7 @@
               </div>
             </div>
           </div>
+          {% endif %}
           <div id="tab-reviews" class="tabs__tab-content">
             <div class="review_list">
               {% for review in product.reviews.all %}

@@ -14,7 +14,9 @@
         height: 3rem;
         padding: 0 1rem;
     }
-    
+    &--link {
+        
+    }
     &--font-weight--bold {
         font-weight: bold;
     }
@@ -53,5 +55,9 @@
 
     &.hidden {
         display: none;
+    }
+
+    &--width--min-content {
+        width: min-content;
     }
 }

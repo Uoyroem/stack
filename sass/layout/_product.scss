@@ -66,8 +66,6 @@
 
   &__sku {
     color: var(--gray);
-
-    
   }
   &__up-buttons-and-sku-info {
     display: flex;
@@ -83,7 +81,7 @@
       }
     }
     &-1 {
-      @media screen and (max-width: $first-breakpoint) {
+      @media screen and (min-width: $first-breakpoint) {
         display: none;
       }
     }
