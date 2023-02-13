@@ -253,5 +253,5 @@ $(function() {
       location.replace($(this).data('href'));
     });
 
-    setTimeout(() => $('.catalog').removeClass('hidden'), 500);
+    setTimeout(() => $('.catalog').removeClass('hidden'), 1500);
 });
