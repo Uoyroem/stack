@@ -18,6 +18,7 @@
   }
 }
 
+
 #catalog-active-checkbox {
   display: none;
 
@@ -47,6 +48,7 @@
   }
   @media screen and (max-width: $mobile-breakpoint) {
     animation: var(--animation-direction) linear catalog-closing;
+
     right: 100vw;
     width: 100vw;
     height: 100vh;
@@ -76,6 +78,10 @@
       height: max-content;
       background-color: white;
     }
+
+    &.hidden {
+      display: none !important;
+    }
   }
 
   &__grid {
@@ -83,5 +89,9 @@
     grid-template-columns: 1fr 1fr;
     grid-template-rows: repeat(1fr, 4);
     gap: 1rem;
+  }
+
+  &.hidden {
+    visibility: hidden;
   }
 }

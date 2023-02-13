@@ -1,4 +1,11 @@
 {% load static %}
+
+{% url 'index' as index_url %}
+{% url 'search' as search_url %}
+{% url 'cart' as cart_url %}
+{% url 'favorities' as favorities_url %}
+{% url 'profile' as profile_url %}
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -14,21 +21,21 @@
   <div class="mobile-navigation-links">
     <div class="container">
       <div class="mobile-navigation-links__inner">
-        <a href="/" class="link link--hover-color--none mobile-navigation-links__item mobile-navigation-links__item--active">
+        <a href="{{index_url}}" class="link link--hover-color--none mobile-navigation-links__item {% if index_url == request.path %}mobile-navigation-links__item--active{% endif %}">
           <span class="material-symbols-outlined icon icon--small">
             home
           </span>
           Главная
         </a>
         <label for="search-input">
-          <a class="link link--hover-color--none mobile-navigation-links__item">
+          <a class="link link--hover-color--none mobile-navigation-links__item {% if search_url == request.path %}mobile-navigation-links__item--active{% endif %}">
             <span class="material-symbols-outlined icon icon--small">
               search
             </span>
             Поиск
           </a>
         </label>
-        <a class="link link--hover-color--none mobile-navigation-links__item" href="{% url 'cart' %}">
+        <a class="link link--hover-color--none mobile-navigation-links__item {% if cart_url == request.path %}mobile-navigation-links__item--active{% endif %}" href="{{cart_url}}">
           <div class="badge-parent">
             <span class="material-symbols-outlined icon icon--small">
               shopping_cart
@@ -41,7 +48,7 @@
           </div>
           Корзина
         </a>
-        <a class="link link--hover-color--none mobile-navigation-links__item" href="{% url 'favorities' %}">
+        <a class="link link--hover-color--none mobile-navigation-links__item {% if favorities_url == request.path %}mobile-navigation-links__item--active{% endif %}" href="{{favorities_url}}">
           <div class="badge-parent">
             <span class="material-symbols-outlined icon icon--small">
               favorite
@@ -54,7 +61,7 @@
           </div>
           Избранные
         </a>
-        <a class="link link--hover-color--none mobile-navigation-links__item" href="{% url 'profile' %}">
+        <a class="link link--hover-color--none mobile-navigation-links__item {% if profile_url == request.path %}mobile-navigation-links__item--active{% endif %}" href="{{profile_url}}">
           <span class="material-symbols-outlined icon icon--small">
             person
           </span>
@@ -63,8 +70,9 @@
       </div>
     </div>
   </div>
+
   <input type="checkbox" id="catalog-active-checkbox">
-  <div class="catalog">
+  <div class="catalog hidden">
     <div class="container">
       <div class="catalog__header">
         <h3>Каталог</h4>
@@ -86,6 +94,8 @@
       </div>
     </div>
   </div>
+  
+  
   <div class="messages">
     <div class="container">
       <div class="messages__inner">

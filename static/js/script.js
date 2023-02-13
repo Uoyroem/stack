@@ -191,6 +191,7 @@ function sendMessage(message, delayMs = 3000) {
 
 
 $(function() {
+ 
   $('#catalog-active-checkbox').on('change', function() {
     const icon = $('#catalog-menu-open-button-icon, #catalog-menu-close-button-icon');
     icon.toggleClass('hidden');
@@ -251,4 +252,6 @@ $(function() {
     $('.button.button--link[data-href]').on('click', function() {
       location.replace($(this).data('href'));
     });
+
+    setTimeout(() => $('.catalog').removeClass('hidden'), 500);
 });

@@ -329,11 +329,17 @@ hr {
     background-color: white;
   }
 }
+.catalog__content.hidden {
+  display: none !important;
+}
 .catalog__grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: repeat(1fr, 4);
   gap: 1rem;
+}
+.catalog.hidden {
+  visibility: hidden;
 }
 
 .footer {
